@@ -8,4 +8,5 @@
     <string name="login_fragment_email_textinputedittext_hint_email">Enter your email</string>
     <string name="login_fragment_email_textinputedittext_hint_password">Enter your password</string>
     <string name="login_fragment_remember_login">Remember login</string>
+    <string name="login_fragment_login_button">Login</string>
 </resources>
