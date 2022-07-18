@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_fragment_header_login_txsiz">24sp</dimen>
+</resources>
