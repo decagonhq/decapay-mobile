@@ -7,7 +7,7 @@
     tools:context=".ui.SplashActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/splash_fragment_logo_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="276dp"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/app_logo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/splash_fragment_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
