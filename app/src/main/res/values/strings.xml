@@ -4,6 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_fragment_header_login">Login</string>
     <string name="login_fragment_email_field_title_email">Email</string>
+    <string name="login_fragment_password_field_title_password">Password</string>
     <string name="login_fragment_email_textinputedittext_hint_email">Enter your email</string>
     <string name="login_fragment_email_textinputedittext_hint_password">Enter your password</string>
+    <string name="login_fragment_remember_login">Remember login</string>
 </resources>
