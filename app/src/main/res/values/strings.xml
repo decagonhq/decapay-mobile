@@ -9,4 +9,7 @@
     <string name="login_fragment_email_textinputedittext_hint_password">Enter your password</string>
     <string name="login_fragment_remember_login">Remember login</string>
     <string name="login_fragment_login_button">Login</string>
+    <string name="login_fragment_forgot_password">Forgot Password?</string>
+    <string name="login_fragment_donthaveanaccount">Don\'t have an account?</string>
+    <string name="login_fragment_create_account">Create Account</string>
 </resources>
