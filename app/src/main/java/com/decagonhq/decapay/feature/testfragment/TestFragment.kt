@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.decagonhq.decapay.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
