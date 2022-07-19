@@ -12,4 +12,5 @@
     <string name="login_fragment_forgot_password">Forgot Password?</string>
     <string name="login_fragment_donthaveanaccount">Don\'t have an account?</string>
     <string name="login_fragment_create_account">Create Account</string>
+    <string name="test_fragment">Test Fragment</string>
 </resources>
