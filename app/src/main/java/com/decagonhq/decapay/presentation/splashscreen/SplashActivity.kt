@@ -1,10 +1,10 @@
-package com.decagonhq.decapay.ui
+package com.decagonhq.decapay.presentation.splashscreen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.decagonhq.decapay.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.presentation.MainActivity
 import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
@@ -13,21 +13,19 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val scope = CoroutineScope(Dispatchers.Main)
-      scope.launch {
-          delay(1000)
-          goToApp()
+        scope.launch {
+            delay(1000)
+            goToApp()
         }
     }
 
-    private fun goToApp(){
-        runOnUiThread{
+    private fun goToApp() {
+        runOnUiThread {
 
             Intent(this, MainActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
-
-
         }
     }
 }
