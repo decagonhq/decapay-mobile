@@ -1,9 +1,13 @@
 package com.decagonhq.decapay.common.di
 
+import android.content.Context
 import com.decagonhq.decapay.common.constants.NetworkConstant
+import com.decagonhq.decapay.common.data.sharedpreference.DecapayPreferences
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -55,5 +59,13 @@ object NetworkModule {
             .client(client)
             .addConverterFactory(gsonConverterFactory)
             .build()
+    }
+    /**
+     * provide sharedPreference
+     */
+    @Provides
+    @Singleton
+    fun provideSharedPreference(@ApplicationContext context: Context): Preferences {
+        return DecapayPreferences(context)
     }
 }
