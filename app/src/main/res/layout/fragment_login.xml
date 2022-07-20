@@ -42,7 +42,8 @@
         app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -77,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_fragment_email_textinputedittext_hint_password"
+            android:inputType="textPassword"
             android:lines="1"
             />
     </com.google.android.material.textfield.TextInputLayout>

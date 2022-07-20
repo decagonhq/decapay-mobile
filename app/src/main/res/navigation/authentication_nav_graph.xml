@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/testFragment">
-
+    app:startDestination="@id/loginFragment">
     <fragment
-        android:id="@+id/testFragment"
-        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/loginFragment"
+        android:name="com.decagonhq.decapay.feature.login.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>
