@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
+import com.google.android.material.snackbar.Snackbar
+import kotlin.properties.Delegates
 
 class LoginFragment : Fragment() {
     /**
@@ -16,6 +19,7 @@ class LoginFragment : Fragment() {
     private val TAG = "LOGINFRAGMENT"
     private lateinit var receivedEmail: String
     private lateinit var receivedPassword: String
+    private var saveLoginCredentialsStatus by Delegates.notNull<Boolean>()
     private var _binding: FragmentLoginBinding? = null
     val binding get() = _binding!!
 
@@ -37,6 +41,31 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+
+        // to validate the inputs received from the fields
+        // email field, password field and the remember-login field
+        binding.loginFragmentLoginButtonBtn.setOnClickListener {
+            // capture the data from the fields, email, password and checkbox
+            receivedEmail = binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.trim().toString()
+            receivedPassword = binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.trim().toString()
+            saveLoginCredentialsStatus = binding.loginFragmentRememberLoginChk.isChecked
+
+            // check the validation
+            if (!LoginInputValidation.validateUserEmail(receivedEmail) || !LoginInputValidation.validateUserPassword(receivedPassword)) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.email_password_validation_feedback),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                // check the "Remember Login" box is checked
+                // if "true' save "email' and "password" to sharedpreference
+                if (binding.loginFragmentRememberLoginChk.isChecked){
+                    // capture the validated email and password and save it to sharedpreference
+                }
+                // perform the network call
+            }
+        }
 
         // capture the input email
         binding.loginFragmentEmailTextinputedittextEmailTiedt.addTextChangedListener {
@@ -66,20 +95,20 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun onPasswordTextChanged(receivedPassword: String){
-        if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password cannot be empty"){
+    private fun onPasswordTextChanged(receivedPassword: String) {
+        if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password cannot be empty") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password cannot be empty"
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must have a minimum of 8 characters."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 upper case character."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 upper case character.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 upper case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 lower case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 special character (@#$%&?!)."){
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 special character (@#$%&?!).") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 special character (@#$%&?!)."
         } else {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = ""
