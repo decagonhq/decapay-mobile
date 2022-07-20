@@ -39,6 +39,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
+        app:errorEnabled="true"
         app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -46,6 +47,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_fragment_email_textinputedittext_email_tiedt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_fragment_email_textinputedittext_hint_email"
@@ -68,6 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
+        app:errorEnabled="true"
         app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
