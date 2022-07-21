@@ -11,13 +11,13 @@ class ValidatorTest {
      * **/
 
     @Test
-    fun valid_email_format(){
+    fun `valid email format`(){
         val email="kingsleyizundu@gmail.com"
         Assert.assertTrue(Validator.validateEmail(email))
     }
 
     @Test
-    fun email_with_no_domain_is_invalid(){
+    fun `email with no domain is invalid`(){
         val email="izundukingsley@"
         Assert.assertFalse(
             Validator.validateEmail(email)
@@ -25,7 +25,7 @@ class ValidatorTest {
     }
 
     @Test
-    fun email_with_no_topleveldomain_is_invalid(){
+    fun `email with no top level domain is invalid`(){
         val email="izundukingsley@gmail"
         Assert.assertFalse(
             Validator.validateEmail(email)
@@ -33,7 +33,7 @@ class ValidatorTest {
     }
 
     @Test
-    fun email_with_no_at_is_invalid(){
+    fun `email with no at is invalid`(){
         val email="izundukingsley"
         Assert.assertFalse(
             Validator.validateEmail(email)
@@ -41,7 +41,7 @@ class ValidatorTest {
     }
 
     @Test
-    fun email_is_empty_return_false(){
+    fun `email is empty return false`(){
         var email=""
         Assert.assertFalse(
             Validator.validateEmail(email)
@@ -49,7 +49,7 @@ class ValidatorTest {
     }
 
     @Test
-    fun email_is_only_top_level_domain_and_subdomain(){
+    fun `email is only top level domain and subdomain`(){
         val email="@gmail.com"
         Assert.assertFalse(
             Validator.validateEmail(email)
@@ -63,32 +63,32 @@ class ValidatorTest {
 
 
     @Test
-    fun valid_name(){
+    fun `valid name`(){
         val name = "David"
         Assert.assertTrue(Validator.validateName(name))
     }
 
     @Test
-    fun valid_name_accounts_for_white_space(){
+    fun `valid name accounts for white space`(){
         val name = " David "
         Assert.assertTrue(Validator.validateName(name))
     }
 
     @Test
-    fun invalid_name_accounts_for_two_words(){
+    fun `invalid name accounts for two words`(){
         val name = " David Omu"
         Assert.assertFalse(Validator.validateName(name))
     }
 
     @Test
-    fun valid_name_hyphenated(){
+    fun `valid name hyphenated`(){
         val name = " David-Omu"
         Assert.assertTrue(Validator.validateName(name))
     }
 
 
     @Test
-    fun invalid_name_special_characters(){
+    fun `invalid name special characters`(){
         val name = " David%"
         Assert.assertFalse(Validator.validateName(name))
     }
@@ -100,22 +100,23 @@ class ValidatorTest {
 
 
    @Test
-   fun valid_password(){
+   fun `valid password`(){
        val password = "123456"
         Assert.assertTrue(Validator.validatePassword(password))
    }
     @Test
-   fun invalid_password(){
+   fun `invalid password`(){
        val password = "1256"
         Assert.assertFalse(Validator.validatePassword(password))
    }
 
-    fun invalid_password_empty(){
+    @Test
+    fun `invalid password empty`(){
        val password = ""
         Assert.assertFalse(Validator.validatePassword(password))
    }
     @Test
-    fun invalid_password_empty_spaces(){
+    fun `invalid password empty spaces`(){
        val password = "       "
         Assert.assertFalse(Validator.validatePassword(password))
    }

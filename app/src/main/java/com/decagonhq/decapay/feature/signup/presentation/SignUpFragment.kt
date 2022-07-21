@@ -16,6 +16,7 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
+import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,12 +47,15 @@ class SignUpFragment : Fragment() {
             val formValidated = validateAndSendRequest()
             if (formValidated) {
                 signUpViewModel.signUp(
-                    firstName = binding.signUpFragmentFirstNameEt.text.toString(),
-                    lastName = binding.signUpFragmentLastNameEt.text.toString(),
-                    email = binding.signUpFragmentEmailEt.text.toString(),
-                    password = binding.signUpFragmentPasswordEt.text.toString(),
-                    confirmPassword = binding.signUpFragmentPasswordConfirmationEt.text.toString(),
-                    phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString()
+                    SignUpRequestBody(
+                        firstName = binding.signUpFragmentFirstNameEt.text.toString(),
+                        lastName = binding.signUpFragmentLastNameEt.text.toString(),
+                        email = binding.signUpFragmentEmailEt.text.toString(),
+                        password = binding.signUpFragmentPasswordEt.text.toString(),
+                        phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString(),
+                        passwordConfirmation = binding.signUpFragmentPasswordConfirmationEt.text.toString(),
+                    )
+
                 )
             }
         }
