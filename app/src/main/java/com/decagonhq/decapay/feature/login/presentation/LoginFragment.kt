@@ -138,8 +138,6 @@ class LoginFragment : Fragment() {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 upper case character."
         } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 lower case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 special character (@#$%&?!).") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 special character (@#$%&?!)."
         } else {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = ""
         }

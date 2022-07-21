@@ -6,16 +6,16 @@ object LoginInputValidation {
     private val PASSWORD_PATTERN = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$")
 
     fun validateUserEmail(email: String): Boolean {
-        if (email.isEmpty() || !email.matches(EMAIL_PATTERN)){
+        if (email.isEmpty() || !email.matches(EMAIL_PATTERN)) {
             return false
         }
         return true
     }
 
     fun validateUserPassword(password: String): Boolean {
-        return if (password.isEmpty()){
+        return if (password.isEmpty()) {
             false
-        } else if (!password.matches(PASSWORD_PATTERN)){
+        } else if (!password.matches(PASSWORD_PATTERN)) {
             false
         } else {
             true
@@ -23,10 +23,10 @@ object LoginInputValidation {
     }
 
     fun validateEmailForTextWatcher(email: String): String {
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             return "Field cannot be empty"
         }
-        if (!email.matches(EMAIL_PATTERN)){
+        if (!email.matches(EMAIL_PATTERN)) {
             return "Invalid email"
         }
         return ""
@@ -47,9 +47,6 @@ object LoginInputValidation {
         }
         if (!passwordText.matches(".*[a-z].*".toRegex())) {
             return "Password must contain at least 1 lower case character."
-        }
-        if (!passwordText.matches(".*[`~!@#$%^&*()\\-_=+|}{\\]\\[\"\';:?/>.<,].*".toRegex())) {
-            return "Password must contain at least 1 special character (@#$%&?!)."
         }
         return ""
     }
