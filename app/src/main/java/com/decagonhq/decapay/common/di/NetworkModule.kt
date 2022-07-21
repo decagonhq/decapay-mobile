@@ -39,6 +39,8 @@ object NetworkModule {
     /**
      * provide the OkHttp
      */
+    @Provides
+    @Singleton
     fun provideOkHttp(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)

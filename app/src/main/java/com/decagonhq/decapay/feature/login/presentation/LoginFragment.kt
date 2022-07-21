@@ -1,19 +1,28 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
+import com.decagonhq.decapay.feature.login.data.network.model.LoginRequestBody
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -24,6 +33,7 @@ class LoginFragment : Fragment() {
      */
     @Inject
     lateinit var preference: Preferences
+    private val loginViewModel: LoginViewModel by viewModels()
     private val TAG = "LOGINFRAGMENT"
     private lateinit var receivedEmail: String
     private lateinit var receivedPassword: String
@@ -62,6 +72,7 @@ class LoginFragment : Fragment() {
 
             // check the validation
             if (!LoginInputValidation.validateUserEmail(receivedEmail) || !LoginInputValidation.validateUserPassword(receivedPassword)) {
+                hideKeyboard()
                 Snackbar.make(
                     binding.root,
                     getString(R.string.email_password_validation_feedback),
@@ -76,8 +87,11 @@ class LoginFragment : Fragment() {
                     preference.putUserPassword(receivedPassword)
                 }
                 // perform the network call
+                loginViewModel.getUserLoggedIn(LoginRequestBody(receivedEmail, receivedPassword))
                 // show dialog
                 pleaseWaitDialog?.show()
+                // hide the keyboard
+                hideKeyboard()
             }
         }
 
@@ -92,6 +106,8 @@ class LoginFragment : Fragment() {
             receivedPassword = binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text.toString()
             onPasswordTextChanged(receivedPassword)
         }
+
+        initObserver()
     }
 
     override fun onDestroy() {
@@ -126,6 +142,44 @@ class LoginFragment : Fragment() {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 special character (@#$%&?!)."
         } else {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = ""
+        }
+    }
+
+    fun initObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.loginResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            pleaseWaitDialog!!.dismiss()
+                            Snackbar.make(
+                                binding.root,
+                                "You have successfully logged in: ${it.messages}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            // capture the token here
+                            val token = it.data.token
+                            preference.putToken(token!!)
+                            Log.d(TAG, "Here is the success result: ${it.messages}")
+                            // on successfuly loggedin, navigate to your list of budgets
+                        }
+                        is Resource.Error -> {
+                            pleaseWaitDialog!!.dismiss()
+                            Snackbar.make(
+                                binding.root,
+                                "${it.messages}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            Log.d(TAG, "Here is the error: ${it.message}")
+                            binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
+                            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
+                        }
+                        is Resource.Loading -> {
+                            pleaseWaitDialog!!.dismiss()
+                        }
+                    }
+                }
+            }
         }
     }
 }
