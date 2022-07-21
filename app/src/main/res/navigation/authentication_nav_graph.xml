@@ -6,6 +6,6 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.decagonhq.decapay.feature.login.LoginFragment"
+        android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
         android:label="LoginFragment" />
 </navigation>

@@ -10,7 +10,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".feature.login.LoginFragment"
+    tools:context=".feature.login.presentation.LoginFragment"
     android:orientation="vertical"
     >
 

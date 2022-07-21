@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.login
+package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
