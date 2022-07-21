@@ -4,21 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     /**
      * declare views and variables
      */
+    @Inject
+    lateinit var preference: Preferences
     private val TAG = "LOGINFRAGMENT"
     private lateinit var receivedEmail: String
     private lateinit var receivedPassword: String
+    private var pleaseWaitDialog: AlertDialog? = null
     private var saveLoginCredentialsStatus by Delegates.notNull<Boolean>()
     private var _binding: FragmentLoginBinding? = null
     val binding get() = _binding!!
@@ -41,6 +50,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // to validate the inputs received from the fields
         // email field, password field and the remember-login field
@@ -60,10 +70,14 @@ class LoginFragment : Fragment() {
             } else {
                 // check the "Remember Login" box is checked
                 // if "true' save "email' and "password" to sharedpreference
-                if (binding.loginFragmentRememberLoginChk.isChecked){
+                if (binding.loginFragmentRememberLoginChk.isChecked) {
                     // capture the validated email and password and save it to sharedpreference
+                    preference.putUserEmail(receivedEmail)
+                    preference.putUserPassword(receivedPassword)
                 }
                 // perform the network call
+                // show dialog
+                pleaseWaitDialog?.show()
             }
         }
 
