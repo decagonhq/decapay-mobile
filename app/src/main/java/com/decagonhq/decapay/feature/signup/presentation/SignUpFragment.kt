@@ -17,6 +17,7 @@ import com.decagonhq.decapay.common.utils.resource.Validator
 
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,12 +49,12 @@ class SignUpFragment : Fragment() {
             if (formValidated) {
                 signUpViewModel.signUp(
                     SignUpRequestBody(
-                        firstName = binding.signUpFragmentFirstNameEt.text.toString(),
-                        lastName = binding.signUpFragmentLastNameEt.text.toString(),
-                        email = binding.signUpFragmentEmailEt.text.toString(),
-                        password = binding.signUpFragmentPasswordEt.text.toString(),
-                        phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString(),
-                        passwordConfirmation = binding.signUpFragmentPasswordConfirmationEt.text.toString(),
+                        firstName = binding.signUpFragmentFirstNameEt.text.toString().trim(),
+                        lastName = binding.signUpFragmentLastNameEt.text.toString().trim(),
+                        email = binding.signUpFragmentEmailEt.text.toString().trim(),
+                        password = binding.signUpFragmentPasswordEt.text.toString().trim(),
+                        phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString().trim(),
+                        passwordConfirmation = binding.signUpFragmentPasswordConfirmationEt.text.toString().trim(),
                     )
 
                 )
@@ -66,7 +67,11 @@ class SignUpFragment : Fragment() {
                     when (it) {
                         is Resource.Success -> {
 //
-                            Toast.makeText(requireContext(), "Success ${it.data.next}", Toast.LENGTH_SHORT).show()
+                            Snackbar.make(
+                                binding.root,
+                                "${it.data.next}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Error -> {
 //
