@@ -23,7 +23,7 @@ class SignUpViewModelTest {
     private val  dispatcher = StandardTestDispatcher()
     lateinit var mockUseCase :SignUpUseCase
     lateinit var mockRequestBody:SignUpRequestBody
-    
+
     @Before
     fun setUp(){
         Dispatchers.setMain(dispatcher)
