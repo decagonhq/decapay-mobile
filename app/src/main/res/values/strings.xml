@@ -13,6 +13,22 @@
     <string name="login_fragment_donthaveanaccount">Don\'t have an account?</string>
     <string name="login_fragment_create_account">Create Account</string>
     <string name="test_fragment">Test Fragment</string>
-    <string name="email_password_validation_feedback">Invalid email or password; please check your login credentials</string>
     <string name="please_wait">Please wait…</string>
+    <string name="email_password_validation_feedback">Invalid email or password; please check your login credentials</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="enter_your_first_name">Enter your first name</string>
+    <string name="email">Email</string>
+    <string name="enter_your_last_name">Enter your last name</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="password">Password</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="title_activity_hilt">HiltActivity</string>
 </resources>
