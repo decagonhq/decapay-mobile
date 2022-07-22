@@ -2,4 +2,6 @@
 <resources>
     <dimen name="logo_font_size">30sp</dimen>
     <dimen name="login_fragment_header_login_txsiz">24sp</dimen>
+    <dimen name="logo_image_size">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

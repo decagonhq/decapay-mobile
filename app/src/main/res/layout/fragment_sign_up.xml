@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        tools:context=".feature.signup.presentation.SignUpFragment">
+
+
+
+
+        <TextView
+            android:id="@+id/signUp_fragment_header_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="@string/create_your_account"
+            android:textSize="@dimen/login_fragment_header_login_txsiz"
+            android:textStyle="bold"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_firstName_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/first_name" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_firstName_il"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_firstName_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_your_first_name"
+                    android:textColorHint="@color/label_color"
+
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_lastName_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_name"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_lastName_il"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="20dp"
+
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_lastName_et"
+                    android:textColorHint="@color/label_color"
+                    android:hint="@string/enter_your_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_email_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_email_il"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="20dp"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_your_email"
+
+                    android:textColorHint="@color/label_color"
+                    app:hintAnimationEnabled="false"
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_phoneNumber_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_number" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_phoneNumber_il"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_your_phone_number"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_phoneNumber_et"
+                    android:textColorHint="@color/label_color"
+                    app:hintAnimationEnabled="false"
+                    android:hint="@string/enter_your_phone_number"
+                    android:inputType="phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_password_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_password_il"
+
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_password_et"
+                    android:textColorHint="@color/label_color"
+                    app:hintAnimationEnabled="false"
+                    android:hint="@string/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            <TextView
+                android:id="@+id/signUp_fragment_passwordConfirmation_tv"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password_confirmation"
+
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUp_fragment_passwordConfirmation_il"
+
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="20dp"
+
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUp_fragment_passwordConfirmation_et"
+                    android:textColorHint="@color/label_color"
+                    app:hintAnimationEnabled="false"
+                    android:hint="@string/confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="39dp"
+                    tools:layout_editor_absoluteY="216dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--    App Button-->
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signUp_fragment_signUp_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/decapay_green"
+            app:backgroundTint="@color/decapay_green"
+            android:layout_marginBottom="20dp"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            app:layout_constraintHorizontal_bias="0.6"
+      />
+        <!-- Already have acc -->
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/signUp_fragment_footer_ll"
+
+        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:layout_marginBottom="40dp"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/signUp_fragment_alreadyHaveAccount_tv"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_weight="1"
+        android:text="@string/already_have_an_account" />
+
+    <TextView
+        android:id="@+id/signUp_fragment_logIn_tv"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1"
+android:gravity="start"
+        android:text="@string/login"
+
+
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
