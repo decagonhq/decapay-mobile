@@ -110,5 +110,7 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
     kaptTest("com.google.dagger:hilt-android-compiler:2.42")
 
+    testImplementation 'app.cash.turbine:turbine:0.7.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
 
 }
