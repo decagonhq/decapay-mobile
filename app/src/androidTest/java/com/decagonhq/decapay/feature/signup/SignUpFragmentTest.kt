@@ -36,9 +36,9 @@ class SignUpFragmentTest {
 
     @Test
     fun screen_renders(){
-        val scenario = launchFragmentInHiltContainer<SignUpFragment>{
-
-        }
+//        val scenario = launchFragmentInHiltContainer<SignUpFragment>{
+//
+//        }
 
     }
 
