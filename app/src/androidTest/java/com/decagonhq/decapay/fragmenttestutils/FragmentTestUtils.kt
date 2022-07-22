@@ -12,7 +12,7 @@ import com.decagonhq.decapay.HiltTestActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-inline fun <reified T: Fragment> launchFragmentInHiltContainer(
+inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
     themeResId: Int = androidx.fragment.testing.R.style.FragmentScenarioEmptyFragmentActivityTheme,
     fragmentFactory: FragmentFactory? = null,
@@ -44,5 +44,4 @@ inline fun <reified T: Fragment> launchFragmentInHiltContainer(
 
         (fragment as T).action()
     }
-
 }
