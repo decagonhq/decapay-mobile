@@ -1,8 +1,20 @@
 <resources>
     <string name="app_name">DecaPay</string>
-    <string name="test_fragment">Test Fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_fragment_header_login">Login</string>
+    <string name="login_fragment_email_field_title_email">Email</string>
+    <string name="login_fragment_password_field_title_password">Password</string>
+    <string name="login_fragment_email_textinputedittext_hint_email">Enter your email</string>
+    <string name="login_fragment_email_textinputedittext_hint_password">Enter your password</string>
+    <string name="login_fragment_remember_login">Remember login</string>
+    <string name="login_fragment_login_button">Login</string>
+    <string name="login_fragment_forgot_password">Forgot Password?</string>
+    <string name="login_fragment_donthaveanaccount">Don\'t have an account?</string>
+    <string name="login_fragment_create_account">Create Account</string>
+    <string name="test_fragment">Test Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="create_your_account">Create your account</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
