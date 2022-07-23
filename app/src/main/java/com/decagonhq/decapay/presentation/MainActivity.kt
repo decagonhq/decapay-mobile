@@ -40,13 +40,13 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         /** INITIALISE DRAWER MENU LISTENER */
-        val navigationView: NavigationView = binding.navView
+        val navigationView: NavigationView = binding.mainActivityNavViewNv
         navigationView.itemIconTintList = null
 
-        drawerLayout = binding.drawerLayout
+        drawerLayout = binding.mainActivityDrawerLayout
 
         binding.mainActivityHamburgerIb.setOnClickListener {
-            drawerLayout.openDrawer(binding.navView)
+            drawerLayout.openDrawer(binding.mainActivityNavViewNv)
         }
 
         selectNavigationItem(navigationView)
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             it.isChecked = true
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            binding.mainActivityDrawerLayout.closeDrawer(GravityCompat.START)
             true
         }
     }
