@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DecaPay</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_fragment_header_login">Login</string>
     <string name="login_fragment_email_field_title_email">Email</string>
@@ -15,4 +15,12 @@
     <string name="test_fragment">Test Fragment</string>
     <string name="email_password_validation_feedback">Invalid email or password; please check your login credentials</string>
     <string name="please_wait">Please wait…</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="budget">Budget</string>
+    <string name="budget_category">Budget Category</string>
+    <string name="log_out">Log Out</string>
+    <string name="name_place_holder">Ugochukwu</string>
+    <string name="email_place_holder">Ugochi45@gmail.com</string>
 </resources>
