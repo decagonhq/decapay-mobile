@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 
@@ -85,6 +87,10 @@ class SignUpFragment : Fragment() {
                     }
                 }
             }
+        }
+        // navigation
+        binding.signUpFragmentLogInTv.setOnClickListener {
+            findNavController().navigate(R.id.loginFragment)
         }
     }
 
