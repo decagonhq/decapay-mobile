@@ -7,4 +7,5 @@
     <dimen name="forgot_password_fragment_navigate_back_txsiz">18sp</dimen>
     <dimen name="forgot_password_fragment_title_reset_password_txsiz">24sp</dimen>
     <dimen name="forgot_password_fragment_title_reset_password_call_out_action_txsiz">16sp</dimen>
+    <dimen name="create_new_password_fragment_title_txsiz">24sp</dimen>
 </resources>

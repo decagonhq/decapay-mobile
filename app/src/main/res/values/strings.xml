@@ -36,4 +36,9 @@
     <string name="forgot_password_fragment_email_textinputedittext_email">abayomitunde@gmail.com</string>
     <string name="forgot_password_fragment_login_button">Reset Password</string>
     <string name="email_validation_feedback">Invalid email; please check your email</string>
+    <string name="create_new_password_fragment_title">Create New Password</string>
+    <string name="create_new_password_fragment_email">New Password</string>
+    <string name="create_new_password_fragment_new_password">New Password</string>
+    <string name="create_new_password_fragment_confirm_password_title">Confirm Password</string>
+    <string name="create_new_password_fragment_sign_up">Sign Up</string>
 </resources>
