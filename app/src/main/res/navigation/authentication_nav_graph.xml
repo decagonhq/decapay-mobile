@@ -12,4 +12,9 @@
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
         android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.decagonhq.decapay.feature.forgotpassword.presentation.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

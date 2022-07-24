@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.databinding.FragmentForgotPasswordBinding
 
@@ -33,6 +34,11 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentForgotPasswordBinding.bind(view)
+
+        // navigation
+        binding.forgotPasswordFragmentNavigateBackIv.setOnClickListener {
+            findNavController().navigate(R.id.loginFragment)
+        }
     }
 
     override fun onDestroy() {

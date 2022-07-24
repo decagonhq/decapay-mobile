@@ -113,6 +113,10 @@ class LoginFragment : Fragment() {
         binding.loginFragmentCreateAccountTv.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)
         }
+        // navigate to forgot password
+        binding.loginFragmentForgotPasswordTv.setOnClickListener {
+            findNavController().navigate(R.id.forgotPasswordFragment)
+        }
     }
 
     override fun onDestroy() {
