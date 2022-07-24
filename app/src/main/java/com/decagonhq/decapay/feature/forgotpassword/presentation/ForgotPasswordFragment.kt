@@ -59,21 +59,19 @@ class ForgotPasswordFragment : Fragment() {
             // receive the user email from the input field
             receivedEmail = binding.forgotPasswordFragmentEmailTextinputedittextEmailTiedt.text.toString()
             // check the validation
-            if (!LoginInputValidation.validateUserEmail(receivedEmail)){
+            if (!LoginInputValidation.validateUserEmail(receivedEmail)) {
                 hideKeyboard()
                 Snackbar.make(
                     binding.root,
                     getString(R.string.email_validation_feedback),
                     Snackbar.LENGTH_LONG
                 ).show()
-
             } else {
                 hideKeyboard()
                 // perform the network call
                 forgotPasswordViewModel.activateForgotPassword(ForgotPasswordRequest(receivedEmail))
                 // show dialog
                 pleaseWaitDialog?.let { it.show() }
-
             }
         }
 
@@ -101,11 +99,11 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-    private fun initObserver(){
+    private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 forgotPasswordViewModel.forgotPasswordResponse.collect {
-                    when(it){
+                    when (it) {
                         is Resource.Success -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
@@ -124,7 +122,6 @@ class ForgotPasswordFragment : Fragment() {
                             ).show()
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
