@@ -15,11 +15,12 @@ class ForgotPasswordUsecase @Inject constructor(private val forgotPasswordReposi
     operator fun invoke(forgotPasswordRequest: ForgotPasswordRequest): Flow<Resource<ForgotPasswordResponse>> = flow {
         try {
             emit(Resource.Loading())
-
+            val forgotPasswordResponse = forgotPasswordRepository.forgotPassword(forgotPasswordRequest)
+            emit(Resource.Success(forgotPasswordResponse))
         }catch (e: HttpException){
-
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException){
-
+            emit(Resource.Error("Couldn't reach server check your internet connection"))
         }
     }
 
