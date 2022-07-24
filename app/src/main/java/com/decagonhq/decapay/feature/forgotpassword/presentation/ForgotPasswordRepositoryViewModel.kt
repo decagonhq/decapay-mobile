@@ -7,12 +7,14 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.forgotpassword.data.network.model.ForgotPasswordRequest
 import com.decagonhq.decapay.feature.forgotpassword.data.network.model.ForgotPasswordResponse
 import com.decagonhq.decapay.feature.forgotpassword.domain.usecase.ForgotPasswordUsecase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ForgotPasswordRepositoryViewModel @Inject constructor(
     private val forgotPasswordUsecase: ForgotPasswordUsecase,
     private val savedStateHandle: SavedStateHandle

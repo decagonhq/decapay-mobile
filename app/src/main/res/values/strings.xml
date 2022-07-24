@@ -35,4 +35,5 @@
     <string name="forgot_password_fragment_title_reset_password_call_out_action">Enter the email associated with your account and\nwe\'ll send an email with instruction to reset your\npassword</string>
     <string name="forgot_password_fragment_email_textinputedittext_email">abayomitunde@gmail.com</string>
     <string name="forgot_password_fragment_login_button">Reset Password</string>
+    <string name="email_validation_feedback">Invalid email; please check your email</string>
 </resources>
