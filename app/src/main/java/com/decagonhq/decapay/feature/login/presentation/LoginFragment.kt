@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -108,6 +109,14 @@ class LoginFragment : Fragment() {
         }
 
         initObserver()
+        // navigation
+        binding.loginFragmentCreateAccountTv.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
+        }
+        // navigate to forgot password
+        binding.loginFragmentForgotPasswordTv.setOnClickListener {
+            findNavController().navigate(R.id.forgotPasswordFragment)
+        }
     }
 
     override fun onDestroy() {

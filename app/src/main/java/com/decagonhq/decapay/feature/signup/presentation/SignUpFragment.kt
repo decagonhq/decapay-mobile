@@ -1,8 +1,6 @@
 package com.decagonhq.decapay.feature.signup.presentation
 
-
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
-
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +26,6 @@ class SignUpFragment : Fragment() {
     private val signUpViewModel: SignUpViewModel by viewModels()
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +56,8 @@ class SignUpFragment : Fragment() {
                     )
 
                 )
+                // when user account is successfully created, navigate to the login
+//                findNavController().navigate(R.id.loginFragment)
             }
         }
 
@@ -79,12 +79,15 @@ class SignUpFragment : Fragment() {
                             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                         }
                         is Resource.Loading -> {
-
                         }
                         else -> {}
                     }
                 }
             }
+        }
+        // navigation
+        binding.signUpFragmentLogInTv.setOnClickListener {
+            findNavController().navigate(R.id.loginFragment)
         }
     }
 
@@ -117,9 +120,9 @@ class SignUpFragment : Fragment() {
         }
 
         val isValidConfirmPassword =
-            binding.signUpFragmentPasswordEt.text.toString() == binding.signUpFragmentPasswordConfirmationEt.text.toString()
-                    && binding.signUpFragmentPasswordConfirmationEt.text.toString()
-                .isNotEmpty()
+            binding.signUpFragmentPasswordEt.text.toString() == binding.signUpFragmentPasswordConfirmationEt.text.toString() &&
+                binding.signUpFragmentPasswordConfirmationEt.text.toString()
+                    .isNotEmpty()
         if (!isValidConfirmPassword) {
             binding.signUpFragmentPasswordEt.error = "Password must be at least 6 characters"
             binding.signUpFragmentPasswordConfirmationEt.error = "Passwords must match"
@@ -127,5 +130,4 @@ class SignUpFragment : Fragment() {
 
         return (isValidEmail && isValidFirstName && isValidLastName && isValidLastName && isValidConfirmPassword && isValidPhoneNumber)
     }
-
 }

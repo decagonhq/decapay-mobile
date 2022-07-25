@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">DecaPay</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_fragment_header_login">Login</string>
     <string name="login_fragment_email_field_title_email">Email</string>
@@ -31,12 +30,4 @@
     <string name="password_confirmation">Password Confirmation</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="title_activity_hilt">HiltActivity</string>
-    <string name="navigation_drawer_open">open</string>
-    <string name="navigation_drawer_close">close</string>
-    <string name="dashboard">Dashboard</string>
-    <string name="budget">Budget</string>
-    <string name="budget_category">Budget Category</string>
-    <string name="log_out">Log Out</string>
-    <string name="name_place_holder">Ugochukwu</string>
-    <string name="email_place_holder">Ugochi45@gmail.com</string>
 </resources>

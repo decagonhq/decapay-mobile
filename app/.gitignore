@@ -33,3 +33,5 @@ gen/
 
 # Windows thumbnail db
 Thumbs.db
+
+.compiler.xml

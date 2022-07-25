@@ -16,8 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-       //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner = "com.decagonhq.decapay.common.utils.HiltTestRunner"
+        testInstrumentationRunner "com.decagonhq.decapay.common.utils.HiltTestRunner"
     }
 
     buildTypes {
