@@ -17,4 +17,9 @@
         android:name="com.decagonhq.decapay.feature.forgotpassword.presentation.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
+    <fragment
+        android:id="@+id/createNewPasswordFragment"
+        android:name="com.decagonhq.decapay.feature.createnewpassword.presentation.CreateNewPasswordFragment"
+        android:label="fragment_create_new_password"
+        tools:layout="@layout/fragment_create_new_password" />
 </navigation>
