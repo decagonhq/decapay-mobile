@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.verifypasswordresetcode.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,9 +71,9 @@ class VerifyPasswordResetCodeFragment : Fragment() {
 
     fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 verifyPasswordResetCodeViewModel.verifyPasswordResetCode.collect {
-                    when(it){
+                    when (it) {
                         is Resource.Success -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
@@ -93,7 +92,6 @@ class VerifyPasswordResetCodeFragment : Fragment() {
                             ).show()
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
