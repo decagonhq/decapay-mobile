@@ -124,4 +124,7 @@ dependencies {
     // this is responsible for handling the synchronous nature of the network call in the esspresso
     androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
+    // pinview
+    implementation 'io.github.chaosleung:pinview:1.4.4'
+
 }

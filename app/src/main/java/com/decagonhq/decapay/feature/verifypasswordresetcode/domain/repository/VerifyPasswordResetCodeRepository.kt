@@ -1,0 +1,8 @@
+package com.decagonhq.decapay.feature.verifypasswordresetcode.domain.repository
+
+import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeRequest
+import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeResponse
+
+interface VerifyPasswordResetCodeRepository {
+    suspend fun verifyPasswordResetCode(verifyPasswordResetCodeRequest: VerifyPasswordResetCodeRequest): VerifyPasswordResetCodeResponse
+}

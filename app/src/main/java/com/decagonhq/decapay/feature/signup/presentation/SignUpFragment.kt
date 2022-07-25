@@ -57,7 +57,7 @@ class SignUpFragment : Fragment() {
 
                 )
                 // when user account is successfully created, navigate to the login
-                findNavController().navigate(R.id.loginFragment)
+//                findNavController().navigate(R.id.loginFragment)
             }
         }
 
