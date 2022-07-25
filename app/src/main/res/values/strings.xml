@@ -41,4 +41,5 @@
     <string name="create_new_password_fragment_new_password">New Password</string>
     <string name="create_new_password_fragment_confirm_password_title">Confirm Password</string>
     <string name="create_new_password_fragment_sign_up">Sign Up</string>
+    <string name="create_new_password_fragment_validation_feedback">Invalid password</string>
 </resources>
