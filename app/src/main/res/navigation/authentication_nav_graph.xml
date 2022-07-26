@@ -5,11 +5,6 @@
     android:id="@+id/authentication_nav_graph"
     app:startDestination="@id/signUpFragment">
     <fragment
-        android:id="@+id/testFragment"
-        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
-    <fragment
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
         android:label="fragment_sign_up"
@@ -18,5 +13,14 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
 </navigation>
