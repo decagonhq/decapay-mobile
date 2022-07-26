@@ -101,7 +101,7 @@ class ValidatorTest {
 
    @Test
    fun `valid password`(){
-       val password = "123456"
+       val password = "1234565Mwe"
         Assert.assertTrue(Validator.validatePassword(password))
    }
     @Test
