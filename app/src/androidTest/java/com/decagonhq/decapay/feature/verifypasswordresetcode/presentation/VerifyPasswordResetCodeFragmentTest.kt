@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.createnewpassword.presentation
+package com.decagonhq.decapay.feature.verifypasswordresetcode.presentation
 
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
@@ -20,10 +20,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class CreateNewPasswordFragmentTest {
+class VerifyPasswordResetCodeFragmentTest {
 
-    private val newPassword = "Reforms*01"
-    private val confirmPassword = "Reforms*01"
+    private val code = "1234"
 
     @get: Rule
     var hiltRule = HiltAndroidRule(this)
@@ -34,15 +33,12 @@ class CreateNewPasswordFragmentTest {
     }
 
     @Test
-    fun createNewPasswordFragment_testUserInputValidEmail() {
-        launchFragmentInHiltContainer<CreateNewPasswordFragment>()
-        onView(withId(R.id.create_new_password_fragment_new_password_tiedt))
-            .perform(typeText(newPassword))
+    fun verifyPasswordResetCodeFragment_testUserEntersAGivenCode() {
+        launchFragmentInHiltContainer<VerifyPasswordResetCodeFragment>()
+        onView(withId(R.id.verify_password_reset_code_fragment_pinview))
+            .perform(typeText(code))
         closeSoftKeyboard()
-        onView(withId(R.id.create_new_password_fragment_confirm_password_tiedt))
-            .perform(typeText(confirmPassword))
-        closeSoftKeyboard()
-        onView(withId(R.id.create_new_password_fragment_create_new_password_button_btn))
+        onView(withId(R.id.verify_password_reset_code_fragment_verify_button_btn))
             .perform(click())
     }
 }
