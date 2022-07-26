@@ -113,4 +113,13 @@ dependencies {
     testImplementation 'app.cash.turbine:turbine:0.7.0'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
 
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+
+    // Idling Resource
+    // this is responsible for handling the synchronous nature of the network call in the esspresso
+    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+
+    // pinview
+    implementation 'io.github.chaosleung:pinview:1.4.4'
+
 }
