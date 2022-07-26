@@ -148,7 +148,6 @@ class SignUpFragment : Fragment() {
                         is Resource.Loading -> {
 
                         }
-                        else -> {}
                     }
                 }
             }
