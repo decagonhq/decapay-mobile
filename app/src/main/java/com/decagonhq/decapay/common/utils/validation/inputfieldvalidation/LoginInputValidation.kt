@@ -50,4 +50,11 @@ object LoginInputValidation {
         }
         return ""
     }
+
+    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
+        if (password != confirmPassword){
+            return false
+        }
+        return true
+    }
 }

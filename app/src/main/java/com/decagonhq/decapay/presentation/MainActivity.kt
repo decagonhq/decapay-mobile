@@ -34,11 +34,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        /** SET STATUS BAR COLOR FOR AP1 LEVEL 22 AND BELOW */
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//         setStatusBarColor(this, R.color.black)
-//        }
-
         /** INITIALISE DRAWER MENU LISTENER */
         val navigationView: NavigationView = binding.mainActivityNavViewNv
         navigationView.itemIconTintList = null
@@ -62,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                    // navController.navigate(R.id.loginFragment)
                 }
                 R.id.menu_budget -> {
-                    navController.navigate(R.id.testFragment)
+                   // navController.navigate(R.id.testFragment)
                 }
                 R.id.menu_budget_category -> {
                    // navController.navigate(R.id.loginFragment)
