@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.forgotpassword.presentation
+package com.decagonhq.decapay.feature.createnewpassword.presentation
 
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
@@ -11,7 +11,7 @@ import com.decagonhq.decapay.fragmenttestutils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.* // ktlint-disable no-wildcard-imports
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,9 +20,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class ForgotPasswordFragmentTest {
+class CreateNewPasswordFragmentTest {
 
-    private val email = "osehiaseehilen@gmail.com"
+    private val newPassword = "Reforms*01"
+    private val confirmPassword = "Reforms*01"
 
     @get: Rule
     var hiltRule = HiltAndroidRule(this)
@@ -33,12 +34,15 @@ class ForgotPasswordFragmentTest {
     }
 
     @Test
-    fun forgotPasswordFragment_testUserEnterValidEmail() {
-        launchFragmentInHiltContainer<ForgotPasswordFragment>()
-        onView(withId(R.id.forgot_password_fragment_email_textinputedittext_email_tiedt))
-            .perform(typeText(email))
+    fun createNewPasswordFragment_testUserInputValidEmail() {
+        launchFragmentInHiltContainer<CreateNewPasswordFragment>()
+        onView(withId(R.id.create_new_password_fragment_new_password_tiedt))
+            .perform(typeText(newPassword))
         closeSoftKeyboard()
-        onView(withId(R.id.forgot_password_fragment_login_button_btn))
+        onView(withId(R.id.create_new_password_fragment_confirm_password_tiedt))
+            .perform(typeText(confirmPassword))
+        closeSoftKeyboard()
+        onView(withId(R.id.create_new_password_fragment_create_new_password_button_btn))
             .perform(click())
     }
 }
