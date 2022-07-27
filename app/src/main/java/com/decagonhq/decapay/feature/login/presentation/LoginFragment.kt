@@ -61,6 +61,15 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+        // when the view is visible
+        // check if login credentials are stored
+        if(preference.getUserEmail() != null && preference.getUserPassword() != null){
+            // set it to the input fields
+            val userEmail = preference.getUserEmail()
+            val password = preference.getUserPassword()
+            binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
+            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
+        }
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // to validate the inputs received from the fields
