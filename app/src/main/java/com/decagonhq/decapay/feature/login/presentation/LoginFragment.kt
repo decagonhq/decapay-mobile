@@ -55,6 +55,16 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+        // check if login credentials are stored
+        if (preference.getUserEmail() != null && preference.getUserPassword() != null) {
+            // set it to the input fields
+            val userEmail = preference.getUserEmail()
+            val password = preference.getUserPassword()
+            binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
+            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
+            Log.d(TAG, "here is a saved user email: $userEmail")
+            Log.d(TAG, "here is the saved password: $password")
+        }
         return view
     }
 
@@ -62,14 +72,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
         // when the view is visible
-        // check if login credentials are stored
-        if(preference.getUserEmail() != null && preference.getUserPassword() != null){
-            // set it to the input fields
-            val userEmail = preference.getUserEmail()
-            val password = preference.getUserPassword()
-            binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
-            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
-        }
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // to validate the inputs received from the fields
@@ -93,8 +95,11 @@ class LoginFragment : Fragment() {
                 // if "true' save "email' and "password" to sharedpreference
                 if (binding.loginFragmentRememberLoginChk.isChecked) {
                     // capture the validated email and password and save it to sharedpreference
+                    Log.d(TAG, "checkbox is checked")
                     preference.putUserEmail(receivedEmail)
                     preference.putUserPassword(receivedPassword)
+                    val urEmail = preference.getUserEmail()
+                    Log.d(TAG, "userEmail: $urEmail")
                 }
                 // perform the network call
                 loginViewModel.getUserLoggedIn(LoginRequestBody(receivedEmail, receivedPassword))
@@ -178,6 +183,8 @@ class LoginFragment : Fragment() {
                             preference.putToken(token!!)
                             Log.d(TAG, "Here is the success result: ${it.messages}")
                             // on successfuly loggedin, navigate to your list of budgets
+                            // check if the user credentials were saved
+                            Log.d(TAG, "here is the userEmail: ${preference.getUserEmail()}, here is password: ${preference.getUserPassword()}")
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
@@ -189,6 +196,7 @@ class LoginFragment : Fragment() {
                             Log.d(TAG, "Here is the error: ${it.message}")
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
+                            Log.d(TAG, "here is the userEmail: ${preference.getUserEmail()}, here is password: ${preference.getUserPassword()}")
                         }
                         is Resource.Loading -> {
                             pleaseWaitDialog!!.dismiss()

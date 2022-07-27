@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateNewPasswordBinding
 import com.decagonhq.decapay.feature.createnewpassword.data.network.model.CreateNewPasswordRequest
@@ -32,7 +33,7 @@ class CreateNewPasswordFragment : Fragment() {
     private val createNewPasswordViewModel: CreateNewPasswordViewModel by viewModels()
     private lateinit var receivedNewPassword: String
     private lateinit var receivedConfirmPassword: String
-    private val pleaseWaitDialog: AlertDialog? = null
+    private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentCreateNewPasswordBinding? = null
     val binding: FragmentCreateNewPasswordBinding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class CreateNewPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateNewPasswordBinding.bind(view)
-
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
         // on click of the createNewPassword button
         binding.createNewPasswordFragmentCreateNewPasswordButtonBtn.setOnClickListener {
             // collect values from the input fields

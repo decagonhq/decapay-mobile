@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentForgotPasswordBinding
 import com.decagonhq.decapay.feature.forgotpassword.data.network.model.ForgotPasswordRequest
@@ -53,6 +54,7 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentForgotPasswordBinding.bind(view)
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // activate action on reset password button
         binding.forgotPasswordFragmentLoginButtonBtn.setOnClickListener {
