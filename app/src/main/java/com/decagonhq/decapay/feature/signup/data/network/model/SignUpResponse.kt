@@ -1,5 +1,11 @@
 package com.decagonhq.decapay.feature.signup.data.network.model
 
 data class SignUpResponse (
-    val next:String?
+    val `data`: Data?,
+    val debugMessage: String?,
+    val errorCode: String?,
+    val message: String?,
+    val status: String?,
+    val subErrors: List<SubError>?,
+    val timestamp: String?
         )

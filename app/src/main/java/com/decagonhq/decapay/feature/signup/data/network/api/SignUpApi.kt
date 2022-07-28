@@ -2,15 +2,19 @@ package com.decagonhq.decapay.feature.signup.data.network.api
 
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface SignUpApi {
-    @GET("pokemon")
+
+
+    @POST("register")
     suspend fun signUp(
-       // @Body signUpRequestBody: SignUpRequestBody
-    ): SignUpResponse
+        @Body signUpRequestBody: SignUpRequestBody
+    ): Response<SignUpResponse>
 }
 
 
