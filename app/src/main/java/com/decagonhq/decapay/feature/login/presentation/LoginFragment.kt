@@ -55,12 +55,21 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+        // check if login credentials are stored
+        if (preference.getUserEmail() != null && preference.getUserPassword() != null) {
+            // set it to the input fields
+            val userEmail = preference.getUserEmail()
+            val password = preference.getUserPassword()
+            binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
+            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
+        }
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+        // when the view is visible
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // to validate the inputs received from the fields
@@ -158,26 +167,25 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            pleaseWaitDialog!!.dismiss()
-                            Snackbar.make(
-                                binding.root,
-                                "You have successfully logged in: ${it.messages}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                            // capture the token here
-                            val token = it.data.token
-                            preference.putToken(token!!)
-                            Log.d(TAG, "Here is the success result: ${it.messages}")
-                            // on successfuly loggedin, navigate to your list of budgets
-                        }
-                        is Resource.Error -> {
-                            pleaseWaitDialog!!.dismiss()
+                            pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
                                 "${it.messages}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "Here is the error: ${it.message}")
+                            // capture the token here
+                            val token = it.data.data?.token
+                            preference.putToken(token!!)
+                            // on successfuly loggedin, navigate to your list of budgets
+
+                        }
+                        is Resource.Error -> {
+                            pleaseWaitDialog!!.dismiss()
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
                         }

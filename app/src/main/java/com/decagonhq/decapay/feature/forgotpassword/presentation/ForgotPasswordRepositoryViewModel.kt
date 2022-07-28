@@ -18,12 +18,12 @@ import javax.inject.Inject
 class ForgotPasswordRepositoryViewModel @Inject constructor(
     private val forgotPasswordUsecase: ForgotPasswordUsecase,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel(){
+) : ViewModel() {
 
     private val _forgotPasswordResponse = MutableSharedFlow<Resource<ForgotPasswordResponse>>()
     val forgotPasswordResponse: SharedFlow<Resource<ForgotPasswordResponse>> get() = _forgotPasswordResponse.asSharedFlow()
 
-    fun activateForgotPassword(forgotPasswordRequest: ForgotPasswordRequest){
+    fun activateForgotPassword(forgotPasswordRequest: ForgotPasswordRequest) {
         viewModelScope.launch {
             forgotPasswordUsecase(forgotPasswordRequest).collect {
                 _forgotPasswordResponse.emit(it)

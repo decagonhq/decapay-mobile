@@ -24,9 +24,10 @@ class CreateNewPasswordViewModel @Inject constructor(
     val createNewPasswordResponse: SharedFlow<Resource<CreateNewPasswordResponse>> get() = _createNewPasswordResponse.asSharedFlow()
 
     fun getCreateNewPasswordResponse(createNewPasswordRequest: CreateNewPasswordRequest) {
-        viewModelScope.launch { createNewPasswordUsecase(createNewPasswordRequest).collect {
-            _createNewPasswordResponse.emit(it)
-        }
+        viewModelScope.launch {
+            createNewPasswordUsecase(createNewPasswordRequest).collect {
+                _createNewPasswordResponse.emit(it)
+            }
         }
     }
 }

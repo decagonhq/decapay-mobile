@@ -6,7 +6,7 @@ import com.decagonhq.decapay.feature.login.data.network.model.LoginResponse
 import com.decagonhq.decapay.feature.login.domain.repository.LoginRepository
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val loginApi: LoginApi): LoginRepository {
+class LoginRepositoryImpl @Inject constructor(private val loginApi: LoginApi) : LoginRepository {
     override suspend fun loginAUser(loginRequestBody: LoginRequestBody): LoginResponse {
         return loginApi.loginUser(loginRequestBody)
     }

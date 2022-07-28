@@ -17,9 +17,9 @@ class VerifyPasswordResetCodeUsecase @Inject constructor(private val verifyPassw
             emit(Resource.Loading())
             val response = verifyPasswordResetCodeRepository.verifyPasswordResetCode(verifyPasswordResetCodeRequest)
             emit(Resource.Success(response))
-        } catch (e: HttpException){
-            emit(Resource.Error(e.localizedMessage?: "An unexpected error occurred"))
-        } catch (e: IOException){
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+        } catch (e: IOException) {
             emit(Resource.Error("Couldn't reach server check your internet connection"))
         }
     }
