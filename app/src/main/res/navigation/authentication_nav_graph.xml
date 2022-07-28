@@ -5,7 +5,26 @@
     android:id="@+id/authentication_nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
+        android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.decagonhq.decapay.feature.forgotpassword.presentation.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
+    <fragment
+        android:id="@+id/createNewPasswordFragment"
+        android:name="com.decagonhq.decapay.feature.createnewpassword.presentation.CreateNewPasswordFragment"
+        android:label="fragment_create_new_password"
+        tools:layout="@layout/fragment_create_new_password" />
+    <fragment
         android:id="@+id/loginFragment"
         android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
         android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/verifyPasswordResetCodeFragment2"
+        android:name="com.decagonhq.decapay.feature.verifypasswordresetcode.presentation.VerifyPasswordResetCodeFragment"
+        android:label="fragment_verify_password_reset_code"
+        tools:layout="@layout/fragment_verify_password_reset_code" />
 </navigation>

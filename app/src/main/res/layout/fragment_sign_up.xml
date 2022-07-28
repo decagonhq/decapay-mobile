@@ -10,7 +10,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         tools:context=".feature.signup.presentation.SignUpFragment">
 
 
@@ -20,9 +22,9 @@
             android:id="@+id/signUp_fragment_header_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="52dp"
             android:text="@string/create_your_account"
-            android:textSize="20sp"
+            android:textSize="@dimen/login_fragment_header_login_txsiz"
             android:textStyle="bold"
             android:layout_marginBottom="40dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +35,7 @@
             <TextView
                 android:id="@+id/signUp_fragment_firstName_tv"
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/first_name" />
 
@@ -63,6 +66,7 @@
             <TextView
                 android:id="@+id/signUp_fragment_lastName_tv"
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/last_name"
                 />
@@ -92,6 +96,7 @@
             <TextView
                 android:id="@+id/signUp_fragment_email_tv"
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
                 />
@@ -123,6 +128,7 @@
             <TextView
                 android:id="@+id/signUp_fragment_phoneNumber_tv"
                 android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number" />
 
@@ -156,6 +162,7 @@
                 android:id="@+id/signUp_fragment_password_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@string/password" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -188,7 +195,7 @@
 
             <TextView
                 android:id="@+id/signUp_fragment_passwordConfirmation_tv"
-
+                android:layout_marginBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/password_confirmation"
@@ -225,11 +232,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signUp_fragment_signUp_btn"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginBottom="20dp"
+            android:background="@color/decapay_green"
+            app:backgroundTint="@color/decapay_green"
+            android:layout_marginBottom="30dp"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             app:layout_constraintHorizontal_bias="0.6"
@@ -241,7 +248,7 @@
 
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
-android:layout_marginBottom="40dp"
+android:layout_marginBottom="50dp"
     android:orientation="horizontal">
     <TextView
         android:id="@+id/signUp_fragment_alreadyHaveAccount_tv"
@@ -250,11 +257,13 @@ android:layout_marginBottom="40dp"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:layout_weight="1"
+        android:layout_marginEnd="3dp"
         android:text="@string/already_have_an_account" />
 
     <TextView
         android:id="@+id/signUp_fragment_logIn_tv"
 
+        android:textColor="@color/decapay_green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

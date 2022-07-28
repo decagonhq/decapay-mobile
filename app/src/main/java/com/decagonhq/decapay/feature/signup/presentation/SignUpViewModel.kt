@@ -10,10 +10,12 @@ import com.decagonhq.decapay.feature.signup.domain.usecase.SignUpUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -25,26 +27,13 @@ class SignUpViewModel @Inject constructor(
 
 
     fun signUp(
-        firstName: String,
-        lastName: String,
-        email: String,
-        phoneNumber: String,
-        password: String,
-        confirmPassword: String
+       signUpRequestBody: SignUpRequestBody
     ) {
 
 
         viewModelScope.launch {
-
             useCase(
-                SignUpRequestBody(
-                    firstName = firstName,
-                    lastName = lastName,
-                    email = email,
-                    phoneNumber = phoneNumber,
-                    password = password,
-                    passwordConfirmation = confirmPassword
-                )
+              signUpRequestBody
             ).collect {
                 _signUpResponse.value = it
             }

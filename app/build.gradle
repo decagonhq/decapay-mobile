@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.decagonhq.decapay.HiltTestRunner"
+        testInstrumentationRunner "com.decagonhq.decapay.common.utils.HiltTestRunner"
     }
 
     buildTypes {
@@ -101,5 +101,25 @@ dependencies {
     // ...with Kotlin.
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
 
+    //Fragment testing
+    debugImplementation("androidx.fragment:fragment-testing:1.5.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+
+    testImplementation 'org.mockito:mockito-core:3.11.2'
+    testImplementation "org.mockito:mockito-inline:3.11.2"
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.42")
+
+    testImplementation 'app.cash.turbine:turbine:0.7.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
+
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+
+    // Idling Resource
+    // this is responsible for handling the synchronous nature of the network call in the esspresso
+    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+
+    // pinview
+    implementation 'io.github.chaosleung:pinview:1.4.4'
 
 }

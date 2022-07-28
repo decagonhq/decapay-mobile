@@ -2,4 +2,11 @@
 <resources>
     <dimen name="logo_font_size">30sp</dimen>
     <dimen name="login_fragment_header_login_txsiz">24sp</dimen>
+    <dimen name="logo_image_size">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="forgot_password_fragment_navigate_back_txsiz">18sp</dimen>
+    <dimen name="forgot_password_fragment_title_reset_password_txsiz">24sp</dimen>
+    <dimen name="forgot_password_fragment_title_reset_password_call_out_action_txsiz">16sp</dimen>
+    <dimen name="create_new_password_fragment_title_txsiz">24sp</dimen>
+    <dimen name="verify_password_reset_code_fragment_verify_button_txsiz">22sp</dimen>
 </resources>
