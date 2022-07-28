@@ -147,7 +147,7 @@ class SignUpFragment : Fragment() {
                                 it.message,
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            
+
                         }
                         is Resource.Loading -> {
 

@@ -21,6 +21,7 @@ import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
 import com.decagonhq.decapay.feature.login.data.network.model.LoginRequestBody
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ class LoginFragment : Fragment() {
      */
     @Inject
     lateinit var preference: Preferences
+
     private val loginViewModel: LoginViewModel by viewModels()
     private val TAG = "LOGINFRAGMENT"
     private lateinit var receivedEmail: String
@@ -176,6 +178,9 @@ class LoginFragment : Fragment() {
                             // capture the token here
                             val token = it.data.data?.token
                             preference.putToken(token!!)
+                            (activity as MainActivity).revealDrawer()
+                            findNavController().navigate(R.id.action_loginFragment_to_testFragment)
+
                             // on successfuly loggedin, navigate to your list of budgets
 
                         }

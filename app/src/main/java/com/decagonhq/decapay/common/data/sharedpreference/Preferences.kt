@@ -13,4 +13,6 @@ interface Preferences {
     fun putUserPassword(password: String)
 
     fun getUserPassword(): String
+
+    fun deleteToken()
 }

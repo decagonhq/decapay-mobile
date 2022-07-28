@@ -7,8 +7,7 @@ class HeaderInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain) = chain.run {
         proceed(
             request()
-                .newBuilder()
-              //  .addHeader("appid", "hello")
+                .newBuilder().addHeader("DVC_KY_HDR", "1")
                 .build()
         )
     }
