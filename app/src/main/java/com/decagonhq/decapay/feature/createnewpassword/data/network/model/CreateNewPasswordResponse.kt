@@ -1,10 +1,11 @@
 package com.decagonhq.decapay.feature.createnewpassword.data.network.model
 
-
-
 data class CreateNewPasswordResponse(
-    val statusCode: String?,
-    val success: Boolean?,
+    val `data`: Data?,
+    val debugMessage: String?,
+    val errorCode: String?,
     val message: String?,
-    val errors: String?
+    val status: String?,
+    val subErrors: List<SubError?>?,
+    val timestamp: String?
 )

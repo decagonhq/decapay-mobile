@@ -12,7 +12,11 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.decagonhq.decapay.feature.forgotpassword.presentation.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_verifyPasswordResetCodeFragment2"
+            app:destination="@id/verifyPasswordResetCodeFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/createNewPasswordFragment"
         android:name="com.decagonhq.decapay.feature.createnewpassword.presentation.CreateNewPasswordFragment"
@@ -26,5 +30,10 @@
         android:id="@+id/verifyPasswordResetCodeFragment2"
         android:name="com.decagonhq.decapay.feature.verifypasswordresetcode.presentation.VerifyPasswordResetCodeFragment"
         android:label="fragment_verify_password_reset_code"
-        tools:layout="@layout/fragment_verify_password_reset_code" />
+        tools:layout="@layout/fragment_verify_password_reset_code" >
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

@@ -20,7 +20,7 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     }
 
     override fun putUserEmail(email: String) {
-        preferences.edit().putString(PreferenceConstants.KEY_LOGIN_USER_EMAIL, email)
+        preferences.edit().putString(PreferenceConstants.KEY_LOGIN_USER_EMAIL, email).apply()
     }
 
     override fun getUserEmail(): String {
@@ -28,7 +28,7 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     }
 
     override fun putUserPassword(password: String) {
-        preferences.edit().putString(PreferenceConstants.KEY_LOGIN_USER_PASSWORD, password)
+        preferences.edit().putString(PreferenceConstants.KEY_LOGIN_USER_PASSWORD, password).apply()
     }
 
     override fun getUserPassword(): String {
