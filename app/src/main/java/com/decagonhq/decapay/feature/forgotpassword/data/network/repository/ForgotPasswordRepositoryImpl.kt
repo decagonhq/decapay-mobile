@@ -11,6 +11,6 @@ class ForgotPasswordRepositoryImpl @Inject constructor(
     private val forgotPasswordApi: ForgotPasswordApi
 ) : ForgotPasswordRepository {
     override suspend fun forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): ForgotPasswordResponse {
-        return forgotPasswordApi.forgotPassword(NetworkConstant.FORGOT_PASSWORD_HEADER_KEY, forgotPasswordRequest)
+        return forgotPasswordApi.forgotPassword(NetworkConstant.REQUEST_HEADER_KEY, forgotPasswordRequest)
     }
 }

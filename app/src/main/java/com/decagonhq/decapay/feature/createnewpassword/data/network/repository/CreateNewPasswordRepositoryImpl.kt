@@ -11,6 +11,6 @@ class CreateNewPasswordRepositoryImpl @Inject constructor(
     private val createNewPasswordApi: CreateNewPasswordApi
 ) : CreateNewPasswordRepository {
     override suspend fun createUserNewPassword(createNewPasswordRequest: CreateNewPasswordRequest): CreateNewPasswordResponse {
-        return createNewPasswordApi.createNewPassword(NetworkConstant.CREATE_NEW_PASSWORD_HEADER_KEY, createNewPasswordRequest)
+        return createNewPasswordApi.createNewPassword(NetworkConstant.REQUEST_HEADER_KEY, createNewPasswordRequest)
     }
 }

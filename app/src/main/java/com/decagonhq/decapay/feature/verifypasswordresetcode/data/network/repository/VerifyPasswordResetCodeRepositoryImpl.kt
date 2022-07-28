@@ -12,6 +12,6 @@ class VerifyPasswordResetCodeRepositoryImpl @Inject constructor(
     private val verifyPasswordResetCodeApi: VerifyPasswordResetCodeApi
 ) : VerifyPasswordResetCodeRepository {
     override suspend fun verifyPasswordResetCode(verifyPasswordResetCodeRequest: VerifyPasswordResetCodeRequest): VerifyPasswordResetCodeResponse {
-        return verifyPasswordResetCodeApi.verifyPasswordResetCode(NetworkConstant.VERIFY_PASSWORD_RESET_HEADER_KEY, verifyPasswordResetCodeRequest)
+        return verifyPasswordResetCodeApi.verifyPasswordResetCode(NetworkConstant.REQUEST_HEADER_KEY, verifyPasswordResetCodeRequest)
     }
 }
