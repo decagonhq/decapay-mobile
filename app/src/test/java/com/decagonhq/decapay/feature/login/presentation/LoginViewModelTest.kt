@@ -1,6 +1,5 @@
 package com.decagonhq.decapay.feature.login.presentation
 
-import androidx.lifecycle.asLiveData
 import app.cash.turbine.test
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.login.data.network.model.LoginRequestBody
@@ -36,12 +35,6 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun loginViewModel_inLoadingState() {
-        val loginViewModel = LoginViewModel(mockLoginUseCase, null)
-        assert(loginViewModel.loginResponse.asLiveData() == Resource.Loading(null))
-    }
-
-    @Test
     fun loginViewModel_returnsASuccessfulData() = runTest {
         val flow = LoginFakeFlow(Resource.Success(LoginResponse(null, null, null, "")))
         `when`(mockLoginUseCase.invoke(mockLoginRequestBody)).thenReturn(flow)
@@ -50,17 +43,6 @@ class LoginViewModelTest {
         loginViewModel.loginResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Success::class.java)
-        }
-    }
-
-    @Test
-    fun loginViewModel_returnsAFailedData() = runTest {
-        val flow = LoginFakeFlow(Resource.Error("Error Occured", null))
-        `when`(mockLoginUseCase.invoke(mockLoginRequestBody)).thenReturn(flow)
-        val loginViewModel = LoginViewModel(mockLoginUseCase, null)
-        loginViewModel.loginResponse.test {
-            val emission = awaitItem()
-            assert(emission::class.java == Resource.Error::class.java)
         }
     }
 
