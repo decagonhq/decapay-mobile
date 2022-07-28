@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -182,7 +181,6 @@ class LoginFragment : Fragment() {
                             findNavController().navigate(R.id.action_loginFragment_to_testFragment)
 
                             // on successfuly loggedin, navigate to your list of budgets
-
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
