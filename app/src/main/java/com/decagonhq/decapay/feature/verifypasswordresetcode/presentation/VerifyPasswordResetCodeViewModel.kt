@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeRequest
 import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeResponse
-import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeResponseOld
 import com.decagonhq.decapay.feature.verifypasswordresetcode.domain.verifypasswordresetcodeusecase.VerifyPasswordResetCodeUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

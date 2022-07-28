@@ -33,6 +33,7 @@ class VerifyPasswordResetCodeFragment : Fragment() {
     private var _binding: FragmentVerifyPasswordResetCodeBinding? = null
     val binding: FragmentVerifyPasswordResetCodeBinding get() = _binding!!
     val args: VerifyPasswordResetCodeFragmentArgs by navArgs()
+    private lateinit var pin: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,7 @@ class VerifyPasswordResetCodeFragment : Fragment() {
 
         // capture the pin
         binding.verifyPasswordResetCodeFragmentVerifyButtonBtn.setOnClickListener {
-            val pin = binding.verifyPasswordResetCodeFragmentPinview.text.toString()
+            pin = binding.verifyPasswordResetCodeFragmentPinview.text.toString()
             val email = args.email
             // perform the network call
             verifyPasswordResetCodeViewModel.getUserVerifyPasswordResetCode(
@@ -86,7 +87,8 @@ class VerifyPasswordResetCodeFragment : Fragment() {
                                 "You have successfully verified: ${it.messages}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.createNewPasswordFragment)
+                            val action = VerifyPasswordResetCodeFragmentDirections.actionVerifyPasswordResetCodeFragment2ToCreateNewPasswordFragment(pin)
+                            findNavController().navigate(action)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

@@ -172,7 +172,7 @@ class LoginFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             // capture the token here
@@ -188,7 +188,7 @@ class LoginFragment : Fragment() {
                             pleaseWaitDialog!!.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                "${it.message}",
+                                "${it.data?.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
