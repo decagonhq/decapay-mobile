@@ -1,6 +1,11 @@
 package com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model
 
 data class VerifyPasswordResetCodeResponse(
-    val isSuccessful: Boolean,
-    val message: String
+    val `data`: Data?,
+    val debugMessage: String?,
+    val errorCode: String?,
+    val message: String?,
+    val status: String?,
+    val subErrors: List<SubError?>?,
+    val timestamp: String?
 )

@@ -43,7 +43,7 @@ class LoginViewModelTest {
 
     @Test
     fun loginViewModel_returnsASuccessfulData() = runTest {
-        val flow = LoginFakeFlow(Resource.Success(LoginResponse(null, null, null)))
+        val flow = LoginFakeFlow(Resource.Success(LoginResponse(null, null, null, "")))
         `when`(mockLoginUseCase.invoke(mockLoginRequestBody)).thenReturn(flow)
         val loginViewModel = LoginViewModel(mockLoginUseCase, null)
         loginViewModel.getUserLoggedIn(mockLoginRequestBody)

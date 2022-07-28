@@ -113,6 +113,8 @@ class ForgotPasswordFragment : Fragment() {
                                 "You email has been successfully sent: ${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            val action = ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToVerifyPasswordResetCodeFragment2(receivedEmail)
+                            findNavController().navigate(action)
                             Log.d(TAG, "Here is the success response: ${it.data.message}")
                         }
                         is Resource.Error -> {

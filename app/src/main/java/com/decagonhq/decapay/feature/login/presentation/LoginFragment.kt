@@ -62,8 +62,6 @@ class LoginFragment : Fragment() {
             val password = preference.getUserPassword()
             binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
-            Log.d(TAG, "here is a saved user email: $userEmail")
-            Log.d(TAG, "here is the saved password: $password")
         }
         return view
     }
@@ -95,11 +93,8 @@ class LoginFragment : Fragment() {
                 // if "true' save "email' and "password" to sharedpreference
                 if (binding.loginFragmentRememberLoginChk.isChecked) {
                     // capture the validated email and password and save it to sharedpreference
-                    Log.d(TAG, "checkbox is checked")
                     preference.putUserEmail(receivedEmail)
                     preference.putUserPassword(receivedPassword)
-                    val urEmail = preference.getUserEmail()
-                    Log.d(TAG, "userEmail: $urEmail")
                 }
                 // perform the network call
                 loginViewModel.getUserLoggedIn(LoginRequestBody(receivedEmail, receivedPassword))
@@ -172,31 +167,27 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            pleaseWaitDialog!!.dismiss()
-                            Snackbar.make(
-                                binding.root,
-                                "You have successfully logged in: ${it.messages}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                            // capture the token here
-                            val token = it.data.token
-                            preference.putToken(token!!)
-                            Log.d(TAG, "Here is the success result: ${it.messages}")
-                            // on successfuly loggedin, navigate to your list of budgets
-                            // check if the user credentials were saved
-                            Log.d(TAG, "here is the userEmail: ${preference.getUserEmail()}, here is password: ${preference.getUserPassword()}")
-                        }
-                        is Resource.Error -> {
-                            pleaseWaitDialog!!.dismiss()
+                            pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
                                 "${it.messages}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "Here is the error: ${it.message}")
+                            // capture the token here
+                            val token = it.data.data?.token
+                            preference.putToken(token!!)
+                            // on successfuly loggedin, navigate to your list of budgets
+
+                        }
+                        is Resource.Error -> {
+                            pleaseWaitDialog!!.dismiss()
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
-                            Log.d(TAG, "here is the userEmail: ${preference.getUserEmail()}, here is password: ${preference.getUserPassword()}")
                         }
                         is Resource.Loading -> {
                             pleaseWaitDialog!!.dismiss()

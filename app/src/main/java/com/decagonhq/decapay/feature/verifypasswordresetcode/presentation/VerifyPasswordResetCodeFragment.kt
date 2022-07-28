@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
@@ -31,6 +32,7 @@ class VerifyPasswordResetCodeFragment : Fragment() {
     private val verifyPasswordResetCodeViewModel: VerifyPasswordResetCodeViewModel by viewModels()
     private var _binding: FragmentVerifyPasswordResetCodeBinding? = null
     val binding: FragmentVerifyPasswordResetCodeBinding get() = _binding!!
+    val args: VerifyPasswordResetCodeFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +57,10 @@ class VerifyPasswordResetCodeFragment : Fragment() {
         // capture the pin
         binding.verifyPasswordResetCodeFragmentVerifyButtonBtn.setOnClickListener {
             val pin = binding.verifyPasswordResetCodeFragmentPinview.text.toString()
+            val email = args.email
             // perform the network call
             verifyPasswordResetCodeViewModel.getUserVerifyPasswordResetCode(
-                VerifyPasswordResetCodeRequest(pin)
+                VerifyPasswordResetCodeRequest(email = email, pin)
             )
             pleaseWaitDialog?.let { it.show() }
             hideKeyboard()
