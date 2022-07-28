@@ -2,6 +2,7 @@ package com.decagonhq.decapay.common.di
 
 import android.content.Context
 import com.decagonhq.decapay.common.constants.NetworkConstant
+import com.decagonhq.decapay.common.data.model.HeaderInterceptor
 import com.decagonhq.decapay.common.data.sharedpreference.DecapayPreferences
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import dagger.Module
@@ -28,6 +29,18 @@ object NetworkModule {
     fun providesLogger(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
     }
+
+
+    /**
+     * provide the logger
+     * this logs out every response to and from the web service
+     */
+    @Provides
+    @Singleton
+    fun providesMobileHeaderInterceptor(): HeaderInterceptor {
+        return HeaderInterceptor()
+    }
+
     /**
      * provide gsonconverter
      */
@@ -36,32 +49,42 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
+
     /**
      * provide the OkHttp
      */
     @Provides
     @Singleton
-    fun provideOkHttp(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttp(
+        loggingInterceptor: HttpLoggingInterceptor,
+        headerInterceptor: HeaderInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)
             .readTimeout(60L, TimeUnit.SECONDS)
             .writeTimeout(60L, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(headerInterceptor)
             .build()
     }
+
     /**
      * it provides retrofit http client
      * for available endpoints to use
      */
     @Provides
     @Singleton
-    fun providesRetrofitHttpClientForEndpointsToUse(client: OkHttpClient, gsonConverterFactory: GsonConverterFactory): Retrofit {
+    fun providesRetrofitHttpClientForEndpointsToUse(
+        client: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(NetworkConstant.BASE_URL)
             .client(client)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
+
     /**
      * provide sharedPreference
      */

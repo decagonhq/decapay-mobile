@@ -17,6 +17,7 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
@@ -51,6 +52,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentSignUpBinding.bind(view)
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         binding.signUpFragmentLogInTv.setOnClickListener {
             findNavController().navigate(R.id.loginFragment)
@@ -67,8 +69,6 @@ class SignUpFragment : Fragment() {
                         email = binding.signUpFragmentEmailEt.text.toString().trim(),
                         password = binding.signUpFragmentPasswordEt.text.toString().trim(),
                         phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString().trim(),
-                        passwordConfirmation = binding.signUpFragmentPasswordConfirmationEt.text.toString()
-                            .trim(),
                     )
 
                 )
@@ -142,8 +142,12 @@ class SignUpFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.dismiss()
+                            Snackbar.make(
+                                binding.root,
+                                it.message,
+                                Snackbar.LENGTH_LONG
+                            ).show()
 
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                         }
                         is Resource.Loading -> {
 
@@ -263,7 +267,7 @@ class SignUpFragment : Fragment() {
         }
 
         val isValidConfirmPassword =
-            binding.signUpFragmentPasswordEt.text.toString() == binding.signUpFragmentPasswordConfirmationEt.text.toString()
+            binding.signUpFragmentPasswordEt.text.toString().trim() == binding.signUpFragmentPasswordConfirmationEt.text.toString()
                 .trim() &&
                     binding.signUpFragmentPasswordConfirmationEt.text.toString().trim()
                         .isNotEmpty()

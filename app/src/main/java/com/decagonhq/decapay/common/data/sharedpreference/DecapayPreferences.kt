@@ -34,4 +34,8 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     override fun getUserPassword(): String {
         return preferences.getString(PreferenceConstants.KEY_LOGIN_USER_PASSWORD, "").orEmpty()
     }
+
+    override fun deleteToken() {
+        preferences.edit().remove(PreferenceConstants.KEY_TOKEN).apply()
+    }
 }

@@ -23,12 +23,14 @@ class SignUpViewModelTest {
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockUseCase: SignUpUseCase
     lateinit var mockRequestBody: SignUpRequestBody
+    lateinit var mockResponse: SignUpResponse
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         mockUseCase = mock(SignUpUseCase::class.java)
         mockRequestBody = mock(SignUpRequestBody::class.java)
+        mockResponse = mock(SignUpResponse::class.java)
     }
 
     @Test
@@ -40,7 +42,7 @@ class SignUpViewModelTest {
     @Test
     fun `view model returns successful data`() = runTest {
 
-        val flow = FakeFlow(Resource.Success(SignUpResponse(null)))
+        val flow = FakeFlow(Resource.Success(mockResponse))
         `when`(mockUseCase.invoke(mockRequestBody)).thenReturn(flow)
         val viewModel = SignUpViewModel(useCase = mockUseCase)
         viewModel.signUp(mockRequestBody)

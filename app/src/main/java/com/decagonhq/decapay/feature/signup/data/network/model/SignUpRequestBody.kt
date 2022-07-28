@@ -6,5 +6,5 @@ data class SignUpRequestBody(
     val email: String,
     val phoneNumber: String,
     val password: String,
-    val passwordConfirmation: String,
+
 )
