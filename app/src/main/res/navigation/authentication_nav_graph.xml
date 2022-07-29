@@ -21,7 +21,11 @@
         android:id="@+id/createNewPasswordFragment"
         android:name="com.decagonhq.decapay.feature.createnewpassword.presentation.CreateNewPasswordFragment"
         android:label="fragment_create_new_password"
-        tools:layout="@layout/fragment_create_new_password" />
+        tools:layout="@layout/fragment_create_new_password" >
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
@@ -39,6 +43,9 @@
             android:name="email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_verifyPasswordResetCodeFragment2_to_createNewPasswordFragment"
+            app:destination="@id/createNewPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/testFragment"

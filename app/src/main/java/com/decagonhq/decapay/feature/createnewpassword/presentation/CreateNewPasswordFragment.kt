@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -40,6 +41,8 @@ class CreateNewPasswordFragment : Fragment() {
     private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentCreateNewPasswordBinding? = null
     val binding: FragmentCreateNewPasswordBinding get() = _binding!!
+    private val args: CreateNewPasswordFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -73,7 +76,7 @@ class CreateNewPasswordFragment : Fragment() {
                 ).show()
             } else {
                 // perform network call
-                val token = preference.getToken()
+                val token = args.token
                 createNewPasswordViewModel.getCreateNewPasswordResponse(CreateNewPasswordRequest(receivedConfirmPassword, receivedNewPassword, token))
                 // show dialog
                 pleaseWaitDialog?.let { it.show() }

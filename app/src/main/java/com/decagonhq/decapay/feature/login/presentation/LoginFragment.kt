@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -172,7 +171,7 @@ class LoginFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             // capture the token here
@@ -182,13 +181,12 @@ class LoginFragment : Fragment() {
                             findNavController().navigate(R.id.action_loginFragment_to_testFragment)
 
                             // on successfuly loggedin, navigate to your list of budgets
-
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                "${it.message}",
+                                "${it.data?.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()

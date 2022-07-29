@@ -11,7 +11,6 @@ interface ForgotPasswordApi {
 
     @POST("api/v1/forgot-password")
     suspend fun forgotPassword(
-        @Header(NetworkConstant.REQUEST_HEADER_NAME) key: String,
         @Body forgotPasswordRequest: ForgotPasswordRequest
     ): ForgotPasswordResponse
 }

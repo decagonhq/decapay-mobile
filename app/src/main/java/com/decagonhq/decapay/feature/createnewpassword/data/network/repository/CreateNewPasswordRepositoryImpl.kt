@@ -1,6 +1,5 @@
 package com.decagonhq.decapay.feature.createnewpassword.data.network.repository
 
-import com.decagonhq.decapay.common.constants.NetworkConstant
 import com.decagonhq.decapay.feature.createnewpassword.data.network.api.CreateNewPasswordApi
 import com.decagonhq.decapay.feature.createnewpassword.data.network.model.CreateNewPasswordRequest
 import com.decagonhq.decapay.feature.createnewpassword.data.network.model.CreateNewPasswordResponse
@@ -11,6 +10,6 @@ class CreateNewPasswordRepositoryImpl @Inject constructor(
     private val createNewPasswordApi: CreateNewPasswordApi
 ) : CreateNewPasswordRepository {
     override suspend fun createUserNewPassword(createNewPasswordRequest: CreateNewPasswordRequest): CreateNewPasswordResponse {
-        return createNewPasswordApi.createNewPassword(NetworkConstant.REQUEST_HEADER_KEY, createNewPasswordRequest)
+        return createNewPasswordApi.createNewPassword(createNewPasswordRequest)
     }
 }
