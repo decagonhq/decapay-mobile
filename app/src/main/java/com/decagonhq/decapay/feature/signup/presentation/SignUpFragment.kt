@@ -132,19 +132,17 @@ class SignUpFragment : Fragment() {
                         is Resource.Success -> {
                             pleaseWaitDialog?.dismiss()
                             findNavController().navigate(R.id.loginFragment)
-
-//
-//                            Snackbar.make(
-//                                binding.root,
-//                                "${it.data.next}",
-//                                Snackbar.LENGTH_LONG
-//                            ).show()
+                            Snackbar.make(
+                                binding.root,
+                                "${it.data.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                it.message,
+                                "${it.data?.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
 

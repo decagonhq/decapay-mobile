@@ -84,7 +84,7 @@ class VerifyPasswordResetCodeFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You have successfully verified: ${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             val action = VerifyPasswordResetCodeFragmentDirections.actionVerifyPasswordResetCodeFragment2ToCreateNewPasswordFragment(pin)
@@ -94,7 +94,7 @@ class VerifyPasswordResetCodeFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.data?.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }
