@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
-import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
 import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
 import com.google.android.material.snackbar.Snackbar
@@ -86,8 +84,7 @@ class SignUpFragment : Fragment() {
             }
         }
 
-
-        //Capture input
+        // Capture input
 
         binding.signUpFragmentFirstNameEt.addTextChangedListener {
             receivedFirstName = binding.signUpFragmentFirstNameEt.text.toString()
@@ -99,12 +96,10 @@ class SignUpFragment : Fragment() {
             onLastNameChanged(receivedLastName)
         }
 
-
         binding.signUpFragmentPhoneNumberEt.addTextChangedListener {
             receivedPhoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString()
             onPhoneNumberChanged(receivedPhoneNumber)
         }
-
 
         binding.signUpFragmentEmailEt.addTextChangedListener {
             receivedEmail = binding.signUpFragmentEmailEt.text.toString()
@@ -115,15 +110,10 @@ class SignUpFragment : Fragment() {
             onPasswordTextChanged(receivedPassword)
         }
 
-
         binding.signUpFragmentPasswordConfirmationEt.addTextChangedListener {
             receivedConfirmPassword = binding.signUpFragmentPasswordConfirmationEt.text.toString()
             onConfirmPasswordChanged(receivedConfirmPassword)
         }
-
-
-
-
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -142,13 +132,11 @@ class SignUpFragment : Fragment() {
                             pleaseWaitDialog?.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                "${it.data?.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
@@ -160,7 +148,6 @@ class SignUpFragment : Fragment() {
         }
     }
 
-
     private fun onEmailTextChanged(receivedEmail: String) {
         if (Validator.validateEmailForTextWatcher(receivedEmail) == "Field cannot be empty") {
             binding.signUpFragmentEmailIl.error = "Field cannot be empty"
@@ -170,7 +157,6 @@ class SignUpFragment : Fragment() {
             binding.signUpFragmentEmailIl.error = ""
         }
     }
-
 
     private fun onPasswordTextChanged(receivedPassword: String) {
         if (Validator.validatePasswordForTextwatcher(receivedPassword) == "Password cannot be empty") {
@@ -191,7 +177,6 @@ class SignUpFragment : Fragment() {
             binding.signUpFragmentPasswordIl.error = ""
         }
     }
-
 
     private fun onConfirmPasswordChanged(confirmPassword: String) {
         if (binding.signUpFragmentPasswordEt.text.toString().trim() != confirmPassword.trim()) {
@@ -225,7 +210,6 @@ class SignUpFragment : Fragment() {
         }
     }
 
-
     /** Validate function**/
     private fun validateAndSendRequest(): Boolean {
         val isValidEmail = Validator.validateEmail(binding.signUpFragmentEmailEt.text.toString())
@@ -248,14 +232,12 @@ class SignUpFragment : Fragment() {
             binding.signUpFragmentLastNameIl.error = "Invalid last name"
         }
 
-
         val isValidPassword =
             Validator.validatePassword(binding.signUpFragmentPasswordEt.text.toString())
 
         if (!isValidPassword) {
             binding.signUpFragmentPasswordIl.error = "Invalid password"
         }
-
 
         val isValidPhoneNumber =
             Validator.validatePhoneNumber(binding.signUpFragmentPhoneNumberEt.text.toString())
@@ -267,13 +249,12 @@ class SignUpFragment : Fragment() {
         val isValidConfirmPassword =
             binding.signUpFragmentPasswordEt.text.toString().trim() == binding.signUpFragmentPasswordConfirmationEt.text.toString()
                 .trim() &&
-                    binding.signUpFragmentPasswordConfirmationEt.text.toString().trim()
-                        .isNotEmpty()
+                binding.signUpFragmentPasswordConfirmationEt.text.toString().trim()
+                    .isNotEmpty()
 
         if (!isValidConfirmPassword) {
             binding.signUpFragmentPasswordConfirmationIl.error = "Confirm password must match"
         }
-
 
         return (isValidEmail && isValidFirstName && isValidLastName && isValidLastName && isValidPassword && isValidConfirmPassword && isValidPhoneNumber)
     }
