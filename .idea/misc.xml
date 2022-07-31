@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_verify_password_reset_code.xml" value="0.1" />
       </map>
     </option>
   </component>
