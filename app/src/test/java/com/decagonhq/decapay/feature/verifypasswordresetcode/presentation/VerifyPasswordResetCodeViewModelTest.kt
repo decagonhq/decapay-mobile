@@ -40,7 +40,8 @@ class VerifyPasswordResetCodeViewModelTest {
         `when`(mockVerifyPasswordResetCodeUsecase.invoke(mockVerifyPasswordResetCodeRequestBody)).thenReturn(flow)
         val viewModel = VerifyPasswordResetCodeViewModel(mockVerifyPasswordResetCodeUsecase, null)
         viewModel.getUserVerifyPasswordResetCode(mockVerifyPasswordResetCodeRequestBody)
-        viewModel.verifyPasswordResetCode.test { val emission = awaitItem()
+        viewModel.verifyPasswordResetCode.test {
+            val emission = awaitItem()
             assert(emission::class.java == Resource.Success::class.java)
         }
     }

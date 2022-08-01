@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ForgotPasswordRepositoryViewModel @Inject constructor(
+class ForgotPasswordViewModel @Inject constructor(
     private val forgotPasswordUsecase: ForgotPasswordUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel() {
 
     private val _forgotPasswordResponse = MutableSharedFlow<Resource<ForgotPasswordResponse>>()
