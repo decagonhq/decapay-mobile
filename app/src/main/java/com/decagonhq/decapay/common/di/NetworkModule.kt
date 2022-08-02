@@ -5,6 +5,7 @@ import com.decagonhq.decapay.common.constants.NetworkConstant
 import com.decagonhq.decapay.common.data.model.HeaderInterceptor
 import com.decagonhq.decapay.common.data.sharedpreference.DecapayPreferences
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.errorhelper.ExceptionHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -92,5 +93,14 @@ object NetworkModule {
     @Singleton
     fun provideSharedPreference(@ApplicationContext context: Context): Preferences {
         return DecapayPreferences(context)
+    }
+
+    /**
+     * provide error handler
+     */
+    @Provides
+    @Singleton
+    fun provideErrorHandle(@ApplicationContext context: Context): ExceptionHandler {
+        return ExceptionHandler(context)
     }
 }

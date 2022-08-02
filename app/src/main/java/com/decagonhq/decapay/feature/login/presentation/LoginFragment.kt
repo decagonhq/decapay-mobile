@@ -186,7 +186,7 @@ class LoginFragment : Fragment() {
                             pleaseWaitDialog!!.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                "${it.data?.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()

@@ -62,9 +62,9 @@ class CreateNewPasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateNewPasswordBinding.bind(view)
         pleaseWaitDialog = showPleaseWaitAlertDialog()
-        // on click of the createNewPassword button
+        /** on click of the createNewPassword button */
         binding.createNewPasswordFragmentCreateNewPasswordButtonBtn.setOnClickListener {
-            // collect values from the input fields
+            /** collect values from the input fields */
             receivedNewPassword = binding.createNewPasswordFragmentNewPasswordTiedt.text.toString()
             receivedConfirmPassword = binding.createNewPasswordFragmentConfirmPasswordTiedt.text.toString()
             if (!LoginInputValidation.validateUserPassword(receivedNewPassword) || !LoginInputValidation.validateConfirmPassword(receivedNewPassword, receivedConfirmPassword)) {
@@ -139,7 +139,7 @@ class CreateNewPasswordFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You have successfully reset your password: ${it.data.message}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             // navigate to login
@@ -149,7 +149,7 @@ class CreateNewPasswordFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "Error message: ${it.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }

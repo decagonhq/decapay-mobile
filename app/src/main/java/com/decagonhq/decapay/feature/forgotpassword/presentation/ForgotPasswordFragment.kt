@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.forgotpassword.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,7 @@ class ForgotPasswordFragment : Fragment() {
      * declare view and variables
      */
     private val TAG = "FORGOTPASSWORD_FRAG"
-    private val forgotPasswordViewModel: ForgotPasswordRepositoryViewModel by viewModels()
+    private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
     private lateinit var receivedEmail: String
     private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentForgotPasswordBinding? = null
@@ -110,18 +109,17 @@ class ForgotPasswordFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You email has been successfully sent: ${it.data.message}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             val action = ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToVerifyPasswordResetCodeFragment2(receivedEmail)
                             findNavController().navigate(action)
-                            Log.d(TAG, "Here is the success response: ${it.data.message}")
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.data?.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }

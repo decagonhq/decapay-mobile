@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 @ExperimentalCoroutinesApi
 class ForgotPasswordFragmentTest {
 
-    private val email = "osehiaseehilen@gmail.com"
+    private val email = "osehiase@gmail.com"
 
     @get: Rule
     var hiltRule = HiltAndroidRule(this)
