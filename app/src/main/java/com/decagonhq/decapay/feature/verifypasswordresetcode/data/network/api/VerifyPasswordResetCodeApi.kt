@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface VerifyPasswordResetCodeApi {
-    @POST
+    @POST("api/v1/verify-code")
     suspend fun verifyPasswordResetCode(
         @Body verifyPasswordResetCodeRequest: VerifyPasswordResetCodeRequest
     ): VerifyPasswordResetCodeResponse

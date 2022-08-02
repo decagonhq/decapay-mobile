@@ -1,6 +1,6 @@
 package com.decagonhq.decapay.feature.createnewpassword.di
 
-import com.decagonhq.decapay.feature.createnewpassword.data.network.CreateNewPasswordRepositoryImpl
+import com.decagonhq.decapay.feature.createnewpassword.data.network.repository.CreateNewPasswordRepositoryImpl
 import com.decagonhq.decapay.feature.createnewpassword.data.network.api.CreateNewPasswordApi
 import com.decagonhq.decapay.feature.createnewpassword.domain.repository.CreateNewPasswordRepository
 import dagger.Module

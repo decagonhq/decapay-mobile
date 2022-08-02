@@ -12,15 +12,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateNewPasswordBinding
 import com.decagonhq.decapay.feature.createnewpassword.data.network.model.CreateNewPasswordRequest
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateNewPasswordFragment : Fragment() {
@@ -28,13 +32,17 @@ class CreateNewPasswordFragment : Fragment() {
     /**
      * declare views and variables
      */
+    @Inject
+    lateinit var preference: Preferences
     private val TAG = "CREATENEWPASSFRAG"
     private val createNewPasswordViewModel: CreateNewPasswordViewModel by viewModels()
     private lateinit var receivedNewPassword: String
     private lateinit var receivedConfirmPassword: String
-    private val pleaseWaitDialog: AlertDialog? = null
+    private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentCreateNewPasswordBinding? = null
     val binding: FragmentCreateNewPasswordBinding get() = _binding!!
+    private val args: CreateNewPasswordFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,10 +61,10 @@ class CreateNewPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateNewPasswordBinding.bind(view)
-
-        // on click of the createNewPassword button
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
+        /** on click of the createNewPassword button */
         binding.createNewPasswordFragmentCreateNewPasswordButtonBtn.setOnClickListener {
-            // collect values from the input fields
+            /** collect values from the input fields */
             receivedNewPassword = binding.createNewPasswordFragmentNewPasswordTiedt.text.toString()
             receivedConfirmPassword = binding.createNewPasswordFragmentConfirmPasswordTiedt.text.toString()
             if (!LoginInputValidation.validateUserPassword(receivedNewPassword) || !LoginInputValidation.validateConfirmPassword(receivedNewPassword, receivedConfirmPassword)) {
@@ -68,7 +76,8 @@ class CreateNewPasswordFragment : Fragment() {
                 ).show()
             } else {
                 // perform network call
-                createNewPasswordViewModel.getCreateNewPasswordResponse(CreateNewPasswordRequest("", "", receivedNewPassword, receivedConfirmPassword))
+                val token = args.token
+                createNewPasswordViewModel.getCreateNewPasswordResponse(CreateNewPasswordRequest(receivedConfirmPassword, receivedNewPassword, token))
                 // show dialog
                 pleaseWaitDialog?.let { it.show() }
                 // hide the keyboard
@@ -130,15 +139,17 @@ class CreateNewPasswordFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You have successfully reset your password: ${it.data.success}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            // navigate to login
+                            findNavController().navigate(R.id.loginFragment)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "Error message: ${it.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }

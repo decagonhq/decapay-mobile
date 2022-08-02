@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.forgotpassword.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentForgotPasswordBinding
 import com.decagonhq.decapay.feature.forgotpassword.data.network.model.ForgotPasswordRequest
@@ -29,7 +29,7 @@ class ForgotPasswordFragment : Fragment() {
      * declare view and variables
      */
     private val TAG = "FORGOTPASSWORD_FRAG"
-    private val forgotPasswordViewModel: ForgotPasswordRepositoryViewModel by viewModels()
+    private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
     private lateinit var receivedEmail: String
     private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentForgotPasswordBinding? = null
@@ -53,6 +53,7 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentForgotPasswordBinding.bind(view)
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // activate action on reset password button
         binding.forgotPasswordFragmentLoginButtonBtn.setOnClickListener {
@@ -108,16 +109,17 @@ class ForgotPasswordFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You email has been successfully sent: ${it.data.message}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "Here is the success response: ${it.data.message}")
+                            val action = ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToVerifyPasswordResetCodeFragment2(receivedEmail)
+                            findNavController().navigate(action)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.data?.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }

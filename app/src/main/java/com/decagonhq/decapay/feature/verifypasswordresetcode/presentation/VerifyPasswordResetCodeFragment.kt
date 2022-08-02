@@ -11,9 +11,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentVerifyPasswordResetCodeBinding
 import com.decagonhq.decapay.feature.verifypasswordresetcode.data.network.model.VerifyPasswordResetCodeRequest
 import com.google.android.material.snackbar.Snackbar
@@ -26,10 +28,12 @@ class VerifyPasswordResetCodeFragment : Fragment() {
      * declare views and variables
      */
     private val TAG = "VERIFYPASWRDRSTCODEFRAG"
-    private val pleaseWaitDialog: AlertDialog? = null
+    private var pleaseWaitDialog: AlertDialog? = null
     private val verifyPasswordResetCodeViewModel: VerifyPasswordResetCodeViewModel by viewModels()
     private var _binding: FragmentVerifyPasswordResetCodeBinding? = null
     val binding: FragmentVerifyPasswordResetCodeBinding get() = _binding!!
+    val args: VerifyPasswordResetCodeFragmentArgs by navArgs()
+    private lateinit var pin: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +53,15 @@ class VerifyPasswordResetCodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentVerifyPasswordResetCodeBinding.bind(view)
-        // capture the pin
+        pleaseWaitDialog = showPleaseWaitAlertDialog()
 
+        // capture the pin
         binding.verifyPasswordResetCodeFragmentVerifyButtonBtn.setOnClickListener {
-            val pin = binding.verifyPasswordResetCodeFragmentPinview.text.toString()
+            pin = binding.verifyPasswordResetCodeFragmentPinview.text.toString()
+            val email = args.email
             // perform the network call
             verifyPasswordResetCodeViewModel.getUserVerifyPasswordResetCode(
-                VerifyPasswordResetCodeRequest(pin)
+                VerifyPasswordResetCodeRequest(email = email, pin)
             )
             pleaseWaitDialog?.let { it.show() }
             hideKeyboard()
@@ -78,16 +84,17 @@ class VerifyPasswordResetCodeFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You have successfully verified: ${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.createNewPasswordFragment)
+                            val action = VerifyPasswordResetCodeFragmentDirections.actionVerifyPasswordResetCodeFragment2ToCreateNewPasswordFragment(pin)
+                            findNavController().navigate(action)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }

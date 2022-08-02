@@ -1,28 +1,27 @@
 package com.decagonhq.decapay.presentation
 
-import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(
+
+) {
+
+    @Inject
+    lateinit var preference: Preferences
+
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -33,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        if (preference.getToken().isEmpty()) {
+            binding.mainActivityHamburgerIb.visibility = View.GONE
+            binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }
 
         /** INITIALISE DRAWER MENU LISTENER */
         val navigationView: NavigationView = binding.mainActivityNavViewNv
@@ -49,21 +54,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectNavigationItem(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener {
-            navController = Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
-            when(it.itemId) {
-                R.id.menu_dashboard ->  {
+            navController =
+                Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
+            when (it.itemId) {
+                R.id.menu_dashboard -> {
 
 
-                   // navController.navigate(R.id.loginFragment)
+                    // navController.navigate(R.id.loginFragment)
                 }
                 R.id.menu_budget -> {
-                   // navController.navigate(R.id.testFragment)
+                    // navController.navigate(R.id.testFragment)
                 }
                 R.id.menu_budget_category -> {
-                   // navController.navigate(R.id.loginFragment)
-                }R.id.menu_logout -> {
-                //navController.p
+                    // navController.navigate(R.id.loginFragment)
+                }
+                R.id.menu_logout -> {
+                    preference.deleteToken()
                     navController.navigate(R.id.loginFragment)
+                    hideDrawer()
                 }
             }
 
@@ -74,6 +82,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun hideDrawer() {
+        binding.mainActivityHamburgerIb.visibility = View.GONE
+        binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+     fun revealDrawer() {
+        binding.mainActivityHamburgerIb.visibility = View.VISIBLE
+        binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
 
 
 }

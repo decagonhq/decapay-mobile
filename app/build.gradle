@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id("androidx.navigation.safeargs")
     id 'dagger.hilt.android.plugin'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -48,6 +49,7 @@ android {
 dependencies {
     def fragment_version = "1.5.0"
     def lifecycle_version = "2.6.0-alpha01"
+    def nav_version = "2.5.0"
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -84,8 +86,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     //Navigation graph
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
+    implementation  "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation  "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.42")
@@ -105,10 +107,13 @@ dependencies {
     debugImplementation("androidx.fragment:fragment-testing:1.5.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
 
+    // mockito
     testImplementation 'org.mockito:mockito-core:3.11.2'
     testImplementation "org.mockito:mockito-inline:3.11.2"
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
     kaptTest("com.google.dagger:hilt-android-compiler:2.42")
+    // mockito
+    androidTestImplementation("org.mockito:mockito-core:4.3.1")
 
     testImplementation 'app.cash.turbine:turbine:0.7.0'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
@@ -121,5 +126,8 @@ dependencies {
 
     // pinview
     implementation 'io.github.chaosleung:pinview:1.4.4'
+
+    // test navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
 
 }

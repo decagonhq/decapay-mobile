@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface CreateNewPasswordApi {
 
-    @POST("/api/v1/Account/Reset-Password")
+    @POST("api/v1/reset-password")
     suspend fun createNewPassword(
         @Body createNewPasswordRequest: CreateNewPasswordRequest
     ): CreateNewPasswordResponse

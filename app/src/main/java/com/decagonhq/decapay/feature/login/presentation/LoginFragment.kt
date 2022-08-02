@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
 import com.decagonhq.decapay.feature.login.data.network.model.LoginRequestBody
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,6 +34,7 @@ class LoginFragment : Fragment() {
      */
     @Inject
     lateinit var preference: Preferences
+
     private val loginViewModel: LoginViewModel by viewModels()
     private val TAG = "LOGINFRAGMENT"
     private lateinit var receivedEmail: String
@@ -55,12 +56,21 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+        // check if login credentials are stored
+        if (preference.getUserEmail() != null && preference.getUserPassword() != null) {
+            // set it to the input fields
+            val userEmail = preference.getUserEmail()
+            val password = preference.getUserPassword()
+            binding.loginFragmentEmailTextinputedittextEmailTiedt.setText(userEmail)
+            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.setText(password)
+        }
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+        // when the view is visible
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         // to validate the inputs received from the fields
@@ -158,26 +168,27 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            pleaseWaitDialog!!.dismiss()
+                            pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "You have successfully logged in: ${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                             // capture the token here
-                            val token = it.data.token
+                            val token = it.data.data?.token
                             preference.putToken(token!!)
-                            Log.d(TAG, "Here is the success result: ${it.messages}")
+                            (activity as MainActivity).revealDrawer()
+                            findNavController().navigate(R.id.action_loginFragment_to_testFragment)
+
                             // on successfuly loggedin, navigate to your list of budgets
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "Here is the error: ${it.message}")
                             binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
                         }

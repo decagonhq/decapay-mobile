@@ -11,7 +11,7 @@
     <string name="login_fragment_forgot_password">Forgot Password?</string>
     <string name="login_fragment_donthaveanaccount">Don\'t have an account?</string>
     <string name="login_fragment_create_account">Create Account</string>
-    <string name="test_fragment">Test Fragment</string>
+    <string name="test_fragment">Budget Listing In Progress</string>
     <string name="please_wait">Please wait…</string>
     <string name="email_password_validation_feedback">Invalid email or password; please check your login credentials</string>
     <string name="sign_up_validation_feedback">Please fix all errors within the form</string>
@@ -53,4 +53,8 @@
     <string name="verify_password_reset_code_fragment_verification">Verification</string>
     <string name="verify_password_reset_code_fragment_title_reset_password_call_out_action_verify">Please enter the verification code we sent to your\nemail address</string>
     <string name="verify_password_reset_code_fragment_verify_button_verify">Verify</string>
+    <string name="error_exception_unknown_error">Unknown Error</string>
+    <string name="error_exception_network_error">Network Error</string>
+    <string name="error_exception_time_out_error">Timeout Error</string>
+
 </resources>

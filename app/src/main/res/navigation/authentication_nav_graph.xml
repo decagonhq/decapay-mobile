@@ -12,19 +12,44 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.decagonhq.decapay.feature.forgotpassword.presentation.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_verifyPasswordResetCodeFragment2"
+            app:destination="@id/verifyPasswordResetCodeFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/createNewPasswordFragment"
         android:name="com.decagonhq.decapay.feature.createnewpassword.presentation.CreateNewPasswordFragment"
         android:label="fragment_create_new_password"
-        tools:layout="@layout/fragment_create_new_password" />
+        tools:layout="@layout/fragment_create_new_password" >
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+    </fragment>
     <fragment
         android:id="@+id/verifyPasswordResetCodeFragment2"
         android:name="com.decagonhq.decapay.feature.verifypasswordresetcode.presentation.VerifyPasswordResetCodeFragment"
         android:label="fragment_verify_password_reset_code"
-        tools:layout="@layout/fragment_verify_password_reset_code" />
+        tools:layout="@layout/fragment_verify_password_reset_code" >
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_verifyPasswordResetCodeFragment2_to_createNewPasswordFragment"
+            app:destination="@id/createNewPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
 </navigation>

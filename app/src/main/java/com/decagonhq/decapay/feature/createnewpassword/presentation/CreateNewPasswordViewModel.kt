@@ -17,16 +17,17 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateNewPasswordViewModel @Inject constructor(
     private val createNewPasswordUsecase: CreateNewPasswordUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel() {
 
     private val _createNewPasswordResponse = MutableSharedFlow<Resource<CreateNewPasswordResponse>>()
     val createNewPasswordResponse: SharedFlow<Resource<CreateNewPasswordResponse>> get() = _createNewPasswordResponse.asSharedFlow()
 
     fun getCreateNewPasswordResponse(createNewPasswordRequest: CreateNewPasswordRequest) {
-        viewModelScope.launch { createNewPasswordUsecase(createNewPasswordRequest).collect {
-            _createNewPasswordResponse.emit(it)
-        }
+        viewModelScope.launch {
+            createNewPasswordUsecase(createNewPasswordRequest).collect {
+                _createNewPasswordResponse.emit(it)
+            }
         }
     }
 }

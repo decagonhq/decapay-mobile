@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.createnewpassword.data.network
+package com.decagonhq.decapay.feature.createnewpassword.data.network.repository
 
 import com.decagonhq.decapay.feature.createnewpassword.data.network.api.CreateNewPasswordApi
 import com.decagonhq.decapay.feature.createnewpassword.data.network.model.CreateNewPasswordRequest
