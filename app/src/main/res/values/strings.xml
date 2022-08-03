@@ -66,5 +66,11 @@
     <string name="create_budget_fragment_label_description">Description</string>
     <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
     <string name="create_budget_fragment_done_button">Done</string>
+    <string name="option_modal_bottom_sheet_fragment_instruction">You can select <b>custom</b> to choose your perfect\ndate</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_annual">Annual</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_monthly">Monthly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_weeklyly">Weekly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_daily">Daily</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_custom">Custom</string>
 
 </resources>

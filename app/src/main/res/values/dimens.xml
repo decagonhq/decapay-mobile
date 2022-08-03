@@ -11,4 +11,7 @@
     <dimen name="verify_password_reset_code_fragment_verify_button_txsiz">22sp</dimen>
     <dimen name="create_budget_fragment_toolbar_title_txsiz">22sp</dimen>
     <dimen name="create_budget_fragment_budget_period_txsiz">16sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_select_title_txsiz">20sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_instruction_txsiz">18sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_options_annual_txsiz">18sp</dimen>
 </resources>
