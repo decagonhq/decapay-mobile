@@ -5,18 +5,16 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.signout.data.network.model.SignOutRequestBody
 import com.decagonhq.decapay.feature.signout.data.network.model.SignOutResponse
 import com.decagonhq.decapay.feature.signout.domain.repository.SignOutRepository
-import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
-
 class SignOutUseCase @Inject constructor(
     private val repository: SignOutRepository,
     private val exceptionHandler: ExceptionHandler
-    ) {
+) {
 
     operator fun invoke(signOutRequestBody: SignOutRequestBody): Flow<Resource<SignOutResponse>> = flow {
         try {
