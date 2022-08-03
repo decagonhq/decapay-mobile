@@ -65,5 +65,6 @@
     <string name="create_budget_fragment_hint_select">Select</string>
     <string name="create_budget_fragment_label_description">Description</string>
     <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
+    <string name="create_budget_fragment_done_button">Done</string>
 
 </resources>

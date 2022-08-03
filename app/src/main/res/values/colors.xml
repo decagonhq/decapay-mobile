@@ -13,4 +13,5 @@
     <color name="toolbar_stroke">#F5F5F5</color>
     <color name="toolbar_background">#E5E5E5</color>
     <color name="border_color">#D9D9D9</color>
+    <color name="border_color_text_input">#ADA9A9</color>
 </resources>
