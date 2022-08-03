@@ -59,5 +59,6 @@
     <string name="view_details">View details</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="empty_list_sub_header">You’ve not created any budget list yet. Click on the + sign icon below to create a budget.</string>
 
 </resources>

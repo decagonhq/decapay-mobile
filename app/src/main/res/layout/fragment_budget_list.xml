@@ -49,10 +49,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:lines="3"
             android:layout_weight="1"
-            android:text="You’ve not created any budget list yet.
-Click on the + sign icon below to
-create a budget." />
+            android:text="@string/empty_list_sub_header"
+            />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
