@@ -56,5 +56,14 @@
     <string name="error_exception_unknown_error">Unknown Error</string>
     <string name="error_exception_network_error">Network Error</string>
     <string name="error_exception_time_out_error">Timeout Error</string>
+    <string name="create_budget_fragment_title_tv">Create Budget</string>
+    <string name="create_budget_fragment_label_title">Title</string>
+    <string name="create_budget_fragment_hint_title">Enter title</string>
+    <string name="create_budget_fragment_label_amount">Amount</string>
+    <string name="create_budget_fragment_hint_amount">Enter amount</string>
+    <string name="create_budget_fragment_label_buget_period">Budget period</string>
+    <string name="create_budget_fragment_hint_select">Select</string>
+    <string name="create_budget_fragment_label_description">Description</string>
+    <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
 
 </resources>

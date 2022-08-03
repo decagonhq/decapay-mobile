@@ -52,4 +52,8 @@
         android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
         android:label="fragment_test"
         tools:layout="@layout/fragment_test" />
+    <fragment
+        android:id="@+id/createBudgetFragment"
+        android:name="com.decagonhq.decapay.feature.createbudget.presentation.CreateBudgetFragment"
+        android:label="CreateBudgetFragment" />
 </navigation>

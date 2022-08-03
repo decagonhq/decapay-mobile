@@ -127,6 +127,10 @@ class LoginFragment : Fragment() {
         binding.loginFragmentForgotPasswordTv.setOnClickListener {
             findNavController().navigate(R.id.forgotPasswordFragment)
         }
+        // navigate to test create budget UI
+        binding.toTestCreatBudgetUI.setOnClickListener {
+            findNavController().navigate(R.id.createBudgetFragment)
+        }
     }
 
     override fun onDestroy() {
