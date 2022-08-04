@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -162,7 +162,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    fun initObserver() {
+    private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginResponse.collect {
@@ -178,7 +178,7 @@ class LoginFragment : Fragment() {
                             val token = it.data.data?.token
                             preference.putToken(token!!)
                             (activity as MainActivity).revealDrawer()
-                            findNavController().navigate(R.id.action_loginFragment_to_testFragment)
+                            findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
 
                             // on successfuly loggedin, navigate to your list of budgets
                         }

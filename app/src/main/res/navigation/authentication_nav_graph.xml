@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/budgetListFragment">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
@@ -31,8 +31,8 @@
         android:name="com.decagonhq.decapay.feature.login.presentation.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_testFragment"
-            app:destination="@id/testFragment" />
+            android:id="@+id/action_loginFragment_to_budgetListFragment"
+            app:destination="@id/budgetListFragment" />
     </fragment>
     <fragment
         android:id="@+id/verifyPasswordResetCodeFragment2"
@@ -48,8 +48,8 @@
             app:destination="@id/createNewPasswordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/testFragment"
-        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/budgetListFragment"
+        android:name="com.decagonhq.decapay.feature.listbudget.presentation.BudgetListFragment"
+        android:label="fragment_budget_list"
+        tools:layout="@layout/fragment_budget_list" />
 </navigation>
