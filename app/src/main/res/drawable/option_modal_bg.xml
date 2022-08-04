@@ -3,7 +3,7 @@
     <item android:gravity="bottom">
         <shape>
             <size android:height="1dp" />
-            <solid android:color="@color/border_color_text_input"/>
+            <solid android:color="@color/border_color"/>
         </shape>
     </item>
 </layer-list>

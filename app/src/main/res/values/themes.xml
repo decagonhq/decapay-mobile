@@ -25,4 +25,11 @@
     </style>
     <style name="Theme.DecaPay.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.DecaPay.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="OptionMenuBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/OptionMenuBottomSheetStyle</item>
+    </style>
+    <style name="OptionMenuBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/option_menu_bottom_sheet_layout_bg</item>
+    </style>
 </resources>

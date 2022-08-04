@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -45,11 +47,12 @@ class CreateBudgetFragment : Fragment() {
         }
         // put a click listerner on the budget period
         binding.createBudgetFragmentBudgetPeriodTv.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "I am clicked",
-                Toast.LENGTH_LONG
-            ).show()
+//            Toast.makeText(
+//                requireContext(),
+//                "I am clicked",
+//                Toast.LENGTH_LONG
+//            ).show()
+            findNavController().navigate(R.id.optionModalBottomSheetFragment)
         }
     }
 

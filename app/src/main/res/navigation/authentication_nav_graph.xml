@@ -56,4 +56,9 @@
         android:id="@+id/createBudgetFragment"
         android:name="com.decagonhq.decapay.feature.createbudget.presentation.CreateBudgetFragment"
         android:label="CreateBudgetFragment" />
+    <dialog
+        android:id="@+id/optionModalBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.createbudget.presentation.bottomsheet.OptionModalBottomSheetFragment"
+        android:label="fragment_option_modal_bottom_sheet"
+        tools:layout="@layout/fragment_option_modal_bottom_sheet" />
 </navigation>

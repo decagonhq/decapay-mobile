@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/budget_period_bg.xml" value="0.1255" />
         <entry key="app/src/main/res/drawable/login_button_bg.xml" value="0.24" />
+        <entry key="app/src/main/res/drawable/option_menu_bottom_sheet_layout_bg.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/option_menu_bottomsheet_text_bg.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/option_modal_bg.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.12" />
@@ -15,7 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.13496376811594202" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />
-        <entry key="app/src/main/res/layout/fragment_option_modal_bottom_sheet.xml" value="0.38059539794921876" />
+        <entry key="app/src/main/res/layout/fragment_option_modal_bottom_sheet.xml" value="0.16281433105468748" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_verify_password_reset_code.xml" value="0.1" />
