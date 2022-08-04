@@ -27,6 +27,15 @@ class BudgetDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val startDateTimeMillis =1517164200000 //(29-01-2018)
+       val  endDateTimiMillis =1517682600000
+
+
+
+        binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
+        binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
+
     }
 
 }
