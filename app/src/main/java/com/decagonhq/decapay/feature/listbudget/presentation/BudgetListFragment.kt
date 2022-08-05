@@ -33,7 +33,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.budgetListFragmentBudgetListRv.visibility = View.GONE
+        //binding.budgetListFragmentBudgetListRv.visibility = View.GONE
         val list = mutableListOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 101, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
         adapter = BudgetListAdapter(list, this)
