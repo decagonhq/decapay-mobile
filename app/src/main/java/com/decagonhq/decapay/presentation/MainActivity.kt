@@ -15,24 +15,23 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(
-
-) {
+class MainActivity :
+    AppCompatActivity() {
 
     @Inject
     lateinit var preference: Preferences
 
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
+    private lateinit var sendDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        // pass data to create budget fragment
 
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity(
             when (it.itemId) {
                 R.id.menu_dashboard -> {
 
-
                     // navController.navigate(R.id.loginFragment)
                 }
                 R.id.menu_budget -> {
@@ -81,16 +79,28 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-
     private fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-     fun revealDrawer() {
+    fun revealDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
+//    override fun passDataFromOptionBottomSheetToCreateBudgetFragment(date: String) {
+//        Log.d("MAIN", "SEND DATA: $date")
+//        passToBundle(date)
+//        sendDate = date
+//        // pass this data to the create budget fragment
+//    }
 
+//    private fun passToBundle(date: String){
+//        val bundle = Bundle()
+//        bundle.putString("date", date)
+//        val createBudgetFragment = CreateBudgetFragment()
+//        createBudgetFragment.arguments = bundle
+//        supportFragmentManager.beginTransaction().add(createBudgetFragment, "createBudgetFragment").commit()
+//    }
 }

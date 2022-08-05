@@ -130,4 +130,13 @@ dependencies {
     // test navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
 
+    // custome date picker
+//    implementation 'io.github.dzmitry-lakisau:month-year-picker-dialog:1.0.0'
+
+    // another picker
+//    implementation 'com.github.demogorgorn:MonthAndYearPicker:1.0.11'
+
+//    implementation 'com.dibyendu.picker:picker:1.0.0'
+
+
 }

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="40dp"
+    android:background="@drawable/op_bottomsheet_layout_bg"
     tools:context=".feature.createbudget.presentation.bottomsheet.OptionModalBottomSheetFragment"
     >
     <androidx.appcompat.widget.LinearLayoutCompat

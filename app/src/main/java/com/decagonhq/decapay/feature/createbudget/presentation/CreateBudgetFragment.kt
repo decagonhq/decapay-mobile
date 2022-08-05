@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.utils.bottomsheetcommunicationonclickinterface.BottomSheetOnclickInterface
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
+import com.decagonhq.decapay.feature.createbudget.presentation.bottomsheet.OptionModalBottomSheetFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-class CreateBudgetFragment : Fragment() {
+@AndroidEntryPoint
+class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
     /**
      * declare variables and views
      */
+    private val TAG = "CREATEBUDGETFRAG"
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding: FragmentCreateBudgetBinding get() = _binding!!
+    private lateinit var budgetPeriod: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,8 @@ class CreateBudgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateBudgetBinding.bind(view)
+        // initialize view
+        budgetPeriod = binding.createBudgetFragmentBudgetPeriodTv
 
         // navigate to list of Budget
         binding.createBudgetFragmentBackNavigationIv.setOnClickListener {
@@ -47,17 +53,19 @@ class CreateBudgetFragment : Fragment() {
         }
         // put a click listerner on the budget period
         binding.createBudgetFragmentBudgetPeriodTv.setOnClickListener {
-//            Toast.makeText(
-//                requireContext(),
-//                "I am clicked",
-//                Toast.LENGTH_LONG
-//            ).show()
-            findNavController().navigate(R.id.optionModalBottomSheetFragment)
+            OptionModalBottomSheetFragment(this).show(
+                requireActivity().supportFragmentManager, "optionBottomSheet"
+            )
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    /** The date selected from the datepicker is set on the budgetPeriod "TextView" */
+    override fun passDataFromOptionBottomSheetToCreateBudgetFragment(date: String) {
+        budgetPeriod.text = date
     }
 }
