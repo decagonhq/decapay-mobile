@@ -110,6 +110,10 @@
             android:lines="1"
             />
     </com.google.android.material.textfield.TextInputLayout>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <TextView
         android:id="@+id/create_budget_fragment_title_budget_period_tv"
         android:layout_width="wrap_content"
