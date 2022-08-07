@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/option_menu_bottom_sheet_layout_bg.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/option_menu_bottomsheet_text_bg.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/option_modal_bg.xml" value="0.225" />
+        <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.28610354223433243" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_verify_password_reset_code.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.12512664640324214" />
       </map>
     </option>
   </component>

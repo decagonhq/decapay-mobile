@@ -110,10 +110,7 @@
             android:lines="1"
             />
     </com.google.android.material.textfield.TextInputLayout>
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
     <TextView
         android:id="@+id/create_budget_fragment_title_budget_period_tv"
         android:layout_width="wrap_content"
@@ -124,31 +121,17 @@
         android:text="@string/create_budget_fragment_label_buget_period"
         />
 
-    <TextView
-        android:id="@+id/create_budget_fragment_budget_period_tv"
+    <Spinner
+        android:id="@+id/create_budget_fragment_buget_period_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="58dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/budget_period_bg"
-        android:drawableEnd="@drawable/ic_arrow_down"
-        android:padding="20dp"
-        android:inputType="text"
-        android:text="@string/create_budget_fragment_hint_select"
-        android:textSize="@dimen/create_budget_fragment_budget_period_txsiz" />
-    <Button
-        android:id="@+id/create_budget_fragment_done_button_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/login_button_bg"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/create_budget_fragment_done_button"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
+        android:background="@drawable/spinner_bg"
+        />
+
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

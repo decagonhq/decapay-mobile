@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class CreateBudgetProjectRepositoryImpl @Inject constructor(
     private val createBudgetApi: CreateBudgetApi
-): CreateBudgetRepository  {
+) : CreateBudgetRepository {
     override suspend fun createBudget(createBudgetRequestBody: CreateBudgetRequestBody): CreateBudgetResponse {
         return createBudgetApi.createBudget(createBudgetRequestBody)
     }

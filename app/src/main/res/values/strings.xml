@@ -72,5 +72,13 @@
     <string name="option_modal_bottom_sheet_fragment_periodic_option_weeklyly">Weekly</string>
     <string name="option_modal_bottom_sheet_fragment_periodic_option_daily">Daily</string>
     <string name="option_modal_bottom_sheet_fragment_periodic_option_custom">Custom</string>
+    <string name="create_budget_fragment_buget_period_autocomplete_view">Please select a period</string>
+    <string-array name="budget_periods">
+        <item>Annual</item>
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Daily</item>
+        <item>Custom</item>
+    </string-array>
 
 </resources>
