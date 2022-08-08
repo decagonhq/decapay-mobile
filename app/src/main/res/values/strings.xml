@@ -97,6 +97,17 @@
     </string-array>
     <string name="create_budget_fragment_budget_period_daily_select_date">Select Date</string>
     <string name="create_budget_fragment_budget_period_custom_selection">Start date, End date</string>
+    <string-array name="choose_year">
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+    </string-array>
 
 
 </resources>
