@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+
+    android:elevation="3dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/budget_line_item_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Groceries"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/budget_line_item_projected_amount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Projected amount - N5,500"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/budget_line_item_amount_so_far_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount so far - N2,500"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/budget_line_item_view_expenses_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="View expenses"
+                android:textColor="@color/decapay_green"
+                android:textSize="12sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/budget_line_item_log_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/decapay_green"
+                android:gravity="center"
+                android:text="@string/log"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:icon="@drawable/ic_arrow_up_right"
+                app:iconGravity="end" />
+
+            <TextView
+                android:id="@+id/budget_line_item_percentage_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3.70%"
+                android:textColor="@color/decapay_green" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.cardview.widget.CardView>
