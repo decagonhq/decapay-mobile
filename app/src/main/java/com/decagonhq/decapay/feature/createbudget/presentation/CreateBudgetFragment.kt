@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,15 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.utils.bottomsheetcommunicationonclickinterface.BottomSheetOnclickInterface
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
+import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
+import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
+class CreateBudgetFragment : Fragment() {
     /**
      * declare variables and views
      */
@@ -24,6 +26,11 @@ class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding: FragmentCreateBudgetBinding get() = _binding!!
     private lateinit var budgetPeriod: TextView
+    lateinit var annualPeriodYear: String
+    lateinit var monthlyPeriodYear: String
+    lateinit var monthlyPeriodMonth: String
+    lateinit var weeklyStartDate: String
+    lateinit var weeklyDuration: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +74,7 @@ class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
                             binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            annualSpinnerAdapterInit()
                         }
                         "Monthly" -> {
                             binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.VISIBLE
@@ -76,6 +84,8 @@ class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
                             binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            monthlyYearSpinner()
+                            monthlyMonthSpinner()
                         }
                         "Weekly" -> {
                             binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.VISIBLE
@@ -131,21 +141,61 @@ class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
                 Snackbar.LENGTH_LONG
             ).show()
         }
-        // put a click listerner on the budget period
-//        binding.createBudgetFragmentBudgetPeriodTv.setOnClickListener {
-//            OptionModalBottomSheetFragment(this).show(
-//                requireActivity().supportFragmentManager, "optionBottomSheet"
-//            )
-//        }
+    }
+
+    private fun annualSpinnerAdapterInit() {
+        val annualPeriodAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
+        annualPeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.adapter = annualPeriodAdapter
+        binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                annualPeriodYear = parent?.getItemAtPosition(position).toString()
+                Log.d(TAG, "Here is the selected year for the annual period: $annualPeriodYear")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
+    }
+
+    private fun monthlyYearSpinner() {
+        val monthPeriodYearAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
+        monthPeriodYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.adapter = monthPeriodYearAdapter
+        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                monthlyPeriodYear = parent?.getItemAtPosition(position).toString()
+                Log.d(TAG, "here is the year for period month: $monthlyPeriodYear")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
+    }
+
+    private fun monthlyMonthSpinner() {
+        val monthPeriodMonthAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, CalendarMonth.calendarMonth)
+        monthPeriodMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.adapter = monthPeriodMonthAdapter
+        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                monthlyPeriodMonth = parent?.getItemAtPosition(position).toString()
+                Log.d(TAG, "See monthly month chosen: $monthlyPeriodMonth")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
+    }
+
+    private fun weeklyStartDate() {
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    /** The date selected from the datepicker is set on the budgetPeriod "TextView" */
-    override fun passDataFromOptionBottomSheetToCreateBudgetFragment(date: String) {
-        budgetPeriod.text = date
     }
 }
