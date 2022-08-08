@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/budget_period_bg.xml" value="0.1255" />
+        <entry key="app/src/main/res/drawable/edit_field_bg.xml" value="0.126" />
         <entry key="app/src/main/res/drawable/login_button_bg.xml" value="0.24" />
         <entry key="app/src/main/res/drawable/op_bottomsheet_layout_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/option_menu_bottom_sheet_layout_bg.xml" value="0.2625" />
@@ -14,7 +15,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.28610354223433243" />
         <entry key="app/src/main/res/layout/custom_login_wait_dialog.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.23123123123123124" />
+        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.13496376811594202" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />

@@ -80,5 +80,23 @@
         <item>Daily</item>
         <item>Custom</item>
     </string-array>
+    <string name="reate_budget_fragment_buget_period_annual_year">Enter year</string>
+    <string-array name="budget_period_month">
+        <item>January</item>
+        <item>Feburary</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+    </string-array>
+    <string-array name="budget_period_weekly">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+    </string-array>
+    <string name="create_budget_fragment_budget_period_daily_select_date">Select Date</string>
+    <string name="create_budget_fragment_budget_period_custom_selection">Start date, End date</string>
+
 
 </resources>
