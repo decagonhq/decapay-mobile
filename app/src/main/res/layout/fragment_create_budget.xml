@@ -149,7 +149,7 @@
             android:visibility="gone"
             />
         <EditText
-            android:id="@+id/create_budget_fragment_budget_period_monthly_edittext"
+            android:id="@+id/create_budget_fragment_budget_period_monthly_year_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
@@ -160,7 +160,7 @@
             android:hint="@string/reate_budget_fragment_buget_period_annual_year"
             />
         <Spinner
-            android:id="@+id/create_budget_fragment_budget_period_monthly_spinner"
+            android:id="@+id/create_budget_fragment_budget_period_monthly_month_spinner"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"

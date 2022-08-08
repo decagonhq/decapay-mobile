@@ -12,7 +12,6 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.bottomsheetcommunicationonclickinterface.BottomSheetOnclickInterface
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
-import com.decagonhq.decapay.feature.createbudget.presentation.bottomsheet.OptionModalBottomSheetFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,22 +52,81 @@ class CreateBudgetFragment : Fragment(), BottomSheetOnclickInterface {
         binding.createBudgetFragmentBugetPeriodSpinner.adapter = budgetPeriodAdapter
         binding.createBudgetFragmentBugetPeriodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (parent?.getItemAtPosition(position) == "Please select a period"){
+                if (parent?.getItemAtPosition(position) == "Please select a period") {
                     //
                 } else {
+                    // on click of an item,
                     val item = parent?.getItemAtPosition(position).toString()
-                    Snackbar.make(
-                        binding.root,
-                        "${item} is selected",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    when (item) {
+                        "Annual" -> {
+                            // make annual view visible
+                            binding.createBudgetFragmentBudgetPeriodAnnualEdittext.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyWeekSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                        }
+                        "Monthly" -> {
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearEdittext.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyWeekSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                        }
+                        "Weekly" -> {
+                            binding.createBudgetFragmentBudgetPeriodWeeklyWeekSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyMonthSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyYearEdittext.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                        }
+                        "Daily" -> {
+                            binding.createBudgetFragmentBudgetPeriodDailyTv.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyWeekSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                        }
+                        "Custom" -> {
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyWeekSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyYearEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyTv.visibility = View.GONE
+                        }
+                    }
+                    // the item view appears,
+                    // all other views must disapper by setting visibility to gone
+                    // -> so what happens next
+                    // -> to capture the input from users
+                    // -> I will create the data for the spinners
+
+//                    Snackbar.make(
+//                        binding.root,
+//                        "${item} is selected",
+//                        Snackbar.LENGTH_LONG
+//                    ).show()
                 }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 //
             }
-
         }
         // navigate to list of Budget
         binding.createBudgetFragmentBackNavigationIv.setOnClickListener {
