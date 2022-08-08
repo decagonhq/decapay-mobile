@@ -129,7 +129,7 @@ class OptionModalBottomSheetFragment(private val listener: BottomSheetOnclickInt
         dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
             val startDate = dateSelected.first
             val endDate = dateSelected.second
-            Log.d(TAG, "this is how the date object looks like: ${startDate}")
+            Log.d(TAG, "this is how the date object looks like: $startDate")
 
             if (startDate != null && endDate != null) {
                 inputPeriod = "${convertLongToTime(startDate)}, ${convertLongToTime(endDate)}"

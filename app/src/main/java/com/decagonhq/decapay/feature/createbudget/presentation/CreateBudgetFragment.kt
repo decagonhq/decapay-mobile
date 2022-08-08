@@ -1,5 +1,6 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,8 +15,10 @@ import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class CreateBudgetFragment : Fragment() {
@@ -31,6 +34,7 @@ class CreateBudgetFragment : Fragment() {
     lateinit var monthlyPeriodMonth: String
     lateinit var weeklyStartDate: String
     lateinit var weeklyDuration: String
+    lateinit var dailyStartDateSelected: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +99,9 @@ class CreateBudgetFragment : Fragment() {
                             binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            weeklyStartDate()
+                            weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.toString()
+                            Log.d(TAG, "This is the weekly duration chosen: $weeklyDuration")
                         }
                         "Daily" -> {
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.VISIBLE
@@ -104,6 +111,7 @@ class CreateBudgetFragment : Fragment() {
                             binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            dailyDate()
                         }
                         "Custom" -> {
                             binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.VISIBLE
@@ -192,6 +200,41 @@ class CreateBudgetFragment : Fragment() {
     }
 
     private fun weeklyStartDate() {
+        val startDatePicker =
+            MaterialDatePicker
+                .Builder.datePicker()
+                .setTitleText("Select Date")
+                .build()
+        startDatePicker.show(
+            parentFragmentManager,
+            "date_picker"
+        )
+        startDatePicker.addOnPositiveButtonClickListener { dateSelected ->
+            weeklyStartDate = "${convertLongToTime(dateSelected)}"
+        }
+    }
+
+    private fun dailyDate() {
+        val dailyStartDate = MaterialDatePicker
+            .Builder.datePicker()
+            .setTitleText("Select Date")
+            .build()
+        dailyStartDate.show(
+            parentFragmentManager,
+            "daily_date_picker"
+        )
+        dailyStartDate.addOnPositiveButtonClickListener { dateSelected ->
+            dailyStartDateSelected = "${convertLongToTime(dateSelected)}"
+        }
+    }
+
+    private fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat(
+            "dd/MM/yyyy",
+            Locale.getDefault()
+        )
+        return format.format(date)
     }
 
     override fun onDestroy() {
