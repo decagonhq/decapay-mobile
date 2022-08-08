@@ -35,6 +35,7 @@ class CreateBudgetFragment : Fragment() {
     lateinit var weeklyStartDate: String
     lateinit var weeklyDuration: String
     lateinit var dailyStartDateSelected: String
+    lateinit var customSelectedDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,6 +122,7 @@ class CreateBudgetFragment : Fragment() {
                             binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
+                            showDateRange()
                         }
                     }
                     // the item view appears,
@@ -225,6 +227,28 @@ class CreateBudgetFragment : Fragment() {
         )
         dailyStartDate.addOnPositiveButtonClickListener { dateSelected ->
             dailyStartDateSelected = "${convertLongToTime(dateSelected)}"
+        }
+    }
+
+    private fun showDateRange() {
+        val dateRangePicker =
+            MaterialDatePicker
+                .Builder.dateRangePicker()
+                .setTitleText("Select Date")
+                .build()
+        dateRangePicker.show(
+            parentFragmentManager,
+            "date_range_picker"
+        )
+        dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
+            val startDate = dateSelected.first
+            val endDate = dateSelected.second
+            Log.d(TAG, "this is how the date object looks like: $startDate")
+
+            if (startDate != null && endDate != null) {
+                customSelectedDate = "${convertLongToTime(startDate)}, ${convertLongToTime(endDate)}"
+                Log.d(TAG, "here is the start and end date: $customSelectedDate")
+            }
         }
     }
 
