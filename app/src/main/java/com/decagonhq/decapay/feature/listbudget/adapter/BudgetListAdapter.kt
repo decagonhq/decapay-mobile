@@ -25,8 +25,8 @@ class BudgetListAdapter(var list: MutableList<Int>, var clicker: BudgetClicker) 
         return list.size
     }
 
-    fun setBudget(results: MutableList<Int>) {
-        this.list = results
+    fun setBudget() {
+        //this.list = results
         notifyDataSetChanged()
     }
 

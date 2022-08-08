@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }else{
+
         }
 
         /** INITIALISE DRAWER MENU LISTENER */
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity(
                         is Resource.Success -> {
                             Snackbar.make(
                                 binding.root,
-                                "${it.data.message}",
+                                it.data.message,
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }
