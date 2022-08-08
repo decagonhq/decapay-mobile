@@ -11,7 +11,7 @@ class BudgetListRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun getBudgetList(token:String): BudgetListResponse {
-        return  budgetListApi.getBudgetList("Bearer $token")
+    override suspend fun getBudgetList(token:String,page:Int): BudgetListResponse {
+        return  budgetListApi.getBudgetList(page,"Bearer $token",20)
     }
 }

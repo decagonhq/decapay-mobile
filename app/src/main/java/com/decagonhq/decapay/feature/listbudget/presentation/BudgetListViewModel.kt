@@ -21,13 +21,18 @@ class BudgetListViewModel @Inject constructor(
    private val _budgetListResponse = MutableStateFlow<Resource<BudgetListResponse>>(Resource.Loading())
    val budgetListResponse: StateFlow<Resource<BudgetListResponse>> get() = _budgetListResponse
 
+   var isFetching = false
+   var page = 0
+
 
 
    fun getBudgetList(token:String) {
-
-
       viewModelScope.launch {
-       budgetListUseCase.invoke(token).collect{
+
+       budgetListUseCase.invoke(token,page).collect{
+          if(it is Resource.Success){
+             page++
+          }
           _budgetListResponse.value = it
        }
       }
@@ -35,11 +40,19 @@ class BudgetListViewModel @Inject constructor(
 
 
    fun getNextPage(token:String){
-      viewModelScope.launch {
-         budgetListUseCase.invoke(token).collect{
-            _budgetListResponse.value = it
+      if(!isFetching){
+         isFetching = true
+         viewModelScope.launch {
+            budgetListUseCase.getNextPage(token,page).collect{
+               if(it is Resource.Success){
+                  page++
+               }
+               isFetching = false
+               _budgetListResponse.value = it
+            }
          }
       }
+
    }
 
 

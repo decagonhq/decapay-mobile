@@ -1,9 +1,10 @@
-package com.decagonhq.decapay.feature.listbudget.data.network.model
+package com.decagonhq.decapay.common.data.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class Content(
+data class Content (
     @SerializedName("displayPercentageSpentSoFar")
     val displayPercentageSpentSoFar: String,
     @SerializedName("displayProjectedAmount")
@@ -22,4 +23,4 @@ data class Content(
     val title: String,
     @SerializedName("totalAmountSpentSoFar")
     val totalAmountSpentSoFar: Int
-)
+): Serializable

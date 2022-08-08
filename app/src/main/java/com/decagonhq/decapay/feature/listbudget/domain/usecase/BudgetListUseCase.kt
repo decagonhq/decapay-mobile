@@ -14,11 +14,25 @@ class BudgetListUseCase  @Inject constructor(
     private  val budgetListRepository: BudgetListRepository,
     private val exceptionHandler: ExceptionHandler
 ){
-    operator fun invoke(token:String): Flow<Resource<BudgetListResponse>> = flow {
+    operator fun invoke(token:String,page:Int): Flow<Resource<BudgetListResponse>> = flow {
 
         try {
             emit(Resource.Loading())
-            val response = budgetListRepository.getBudgetList(token)
+            val response = budgetListRepository.getBudgetList(token,page)
+            emit(Resource.Success(response))
+        } catch (e: HttpException) {
+            val message = exceptionHandler.parse(e)
+            emit(Resource.Error(message))
+        } catch (e: IOException) {
+            emit(Resource.Error("Couldn't reach server check your internet connection"))
+        }
+    }
+
+
+     fun getNextPage(token:String,page:Int): Flow<Resource<BudgetListResponse>> = flow {
+
+        try {
+            val response = budgetListRepository.getBudgetList(token, page )
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)

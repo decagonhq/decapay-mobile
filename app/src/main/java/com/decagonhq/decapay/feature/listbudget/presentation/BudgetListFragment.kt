@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetListBinding
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
+import com.decagonhq.decapay.common.data.model.Content
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private lateinit var adapter: BudgetListAdapter
     private val binding get() = _binding!!
 
-    private val list = mutableListOf<Int>(1, 2, 3, 4, 5, 6)
+    private val list = mutableListOf<Content>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,39 +73,42 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                 budgetListViewModel.budgetListResponse.collect {
                     when (it) {
                         is Resource.Loading -> {
-                           // setIsLoadingScreen()
+                            setIsLoadingScreen()
                         }
 
                         is Resource.Success -> {
-                            if (it.data.data.content.isEmpty()) {
-                              //  setEmptyListScreen()
-                            }
+                            setDataLoaded(it.data.data.content as MutableList<Content>)
                         }
-
                         else -> {}
                     }
-                    var newList = mutableListOf<Int>(1, 2, 3, 4, 5, 6)
 
-                    list.addAll(newList)
-                    adapter.setBudget()
+
                 }
             }
         }
     }
 
-    override fun onClickItem(currentBudget: Int, position: Int) {
-        var bundle = Bundle()
-        bundle.putString("KEY","Value")
-        findNavController().navigate(R.id.budgetDetailsFragment,bundle)
+    override fun onClickItem(currentBudget: Content, position: Int) {
+        goToBudgetDetails(currentBudget)
 
     }
 
-    override fun onClickItemElipsis(currentBudget: Int, position: Int, view: View) {
+
+
+
+    override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         //println("Clicked on an item elipsis")
-        showPopupMenu(currentBudget, position, view)
+        showPopupMenu(position, view)
     }
 
-    private fun showPopupMenu(currentBudget: Int, position: Int, view: View) =
+
+    private fun goToBudgetDetails(currentBudget: Content){
+        val bundle = Bundle()
+        bundle.putSerializable("BUDGET_ITEM", currentBudget)
+        findNavController().navigate(R.id.budgetDetailsFragment, bundle)
+    }
+
+    private fun showPopupMenu(position: Int, view: View) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.budget_item_menu, menu)
             setOnMenuItemClickListener { item ->
@@ -114,7 +117,9 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
                     }
                     "View details" -> {
-
+                        val bundle = Bundle()
+                        bundle.putSerializable("BUDGET_ITEM", adapter.list[position])
+                        findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                     }
                     "Delete" -> {
                         adapter.deleteItemAtIndex(position)
@@ -137,7 +142,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                     val pastVisibleItems =
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 3) {
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
                         budgetListViewModel.getNextPage(preference.getToken())
 
                         /**
@@ -156,13 +161,27 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private fun setIsLoadingScreen() {
         binding.budgetListFragmentBudgetListRv.visibility = View.GONE
         binding.budgetListFragmentEmptyLl.visibility = View.GONE
-       binding.budgetListFragmentPageLoadingPb.visibility = View.VISIBLE
+        binding.budgetListFragmentPageLoadingPb.visibility = View.VISIBLE
 
     }
 
     private fun setEmptyListScreen() {
         binding.budgetListFragmentBudgetListRv.visibility = View.GONE
         binding.budgetListFragmentEmptyLl.visibility = View.VISIBLE
+        binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
+    }
+
+    private fun setDataLoaded(newList: MutableList<Content>) {
+
+        if (newList.isEmpty() && list.isEmpty()) {
+            setEmptyListScreen()
+        } else {
+            list.addAll(newList)
+            adapter.setBudget()
+        }
+
+        binding.budgetListFragmentBudgetListRv.visibility = View.VISIBLE
+        binding.budgetListFragmentEmptyLl.visibility = View.GONE
         binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
     }
 
