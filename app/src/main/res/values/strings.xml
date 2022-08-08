@@ -108,6 +108,8 @@
         <item>2029</item>
         <item>2030</item>
     </string-array>
+    <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
+    <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
 
 
 </resources>
