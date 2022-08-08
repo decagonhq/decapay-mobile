@@ -1,7 +1,5 @@
 package com.decagonhq.decapay.common.utils.resource
 
-import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
-
 class Validator {
 
     companion object {
@@ -12,19 +10,15 @@ class Validator {
             return !(email.isEmpty() || !email.trim().matches(emailPattern))
         }
 
-
         fun validateName(name: String): Boolean {
             val allAlphabets = Regex("""^[a-zA-Z-]*${'$'}""")
 
             return !(name.isEmpty() || !name.trim().matches(allAlphabets))
-
         }
 
-
-
-        fun validatePassword(password:String):Boolean{
-            val passwordRegex =Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$")
-            return  !(password.isEmpty() || !password.trim().matches(passwordRegex))
+        fun validatePassword(password: String): Boolean {
+            val passwordRegex = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$")
+            return !(password.isEmpty() || !password.trim().matches(passwordRegex))
         }
 
         fun validateEmailForTextWatcher(email: String): String {
@@ -38,11 +32,9 @@ class Validator {
             return ""
         }
 
-
-        fun validatePhoneNumber(phone:String):Boolean{
-           return  android.util.Patterns.PHONE.matcher(phone.trim()).matches();
+        fun validatePhoneNumber(phone: String): Boolean {
+            return android.util.Patterns.PHONE.matcher(phone.trim()).matches()
         }
-
 
         fun validatePasswordForTextwatcher(passwordText: String): String? {
             if (passwordText.isEmpty()) {
