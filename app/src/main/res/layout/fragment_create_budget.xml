@@ -236,7 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/create_budget_fragment_hint_add_description_here"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:lines="1"
             />
     </com.google.android.material.textfield.TextInputLayout>

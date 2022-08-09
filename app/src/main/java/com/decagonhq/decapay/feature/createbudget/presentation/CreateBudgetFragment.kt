@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class CreateBudgetFragment : Fragment() {
@@ -60,9 +59,6 @@ class CreateBudgetFragment : Fragment() {
     lateinit var customBudgetEndDate: String
     lateinit var budgetDescription: String
     private var pleaseWaitDialog: AlertDialog? = null
-    var budgetMonth by Delegates.notNull<Int>()
-    var budgetYear by Delegates.notNull<Int>()
-    var budgetDuration by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,9 +128,6 @@ class CreateBudgetFragment : Fragment() {
                             binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.setOnClickListener {
                                 weeklyStartDate()
                             }
-
-                            weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
-                            Log.d(TAG, "This is the weekly duration chosen: $weeklyDuration")
                         }
                         "Daily" -> {
                             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.VISIBLE
@@ -163,17 +156,6 @@ class CreateBudgetFragment : Fragment() {
                             }
                         }
                     }
-                    // the item view appears,
-                    // all other views must disapper by setting visibility to gone
-                    // -> so what happens next
-                    // -> to capture the input from users
-                    // -> I will create the data for the spinners
-
-//                    Snackbar.make(
-//                        binding.root,
-//                        "${item} is selected",
-//                        Snackbar.LENGTH_LONG
-//                    ).show()
                 }
             }
 
@@ -188,6 +170,7 @@ class CreateBudgetFragment : Fragment() {
             budgetAmount = binding.createBudgetFragmentAmountTiedt.text?.trim().toString()
             // budgetPeriodType
             budgetDescription = binding.createBudgetFragmentDescriptionTiedt.text?.trim().toString()
+            weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
             if (budgetTitle.isEmpty() || budgetAmount.isEmpty() || budgetPeriodType.isEmpty() || budgetDescription.isEmpty()) {
@@ -203,60 +186,70 @@ class CreateBudgetFragment : Fragment() {
                     "Annual" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + preference.getToken(),
+                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, null, UserPeriodConstant.ANNUAL,
                                 budgetTitle, annualPeriodYear.toInt()
                             )
                         )
+                        // show dialog
+                        pleaseWaitDialog?.show()
                     }
                     "Monthly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + preference.getToken(),
+                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), UserPeriodConstant.MONTHLY,
                                 budgetTitle, monthlyPeriodYear.toInt()
                             )
                         )
+                        // show dialog
+                        pleaseWaitDialog?.show()
                     }
                     "Weekly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + preference.getToken(),
+                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, weeklyStartDate,
                                 budgetDescription, weeklyDuration.toInt(), null, UserPeriodConstant.WEEKLY,
                                 budgetTitle, null
                             )
                         )
+                        Log.d(TAG, "here is the input from tht duration: ${weeklyDuration}")
+                        // show dialog
+                        pleaseWaitDialog?.show()
                     }
                     "Daily" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + preference.getToken(),
+                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), null, dailyStartDateSelected,
+                                budgetAmount.toDouble(), dailyStartDateSelected, dailyStartDateSelected,
                                 budgetDescription, null, null, UserPeriodConstant.DAILY,
                                 budgetTitle, null
                             )
                         )
+                        // show dialog
+                        pleaseWaitDialog?.show()
                     }
                     "Custom" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + preference.getToken(),
+                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), customBudgetEndDate, customeBudgetStartDate,
                                 budgetDescription, null, null, UserPeriodConstant.CUSTOM,
                                 budgetTitle, null
                             )
                         )
+                        // show dialog
+                        pleaseWaitDialog?.show()
                     }
                 }
-//                createBudgetViewModel.userCreateBudget(CreateBudgetRequestBody(budgetAmount.toDouble(), ))
             }
         }
         // observer
@@ -279,7 +272,6 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 annualPeriodYear = parent?.getItemAtPosition(position).toString()
-                Log.d(TAG, "Here is the selected year for the annual period: $annualPeriodYear")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -295,7 +287,6 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 monthlyPeriodYear = parent?.getItemAtPosition(position).toString()
-                Log.d(TAG, "here is the year for period month: $monthlyPeriodYear")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -311,7 +302,6 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 monthlyPeriodMonth = parent?.getItemAtPosition(position).toString()
-                Log.d(TAG, "See monthly month chosen: $monthlyPeriodMonth")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -333,7 +323,6 @@ class CreateBudgetFragment : Fragment() {
         startDatePicker.addOnPositiveButtonClickListener { dateSelected ->
             weeklyStartDate = "${convertLongToTime(dateSelected)}"
             binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.text = weeklyStartDate
-            Log.d(TAG, "Here is the weekly start date chosen: $weeklyStartDate")
         }
     }
 
@@ -349,7 +338,6 @@ class CreateBudgetFragment : Fragment() {
         dailyStartDate.addOnPositiveButtonClickListener { dateSelected ->
             dailyStartDateSelected = "${convertLongToTime(dateSelected)}"
             binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.text = dailyStartDateSelected
-            Log.d(TAG, "Here is the selected date: $dailyStartDateSelected")
         }
     }
 
@@ -366,14 +354,12 @@ class CreateBudgetFragment : Fragment() {
         dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
             val startDate = dateSelected.first
             val endDate = dateSelected.second
-            Log.d(TAG, "this is how the date object looks like: $startDate")
 
             if (startDate != null && endDate != null) {
                 customSelectedDate = "${convertLongToTime(startDate)}, ${convertLongToTime(endDate)}"
                 customeBudgetStartDate = convertLongToTime(startDate)
                 customBudgetEndDate = convertLongToTime(endDate)
                 binding.createBudgetFragmentBudgetPeriodCustomTv.text = customSelectedDate
-                Log.d(TAG, "here is the start and end date: $customSelectedDate")
             }
         }
     }
@@ -404,7 +390,7 @@ class CreateBudgetFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.data?.message}",
+                                "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }
