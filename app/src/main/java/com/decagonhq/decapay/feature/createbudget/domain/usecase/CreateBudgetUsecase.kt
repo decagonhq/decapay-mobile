@@ -16,10 +16,10 @@ class CreateBudgetUsecase @Inject constructor(
     private val exceptionHandler: ExceptionHandler
 ) {
 
-    operator fun invoke(createBudgetRequestBody: CreateBudgetRequestBody): Flow<Resource<CreateBudgetResponse>> = flow {
+    operator fun invoke(authorization: String, createBudgetRequestBody: CreateBudgetRequestBody): Flow<Resource<CreateBudgetResponse>> = flow {
         try {
             emit(Resource.Loading())
-            val response = createBudgetRepository.createBudget(createBudgetRequestBody)
+            val response = createBudgetRepository.createBudget(authorization, createBudgetRequestBody)
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)

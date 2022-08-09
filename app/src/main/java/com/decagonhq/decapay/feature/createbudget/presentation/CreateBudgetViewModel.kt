@@ -23,9 +23,9 @@ class CreateBudgetViewModel @Inject constructor(
     private val _createBudgetResponse = MutableSharedFlow<Resource<CreateBudgetResponse>>()
     val createBudgetResponse: SharedFlow<Resource<CreateBudgetResponse>> get() = _createBudgetResponse.asSharedFlow()
 
-    fun userCreateBudget(createBudgetRequestBody: CreateBudgetRequestBody) {
+    fun userCreateBudget(authorization: String, createBudgetRequestBody: CreateBudgetRequestBody) {
         viewModelScope.launch {
-            createBudgetUsecase(createBudgetRequestBody).collect {
+            createBudgetUsecase(authorization, createBudgetRequestBody).collect {
                 _createBudgetResponse.emit(it)
             }
         }
