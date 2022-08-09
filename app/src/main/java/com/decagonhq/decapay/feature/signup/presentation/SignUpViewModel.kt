@@ -1,5 +1,4 @@
 package com.decagonhq.decapay.feature.signup.presentation
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.utils.resource.Resource

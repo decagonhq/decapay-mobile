@@ -38,8 +38,8 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun providesMobileHeaderInterceptor(): HeaderInterceptor {
-        return HeaderInterceptor()
+    fun providesMobileHeaderInterceptor(preferences: Preferences): HeaderInterceptor {
+        return HeaderInterceptor(preferences)
     }
 
     /**
@@ -58,7 +58,8 @@ object NetworkModule {
     @Singleton
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
-        headerInterceptor: HeaderInterceptor
+        headerInterceptor: HeaderInterceptor,
+        preferences: Preferences
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)
@@ -103,4 +104,6 @@ object NetworkModule {
     fun provideErrorHandle(@ApplicationContext context: Context): ExceptionHandler {
         return ExceptionHandler(context)
     }
+
+
 }

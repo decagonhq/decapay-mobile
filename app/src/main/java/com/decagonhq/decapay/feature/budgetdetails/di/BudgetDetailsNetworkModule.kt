@@ -1,6 +1,6 @@
 package com.decagonhq.decapay.feature.budgetdetails.di
 
-import com.decagonhq.decapay.feature.budgetdetails.data.api.BudgetDetailApi
+import com.decagonhq.decapay.feature.budgetdetails.data.network.api.BudgetDetailsApi
 import com.decagonhq.decapay.feature.budgetdetails.data.repository.BudgetDetailsRepositoryImpl
 import com.decagonhq.decapay.feature.budgetdetails.domain.repository.BudgetDetailsRepository
 import dagger.Module
@@ -19,14 +19,14 @@ object BudgetDetailsNetworkModule {
 
         @Provides
         @Singleton
-        fun provideBudgetDetailsApi(retrofit: Retrofit): BudgetDetailApi {
-            return retrofit.create(BudgetDetailApi::class.java)
+        fun provideBudgetDetailsApi(retrofit: Retrofit): BudgetDetailsApi {
+            return retrofit.create(BudgetDetailsApi::class.java)
         }
 
         @Provides
         @Singleton
-        fun provideBudgetDetailsRepository(budgetDetailApi: BudgetDetailApi): BudgetDetailsRepository {
-            return BudgetDetailsRepositoryImpl(budgetDetailApi)
+        fun provideBudgetDetailsRepository(budgetDetailsApi: BudgetDetailsApi): BudgetDetailsRepository {
+            return BudgetDetailsRepositoryImpl(budgetDetailsApi)
         }
 
     }
