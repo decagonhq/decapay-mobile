@@ -2,7 +2,6 @@ package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -219,7 +218,7 @@ class CreateBudgetFragment : Fragment() {
                                 budgetTitle, null
                             )
                         )
-                        Log.d(TAG, "here is the input from tht duration: ${weeklyDuration}")
+
                         // show dialog
                         pleaseWaitDialog?.show()
                     }
