@@ -38,8 +38,8 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun providesMobileHeaderInterceptor(): HeaderInterceptor {
-        return HeaderInterceptor()
+    fun providesMobileHeaderInterceptor(preferences: Preferences): HeaderInterceptor {
+        return HeaderInterceptor(preferences)
     }
 
     /**
@@ -58,7 +58,8 @@ object NetworkModule {
     @Singleton
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
-        headerInterceptor: HeaderInterceptor
+        headerInterceptor: HeaderInterceptor,
+        preferences: Preferences
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)
@@ -66,6 +67,13 @@ object NetworkModule {
             .writeTimeout(60L, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(headerInterceptor)
+//            .addInterceptor { chain ->
+//                val request = chain.request().newBuilder()
+//                    .addHeader("Authorization", "Bearer ${preferences.getToken()}")
+//                    .addHeader("DVC_KY_HDR", "1")
+//                chain.proceed(request.build())
+//            }
+
             .build()
     }
 
@@ -103,4 +111,6 @@ object NetworkModule {
     fun provideErrorHandle(@ApplicationContext context: Context): ExceptionHandler {
         return ExceptionHandler(context)
     }
+
+
 }

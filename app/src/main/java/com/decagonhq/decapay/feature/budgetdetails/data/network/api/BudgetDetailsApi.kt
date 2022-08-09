@@ -10,6 +10,5 @@ interface BudgetDetailsApi {
     @GET("api/v1/budgets/{budgetId}")
     suspend fun getBudgetDetails(
         @Path("budgetId") budgetId: Int,
-        @Header("Authorization") authorization: String,
         ): BudgetDetailsResponse
 }

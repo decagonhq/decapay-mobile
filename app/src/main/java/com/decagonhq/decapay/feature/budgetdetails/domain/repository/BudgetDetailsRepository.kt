@@ -4,5 +4,5 @@ import com.decagonhq.decapay.feature.budgetdetails.data.network.model.BudgetDeta
 
 interface BudgetDetailsRepository {
 
-    suspend fun getBudgetDetails(budgetId: Int,token:String):BudgetDetailsResponse
+    suspend fun getBudgetDetails(budgetId: Int):BudgetDetailsResponse
 }

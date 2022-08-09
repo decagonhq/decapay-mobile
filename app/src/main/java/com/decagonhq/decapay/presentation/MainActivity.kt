@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity(
                                 it.data.message,
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            preference.deleteToken()
                         }
                         is Resource.Error -> {
 //                            pleaseWaitDialog?.dismiss()
@@ -112,7 +113,6 @@ class MainActivity : AppCompatActivity(
                 }
                 R.id.menu_logout -> {
                     activityViewModel.signOutUser(SignOutRequestBody(preference.getToken()))
-                    preference.deleteToken()
                     navController.navigate(R.id.loginFragment)
                     hideDrawer()
                 }

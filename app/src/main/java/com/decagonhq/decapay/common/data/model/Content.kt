@@ -14,7 +14,7 @@ data class Content (
     @SerializedName("id")
     val id: Int,
     @SerializedName("percentageSpentSoFar")
-    val percentageSpentSoFar: Int,
+    val percentageSpentSoFar: Double,
     @SerializedName("period")
     val period: String,
     @SerializedName("projectedAmount")
@@ -22,5 +22,5 @@ data class Content (
     @SerializedName("title")
     val title: String,
     @SerializedName("totalAmountSpentSoFar")
-    val totalAmountSpentSoFar: Int
+    val totalAmountSpentSoFar: Double
 ): Serializable

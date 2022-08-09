@@ -21,10 +21,10 @@ class BudgetDetailsViewModel @Inject constructor(
 
 
 
-    fun getBudgetDetails(budgetId:Int, token:String){
+    fun getBudgetDetails(budgetId:Int){
         viewModelScope.launch {
 
-            budgetsDetailsUseCase(budgetId,token).collect{
+            budgetsDetailsUseCase(budgetId).collect{
                 _budgetDetailsResponse.value = it
             }
 

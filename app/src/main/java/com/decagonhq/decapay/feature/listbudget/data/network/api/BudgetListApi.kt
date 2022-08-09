@@ -11,7 +11,6 @@ interface BudgetListApi {
     @GET("api/v1/budgets")
     suspend fun getBudgetList(
         @Query("page") address: Int,
-        @Header("Authorization") authorization: String,
         @Query("size") size: Int,
     ): BudgetListResponse
 }

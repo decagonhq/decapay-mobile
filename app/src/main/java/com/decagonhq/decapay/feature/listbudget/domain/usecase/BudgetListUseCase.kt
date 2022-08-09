@@ -10,15 +10,15 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class BudgetListUseCase  @Inject constructor(
-    private  val budgetListRepository: BudgetListRepository,
+class BudgetListUseCase @Inject constructor(
+    private val budgetListRepository: BudgetListRepository,
     private val exceptionHandler: ExceptionHandler
-){
-    operator fun invoke(token:String,page:Int): Flow<Resource<BudgetListResponse>> = flow {
+) {
+    operator fun invoke(page: Int): Flow<Resource<BudgetListResponse>> = flow {
 
         try {
             emit(Resource.Loading())
-            val response = budgetListRepository.getBudgetList(token,page)
+            val response = budgetListRepository.getBudgetList(page)
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)
@@ -29,10 +29,9 @@ class BudgetListUseCase  @Inject constructor(
     }
 
 
-     fun getNextPage(token:String,page:Int): Flow<Resource<BudgetListResponse>> = flow {
-
+    fun getNextPage(page: Int): Flow<Resource<BudgetListResponse>> = flow {
         try {
-            val response = budgetListRepository.getBudgetList(token, page )
+            val response = budgetListRepository.getBudgetList(page)
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)

@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.model.Content
-import com.decagonhq.decapay.common.utils.commaSeparatedString
 
 class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClicker) :
     RecyclerView.Adapter<BudgetListAdapter.BudgetListViewHolder>() {
@@ -47,9 +46,9 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
 
 
         fun initialize(currentBudgetItem: Content, clicker: BudgetClicker) {
-            amountTextView.text = "₦${currentBudgetItem.projectedAmount.toDouble().commaSeparatedString()}"
+            amountTextView.text = "${currentBudgetItem.projectedAmount}"
             percentageTextView.text = "${currentBudgetItem.percentageSpentSoFar}%"
-            spentTextView.text = "₦${((currentBudgetItem.percentageSpentSoFar/100)*currentBudgetItem.projectedAmount).toDouble().commaSeparatedString()}"
+            spentTextView.text = "${((currentBudgetItem.percentageSpentSoFar/100)*currentBudgetItem.projectedAmount)}"
             titleTextView.text = currentBudgetItem.title
 
 

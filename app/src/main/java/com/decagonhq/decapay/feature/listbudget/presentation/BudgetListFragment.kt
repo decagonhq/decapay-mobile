@@ -51,7 +51,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
         // val list = mutableListOf<Int>()
 
-        budgetListViewModel.getBudgetList(preference.getToken())
+        budgetListViewModel.getBudgetList()
         adapter = BudgetListAdapter(list, this)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
@@ -94,15 +94,13 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     }
 
 
-
-
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         //println("Clicked on an item elipsis")
         showPopupMenu(position, view)
     }
 
 
-    private fun goToBudgetDetails(currentBudget: Content){
+    private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
         bundle.putSerializable("BUDGET_ITEM", currentBudget)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
@@ -143,7 +141,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
-                        budgetListViewModel.getNextPage(preference.getToken())
+                        budgetListViewModel.getNextPage()
 
                         /**
                         Make network call

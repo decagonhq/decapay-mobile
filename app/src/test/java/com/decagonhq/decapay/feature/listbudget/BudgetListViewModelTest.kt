@@ -49,12 +49,12 @@ class BudgetListViewModelTest {
 
     @Test
      fun `view model fetches first list`() = runTest{
-        val token = "token"
+
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(token,0)).thenReturn(flow)
+        Mockito.`when`(mockUseCase.invoke(0)).thenReturn(flow)
         val viewModel = BudgetListViewModel( mockUseCase)
 
-        viewModel.getBudgetList(token)
+        viewModel.getBudgetList()
         viewModel.budgetListResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Loading::class.java)
@@ -69,11 +69,11 @@ class BudgetListViewModelTest {
         val token = "token"
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(token,0)).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(token,1)).thenReturn(flow2)
+        Mockito.`when`(mockUseCase.invoke(0)).thenReturn(flow)
+        Mockito.`when`(mockUseCase.getNextPage(1)).thenReturn(flow2)
         val viewModel = BudgetListViewModel( mockUseCase)
 
-        viewModel.getBudgetList(token)
+        viewModel.getBudgetList()
 
 
         viewModel.budgetListResponse.test {
@@ -83,7 +83,7 @@ class BudgetListViewModelTest {
             assert(secondEmission::class.java == Resource.Success::class.java)
         }
 
-        viewModel.getNextPage(token)
+        viewModel.getNextPage()
 
         viewModel.budgetListResponse.test {
                         val thirdEmission = awaitItem()

@@ -12,8 +12,6 @@ interface SignOutApi {
 
     @POST("api/v1/signout")
     suspend fun signOut(
-        @Header("Authorization") authorization:String,
         @Body signOutRequestBody: SignOutRequestBody
-
     ): SignOutResponse
 }

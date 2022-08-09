@@ -35,7 +35,7 @@ class BudgetDetailsViewModelTest {
     }
 
     @After
-    fun testDown() {
+    fun tearDown() {
         Dispatchers.resetMain()
     }
 
@@ -47,11 +47,11 @@ class BudgetDetailsViewModelTest {
 
     @Test
     fun `view model loads data`() = runTest{
-        val token = "token"
+
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(1,token)).thenReturn(flow)
+        Mockito.`when`(mockUseCase.invoke(1)).thenReturn(flow)
         val  viewModel = BudgetDetailsViewModel(mockUseCase)
-        viewModel.getBudgetDetails(1,token)
+        viewModel.getBudgetDetails(1)
         viewModel.budgetDetailsResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Loading::class.java)

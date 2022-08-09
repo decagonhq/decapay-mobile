@@ -26,10 +26,10 @@ class BudgetListViewModel @Inject constructor(
 
 
 
-   fun getBudgetList(token:String) {
+   fun getBudgetList() {
       viewModelScope.launch {
 
-       budgetListUseCase.invoke(token,page).collect{
+       budgetListUseCase.invoke(page).collect{
           if(it is Resource.Success){
              page++
           }
@@ -39,11 +39,11 @@ class BudgetListViewModel @Inject constructor(
    }
 
 
-   fun getNextPage(token:String){
+   fun getNextPage(){
       if(!isFetching){
          isFetching = true
          viewModelScope.launch {
-            budgetListUseCase.getNextPage(token,page).collect{
+            budgetListUseCase.getNextPage(page).collect{
                if(it is Resource.Success){
                   page++
                }

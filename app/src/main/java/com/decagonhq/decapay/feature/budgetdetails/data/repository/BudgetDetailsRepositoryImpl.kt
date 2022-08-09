@@ -11,8 +11,8 @@ class BudgetDetailsRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun getBudgetDetails(budgetId: Int,token:String): BudgetDetailsResponse {
-       return budgetDetailsApi.getBudgetDetails(budgetId,"Bearer $token")
+    override suspend fun getBudgetDetails(budgetId: Int): BudgetDetailsResponse {
+       return budgetDetailsApi.getBudgetDetails(budgetId)
 
     }
 

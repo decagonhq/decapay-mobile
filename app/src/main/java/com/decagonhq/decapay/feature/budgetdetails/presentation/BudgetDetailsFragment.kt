@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.commaSeparatedString
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +49,7 @@ class BudgetDetailsFragment : Fragment() {
 
 
 
-        budgetDetailsViewModel.getBudgetDetails(budget.id, preference.getToken())
+        budgetDetailsViewModel.getBudgetDetails(budget.id)
 
 
     }
@@ -65,7 +64,7 @@ class BudgetDetailsFragment : Fragment() {
                             val budgetDetails = it.data.data;
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
-                            binding.budgetDetailsHeaderAmountTv.text = "₦" + budgetDetails.projectedAmount.commaSeparatedString()
+                            binding.budgetDetailsHeaderAmountTv.text = budgetDetails.projectedAmount.toString()
                             binding.budgetDetailsTasAmountTv.text = budgetDetails.displayTotalAmountSpentSoFar
                             binding.budgetDetailsPercentageAmountTv.text =    budgetDetails.percentageSpentSoFar.toString() + "%"
 

@@ -16,11 +16,11 @@ class BudgetsDetailsUseCase @Inject constructor(
 ) {
 
 
-    operator fun invoke(budgetId:Int,token:String): Flow<Resource<BudgetDetailsResponse>> =
+    operator fun invoke(budgetId:Int): Flow<Resource<BudgetDetailsResponse>> =
         flow {
             try {
                 emit(Resource.Loading())
-                val response = budgetDetailsRepository.getBudgetDetails(budgetId,token)
+                val response = budgetDetailsRepository.getBudgetDetails(budgetId)
                 emit(Resource.Success(response))
             } catch (e: HttpException) {
                 val message = exceptionHandler.parse(e)
