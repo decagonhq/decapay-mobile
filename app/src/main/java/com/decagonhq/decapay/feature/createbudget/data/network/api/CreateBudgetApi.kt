@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface CreateBudgetApi {
 
-    @POST("api/v1/createbudget")
+    @POST("api/v1/budgets")
     suspend fun createBudget(
         @Body createBudgetRequestBody: CreateBudgetRequestBody
     ): CreateBudgetResponse

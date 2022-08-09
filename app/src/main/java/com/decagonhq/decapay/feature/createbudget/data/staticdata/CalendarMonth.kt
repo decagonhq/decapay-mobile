@@ -4,18 +4,18 @@ object CalendarMonth {
     val calendarMonth: ArrayList<String>
         get() {
             val calendarMonthData = ArrayList<String>()
-            calendarMonth.add("January")
-            calendarMonth.add("February")
-            calendarMonth.add("March")
-            calendarMonth.add("April")
-            calendarMonth.add("May")
-            calendarMonth.add("June")
-            calendarMonth.add("July")
-            calendarMonth.add("August")
-            calendarMonth.add("September")
-            calendarMonth.add("October")
-            calendarMonth.add("November")
-            calendarMonth.add("December")
+            calendarMonthData.add("January")
+            calendarMonthData.add("February")
+            calendarMonthData.add("March")
+            calendarMonthData.add("April")
+            calendarMonthData.add("May")
+            calendarMonthData.add("June")
+            calendarMonthData.add("July")
+            calendarMonthData.add("August")
+            calendarMonthData.add("September")
+            calendarMonthData.add("October")
+            calendarMonthData.add("November")
+            calendarMonthData.add("December")
 
             return calendarMonthData
         }

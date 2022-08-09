@@ -73,7 +73,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_fragment_email_textinputedittext_email_tiedt"
+            android:id="@+id/create_budget_fragment_title_tiedt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/create_budget_fragment_hint_title"
@@ -141,8 +141,7 @@
             android:id="@+id/create_budget_fragment_budget_period_annual_year_spinner"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_gravity=""
+            android:layout_marginTop="4dp"
             android:entries="@array/choose_year"
             android:visibility="gone"
             android:background="@drawable/spinner_bg"
@@ -151,8 +150,7 @@
             android:id="@+id/create_budget_fragment_budget_period_monthly_year_spinner"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_gravity=""
+            android:layout_marginTop="4dp"
             android:entries="@array/choose_year"
             android:visibility="gone"
             android:background="@drawable/spinner_bg"
@@ -161,11 +159,12 @@
             android:id="@+id/create_budget_fragment_budget_period_monthly_month_spinner"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
+            android:layout_gravity="center_vertical|end"
             android:entries="@array/budget_period_month"
             android:visibility="gone"
             android:background="@drawable/spinner_bg"
             />
+
         <TextView
             android:id="@+id/create_budget_fragment_budget_period_weekly_start_date_tv"
             android:layout_width="match_parent"
@@ -181,7 +180,7 @@
             android:id="@+id/create_budget_fragment_budget_period_weekly_duration_edittext"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="4dp"
             android:layout_marginTop="48dp"
             android:inputType="number"
             android:fontFamily="@font/roboto_light"
@@ -253,8 +252,6 @@
         android:text="@string/create_budget_fragment_done_button"
         android:textAllCaps="false"
         android:textColor="@color/white" />
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>
