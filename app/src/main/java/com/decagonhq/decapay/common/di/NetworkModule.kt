@@ -67,13 +67,6 @@ object NetworkModule {
             .writeTimeout(60L, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(headerInterceptor)
-//            .addInterceptor { chain ->
-//                val request = chain.request().newBuilder()
-//                    .addHeader("Authorization", "Bearer ${preferences.getToken()}")
-//                    .addHeader("DVC_KY_HDR", "1")
-//                chain.proceed(request.build())
-//            }
-
             .build()
     }
 

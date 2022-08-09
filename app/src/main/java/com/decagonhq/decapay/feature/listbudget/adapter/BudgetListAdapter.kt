@@ -46,9 +46,9 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
 
 
         fun initialize(currentBudgetItem: Content, clicker: BudgetClicker) {
-            amountTextView.text = "${currentBudgetItem.projectedAmount}"
-            percentageTextView.text = "${currentBudgetItem.percentageSpentSoFar}%"
-            spentTextView.text = "${((currentBudgetItem.percentageSpentSoFar/100)*currentBudgetItem.projectedAmount)}"
+            amountTextView.text = currentBudgetItem.displayProjectedAmount
+            percentageTextView.text = currentBudgetItem.displayPercentageSpentSoFar
+            spentTextView.text = currentBudgetItem.displayTotalAmountSpentSoFar
             titleTextView.text = currentBudgetItem.title
 
 

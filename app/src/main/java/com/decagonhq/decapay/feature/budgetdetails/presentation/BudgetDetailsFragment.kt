@@ -64,9 +64,9 @@ class BudgetDetailsFragment : Fragment() {
                             val budgetDetails = it.data.data;
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
-                            binding.budgetDetailsHeaderAmountTv.text = budgetDetails.projectedAmount.toString()
+                            binding.budgetDetailsHeaderAmountTv.text = budgetDetails.displayProjectedAmount
                             binding.budgetDetailsTasAmountTv.text = budgetDetails.displayTotalAmountSpentSoFar
-                            binding.budgetDetailsPercentageAmountTv.text =    budgetDetails.percentageSpentSoFar.toString() + "%"
+                            binding.budgetDetailsPercentageAmountTv.text =    budgetDetails.displayPercentageSpentSoFar
 
                             val formatter = SimpleDateFormat("yyyy.MM.dd, HH:mm")
 

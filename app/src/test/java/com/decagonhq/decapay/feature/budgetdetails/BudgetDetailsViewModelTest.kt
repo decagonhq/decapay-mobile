@@ -5,7 +5,6 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.BudgetDetailsResponse
 import com.decagonhq.decapay.feature.budgetdetails.domain.usecase.BudgetsDetailsUseCase
 import com.decagonhq.decapay.feature.budgetdetails.presentation.BudgetDetailsViewModel
-import com.decagonhq.decapay.feature.listbudget.presentation.BudgetListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -24,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class BudgetDetailsViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
-    lateinit var mockUseCase: BudgetsDetailsUseCase
+    private lateinit var mockUseCase: BudgetsDetailsUseCase
     lateinit var mockResponse: BudgetDetailsResponse
 
     @Before
