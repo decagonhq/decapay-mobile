@@ -19,6 +19,17 @@
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/budget_item" />
 
+
+    <ProgressBar
+        android:id="@+id/budgetListFragment_page_loading_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/decapay_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/budgetListFragment_empty_ll"
         android:layout_width="wrap_content"

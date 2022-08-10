@@ -3,12 +3,13 @@ package com.decagonhq.decapay.feature.listbudget.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.data.model.Content
 
-class BudgetListAdapter(var list: MutableList<Int>, var clicker: BudgetClicker) :
+class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClicker) :
     RecyclerView.Adapter<BudgetListAdapter.BudgetListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetListViewHolder {
@@ -25,8 +26,7 @@ class BudgetListAdapter(var list: MutableList<Int>, var clicker: BudgetClicker) 
         return list.size
     }
 
-    fun setBudget(results: MutableList<Int>) {
-        this.list = results
+    fun setBudget() {
         notifyDataSetChanged()
     }
 
@@ -38,17 +38,27 @@ class BudgetListAdapter(var list: MutableList<Int>, var clicker: BudgetClicker) 
 
 
     class BudgetListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_list_item_elipsis_ib)
+       private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_list_item_elipsis_ib)
+        private  var titleTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_title_tv)
+        private var amountTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_amount_tv)
+        private  var spentTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_amount_spent_tv)
+        private  var percentageTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_percentage_spent_tv)
 
 
-        fun initialize(currentBudgetItem: Int, clicker: BudgetClicker) {
+        fun initialize(currentBudgetItem: Content, clicker: BudgetClicker) {
+            amountTextView.text = currentBudgetItem.displayProjectedAmount
+            percentageTextView.text = currentBudgetItem.displayPercentageSpentSoFar
+            spentTextView.text = currentBudgetItem.displayTotalAmountSpentSoFar
+            titleTextView.text = currentBudgetItem.title
+
+
+
 
             itemView.setOnClickListener {
                 clicker.onClickItem(currentBudgetItem, adapterPosition)
             }
-
             button.setOnClickListener {
-                clicker.onClickItemElipsis(currentBudgetItem, adapterPosition, button)
+                clicker.onClickItemEllipsis(currentBudgetItem, adapterPosition, button)
             }
         }
     }

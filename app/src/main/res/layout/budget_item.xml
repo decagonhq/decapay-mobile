@@ -13,6 +13,7 @@
 
 
         <TextView
+            android:id="@+id/budget_list_item_budget_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,6 +44,7 @@
             android:text="Budget Amount" />
 
         <TextView
+            android:id="@+id/budget_list_item_budget_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N5000" />
@@ -61,9 +63,10 @@
             android:text="Total amount spent" />
 
         <TextView
+            android:id="@+id/budget_list_item_amount_spent_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N8000" />
+            android:text="" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -79,10 +82,11 @@
             android:text="Percentage" />
 
         <TextView
+            android:id="@+id/budget_list_item_budget_percentage_spent_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/decapay_green"
-            android:text="3.97%" />
+            android:text="" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
