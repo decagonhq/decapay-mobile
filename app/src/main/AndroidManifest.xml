@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.decagonhq.decapay" >
 
+    <uses-sdk tools:overrideLibrary="by.dzmitry_lakisau.month_year_picker_dialog"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application

@@ -64,5 +64,60 @@
     <string name="log">Log</string>
     <string name="percentage">Percentage</string>
     <string name="total_amount_spent">Total Amount spent</string>
+    <string name="create_budget_fragment_title_tv">Create Budget</string>
+    <string name="create_budget_fragment_label_title">Title</string>
+    <string name="create_budget_fragment_hint_title">Enter title</string>
+    <string name="create_budget_fragment_label_amount">Amount</string>
+    <string name="create_budget_fragment_hint_amount">Enter amount</string>
+    <string name="create_budget_fragment_label_buget_period">Budget period</string>
+    <string name="create_budget_fragment_hint_select">Select</string>
+    <string name="create_budget_fragment_label_description">Description</string>
+    <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
+    <string name="create_budget_fragment_done_button">Done</string>
+    <string name="option_modal_bottom_sheet_fragment_instruction">You can select <b>custom</b> to choose your perfect\ndate</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_annual">Annual</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_monthly">Monthly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_weeklyly">Weekly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_daily">Daily</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_custom">Custom</string>
+    <string name="create_budget_fragment_buget_period_autocomplete_view">Please select a period</string>
+    <string-array name="budget_periods">
+        <item>Annual</item>
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Daily</item>
+        <item>Custom</item>
+    </string-array>
+    <string name="reate_budget_fragment_buget_period_annual_year">Enter year</string>
+    <string-array name="budget_period_month">
+        <item>January</item>
+        <item>Feburary</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+    </string-array>
+    <string-array name="budget_period_weekly">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+    </string-array>
+    <string name="create_budget_fragment_budget_period_daily_select_date">Select Date</string>
+    <string name="create_budget_fragment_budget_period_custom_selection">Start date, End date</string>
+    <string-array name="choose_year">
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+    </string-array>
+    <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
+    <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
+
 
 </resources>

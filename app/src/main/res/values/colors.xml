@@ -13,4 +13,9 @@
     <color name="budget_list_grey">#F5F5F5</color>
     <color name="light_green_tint">#F8FCF7</color>
     <color name="light_blue_tint">#F7FCFF</color>
+    <color name="toolbar_stroke">#F5F5F5</color>
+    <color name="toolbar_background">#E5E5E5</color>
+    <color name="border_color">#D9D9D9</color>
+    <color name="border_color_text_input">#ADA9A9</color>
+    <color name="background_color_text">#FFE088</color>
 </resources>
