@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.createbudget.presentation.bottomsheet
 
 import android.app.DatePickerDialog
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import com.decagonhq.decapay.common.utils.bottomsheetcommunicationonclickinterfa
 import com.decagonhq.decapay.databinding.FragmentOptionModalBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 import java.util.*
 
 class OptionModalBottomSheetFragment(private val listener: BottomSheetOnclickInterface) : BottomSheetDialogFragment() {
