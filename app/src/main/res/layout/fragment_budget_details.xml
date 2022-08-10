@@ -9,6 +9,7 @@
     tools:context=".feature.budgetdetails.presentation.BudgetDetailsFragment">
 
 <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/budget_details_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -26,7 +27,7 @@
             android:id="@+id/budget_details_header_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Budget Title"
+            android:text=""
             android:textSize="14sp"
             android:textColor="@color/white" />
 
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:text="N3000000"
+            android:text=""
             android:textColor="@color/white" />
 
 
@@ -73,7 +74,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="N20000"
+                    android:text=""
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -116,7 +117,7 @@
                     android:id="@+id/budget_details_percentage_amount_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="N20000"
+                    android:text=""
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>

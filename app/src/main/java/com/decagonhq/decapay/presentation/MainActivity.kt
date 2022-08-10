@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }else{
+
         }
 
         /** INITIALISE DRAWER MENU LISTENER */
@@ -70,9 +72,10 @@ class MainActivity : AppCompatActivity(
                         is Resource.Success -> {
                             Snackbar.make(
                                 binding.root,
-                                "${it.data.message}",
+                                it.data.message,
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            preference.deleteToken()
                         }
                         is Resource.Error -> {
 //                            pleaseWaitDialog?.dismiss()
@@ -110,7 +113,6 @@ class MainActivity : AppCompatActivity(
                 }
                 R.id.menu_logout -> {
                     activityViewModel.signOutUser(SignOutRequestBody(preference.getToken()))
-                    preference.deleteToken()
                     navController.navigate(R.id.loginFragment)
                     hideDrawer()
                 }

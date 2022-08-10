@@ -13,6 +13,6 @@ class SignOutRepositoryImpl @Inject constructor(private val signOutApi: SignOutA
     SignOutRepository {
 
     override suspend fun signOutUser(signOutRequestBody: SignOutRequestBody): SignOutResponse {
-        return signOutApi.signOut("Bearer ${signOutRequestBody.token}", signOutRequestBody)
+        return signOutApi.signOut(signOutRequestBody)
     }
 }

@@ -51,7 +51,11 @@
         android:id="@+id/budgetListFragment"
         android:name="com.decagonhq.decapay.feature.listbudget.presentation.BudgetListFragment"
         android:label="fragment_budget_list"
-        tools:layout="@layout/fragment_budget_list" />
+        tools:layout="@layout/fragment_budget_list" >
+        <action
+            android:id="@+id/action_budgetListFragment_to_budgetDetailsFragment"
+            app:destination="@id/budgetDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/budgetDetailsFragment"
         android:name="com.decagonhq.decapay.feature.budgetdetails.presentation.BudgetDetailsFragment"
