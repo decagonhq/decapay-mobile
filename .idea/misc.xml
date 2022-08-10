@@ -17,7 +17,7 @@
         <entry key="app/src/main/res/layout/custom_login_wait_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_budget_details.xml" value="0.2418478260869565" />
         <entry key="app/src/main/res/layout/fragment_budget_list.xml" value="0.25833333333333336" />
-        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.13496376811594202" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />
