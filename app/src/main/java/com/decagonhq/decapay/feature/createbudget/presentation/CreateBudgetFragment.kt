@@ -43,7 +43,6 @@ class CreateBudgetFragment : Fragment() {
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding: FragmentCreateBudgetBinding get() = _binding!!
     private val createBudgetViewModel: CreateBudgetViewModel by viewModels()
-    private lateinit var budgetPeriod: TextView
     lateinit var annualPeriodYear: String
     lateinit var monthlyPeriodYear: String
     lateinit var monthlyPeriodMonth: String
@@ -185,7 +184,7 @@ class CreateBudgetFragment : Fragment() {
                     "Annual" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
+                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, null, UserPeriodConstant.ANNUAL,
@@ -198,7 +197,7 @@ class CreateBudgetFragment : Fragment() {
                     "Monthly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
+                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), UserPeriodConstant.MONTHLY,
@@ -211,7 +210,7 @@ class CreateBudgetFragment : Fragment() {
                     "Weekly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
+                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, weeklyStartDate,
                                 budgetDescription, weeklyDuration.toInt(), null, UserPeriodConstant.WEEKLY,
@@ -225,7 +224,7 @@ class CreateBudgetFragment : Fragment() {
                     "Daily" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
+                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), dailyStartDateSelected, dailyStartDateSelected,
                                 budgetDescription, null, null, UserPeriodConstant.DAILY,
@@ -238,7 +237,7 @@ class CreateBudgetFragment : Fragment() {
                     "Custom" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${NetworkConstant.MY_TOKEN}",
+                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), customBudgetEndDate, customeBudgetStartDate,
                                 budgetDescription, null, null, UserPeriodConstant.CUSTOM,
