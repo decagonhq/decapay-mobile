@@ -60,15 +60,5 @@
             android:name="year"
             app:argType="string"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_createBudgetFragment_to_optionModalBottomSheetFragment"
-            app:destination="@id/optionModalBottomSheetFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/optionModalBottomSheetFragment"
-        android:name="com.decagonhq.decapay.feature.createbudget.presentation.bottomsheet.OptionModalBottomSheetFragment"
-        android:label="fragment_option_modal_bottom_sheet"
-        tools:layout="@layout/fragment_option_modal_bottom_sheet" >
-        <argument android:name="clicklistener" />
-    </dialog>
 </navigation>
