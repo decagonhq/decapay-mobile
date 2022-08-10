@@ -150,14 +150,6 @@ class LoginFragment : Fragment() {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password cannot be empty"
         } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must have a minimum of 8 characters."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 upper case character.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 upper case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 lower case character."
         } else {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = ""
         }

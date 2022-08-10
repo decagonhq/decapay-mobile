@@ -48,13 +48,6 @@ class LoginInputValidationTest {
     }
 
     @Test
-    fun validateUserPassword_givePasswordStartsWithLowerCaseLetter_returnFalse() {
-        val receivedPassword = "blessed1"
-        val result = LoginInputValidation.validateUserPassword(receivedPassword)
-        assertFalse(result)
-    }
-
-    @Test
     fun validateEmailForTextWatcher_emptyEmailField() {
         val expected = "Field cannot be empty"
         val result = LoginInputValidation.validateEmailForTextWatcher("")
