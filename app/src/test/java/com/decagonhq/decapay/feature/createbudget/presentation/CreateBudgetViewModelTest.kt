@@ -39,9 +39,9 @@ class CreateBudgetViewModelTest() {
     @Test
     fun createBudgetViewModelTest_returnASuccessfulData() = runTest {
         val flow = CreateBudgetFakeFlow(Resource.Success(mockCreateBudgetResponse))
-        `when`(mockCreateBudgetUsecase.invoke("", mockCreateBudgetResquest)).thenReturn(flow)
+        `when`(mockCreateBudgetUsecase.invoke(mockCreateBudgetResquest)).thenReturn(flow)
         val createBudgetViewModel = CreateBudgetViewModel(mockCreateBudgetUsecase, null)
-        createBudgetViewModel.userCreateBudget("", mockCreateBudgetResquest)
+        createBudgetViewModel.userCreateBudget(mockCreateBudgetResquest)
         createBudgetViewModel.createBudgetResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Success::class.java)

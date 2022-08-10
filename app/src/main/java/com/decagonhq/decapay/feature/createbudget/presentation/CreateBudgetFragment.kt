@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.constants.NetworkConstant
 import com.decagonhq.decapay.common.constants.UserPeriodConstant
-import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
@@ -30,15 +28,12 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateBudgetFragment : Fragment() {
     /**
      * declare variables and views
      */
-    @Inject
-    lateinit var preference: Preferences
     private val TAG = "CREATEBUDGETFRAG"
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding: FragmentCreateBudgetBinding get() = _binding!!
@@ -184,7 +179,6 @@ class CreateBudgetFragment : Fragment() {
                     "Annual" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, null, UserPeriodConstant.ANNUAL,
@@ -197,7 +191,6 @@ class CreateBudgetFragment : Fragment() {
                     "Monthly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
                                 budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), UserPeriodConstant.MONTHLY,
@@ -210,7 +203,6 @@ class CreateBudgetFragment : Fragment() {
                     "Weekly" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, weeklyStartDate,
                                 budgetDescription, weeklyDuration.toInt(), null, UserPeriodConstant.WEEKLY,
@@ -224,7 +216,6 @@ class CreateBudgetFragment : Fragment() {
                     "Daily" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), dailyStartDateSelected, dailyStartDateSelected,
                                 budgetDescription, null, null, UserPeriodConstant.DAILY,
@@ -237,7 +228,6 @@ class CreateBudgetFragment : Fragment() {
                     "Custom" -> {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
-                            NetworkConstant.BEARER + " ${preference.getToken()}",
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), customBudgetEndDate, customeBudgetStartDate,
                                 budgetDescription, null, null, UserPeriodConstant.CUSTOM,
@@ -255,11 +245,7 @@ class CreateBudgetFragment : Fragment() {
 
         // navigate to list of Budget
         binding.createBudgetFragmentBackNavigationIv.setOnClickListener {
-            Snackbar.make(
-                binding.root,
-                "navigate me to Budget list",
-                Snackbar.LENGTH_LONG
-            ).show()
+            findNavController().navigate(R.id.budgetListFragment)
         }
     }
 
@@ -383,6 +369,7 @@ class CreateBudgetFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            findNavController().navigate(R.id.budgetListFragment)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

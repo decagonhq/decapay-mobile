@@ -5,7 +5,6 @@ import com.decagonhq.decapay.feature.createbudget.data.network.model.CreateBudge
 
 interface CreateBudgetRepository {
     suspend fun createBudget(
-        authorization: String,
         createBudgetRequestBody: CreateBudgetRequestBody
     ): CreateBudgetResponse
 }

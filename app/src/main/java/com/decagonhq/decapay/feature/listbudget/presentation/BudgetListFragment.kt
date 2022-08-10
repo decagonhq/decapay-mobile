@@ -14,12 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetListBinding
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
-import com.decagonhq.decapay.common.data.model.Content
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,7 +37,8 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private val list = mutableListOf<Content>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetListBinding.inflate(inflater, container, false)
@@ -47,7 +48,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //binding.budgetListFragmentBudgetListRv.visibility = View.GONE
+        // binding.budgetListFragmentBudgetListRv.visibility = View.GONE
 
         // val list = mutableListOf<Int>()
 
@@ -56,10 +57,8 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
 
-
-
         binding.budgetListFragmentCreateBudgetFab.setOnClickListener {
-
+            findNavController().navigate(R.id.createBudgetFragment)
         }
 
         setUpScrollListener()
@@ -81,8 +80,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                         }
                         else -> {}
                     }
-
-
                 }
             }
         }
@@ -90,15 +87,12 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onClickItem(currentBudget: Content, position: Int) {
         goToBudgetDetails(currentBudget)
-
     }
-
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
-        //println("Clicked on an item elipsis")
+        // println("Clicked on an item elipsis")
         showPopupMenu(position, view)
     }
-
 
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
@@ -112,7 +106,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-
                     }
                     "View details" -> {
                         val bundle = Bundle()
@@ -128,39 +121,33 @@ class BudgetListFragment : Fragment(), BudgetClicker {
             show()
         }
 
-
     private fun setUpScrollListener() {
         binding.budgetListFragmentBudgetListRv.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
-                if (dy > 0) {
-                    val visibleItemCount = recyclerView.layoutManager!!.childCount
-                    val totalItemCount = recyclerView.layoutManager!!.itemCount
-                    val pastVisibleItems =
-                        (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if (dy > 0) {
+                        val visibleItemCount = recyclerView.layoutManager!!.childCount
+                        val totalItemCount = recyclerView.layoutManager!!.itemCount
+                        val pastVisibleItems =
+                            (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
-                        budgetListViewModel.getNextPage()
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
+                            budgetListViewModel.getNextPage()
 
-                        /**
-                        Make network call
-                         **/
+                            /**
+                             Make network call
+                             **/
+                        }
                     }
-
-
                 }
-
-            }
-        })
+            })
     }
-
 
     private fun setIsLoadingScreen() {
         binding.budgetListFragmentBudgetListRv.visibility = View.GONE
         binding.budgetListFragmentEmptyLl.visibility = View.GONE
         binding.budgetListFragmentPageLoadingPb.visibility = View.VISIBLE
-
     }
 
     private fun setEmptyListScreen() {
@@ -182,5 +169,4 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         binding.budgetListFragmentEmptyLl.visibility = View.GONE
         binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
     }
-
 }

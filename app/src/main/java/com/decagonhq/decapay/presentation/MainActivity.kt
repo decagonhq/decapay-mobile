@@ -24,9 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(
-
-) {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preference: Preferences
@@ -43,12 +41,10 @@ class MainActivity : AppCompatActivity(
 
         setUpViewModelListener()
 
-
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        }else{
-
+        } else {
         }
 
         /** INITIALISE DRAWER MENU LISTENER */
@@ -64,7 +60,7 @@ class MainActivity : AppCompatActivity(
         selectNavigationItem(navigationView)
     }
 
-    private fun setUpViewModelListener(){
+    private fun setUpViewModelListener() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 activityViewModel.signOutResponse.collect {
@@ -93,15 +89,12 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-
-
     private fun selectNavigationItem(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener {
             navController =
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
             when (it.itemId) {
                 R.id.menu_dashboard -> {
-
 
                     // navController.navigate(R.id.loginFragment)
                 }
@@ -124,7 +117,6 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-
     private fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -134,9 +126,4 @@ class MainActivity : AppCompatActivity(
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
-
-
-
-
-
 }
