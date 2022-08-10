@@ -11,7 +11,13 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- This is the style for the bottomsheet added to the activity/ application theme-->
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
         <!-- Customize your theme here. -->
+        <!-- This line of styles are for the Material Date Picker-->
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
     </style>
 
     <style name="menu_text_style" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu">
@@ -25,4 +31,32 @@
     </style>
     <style name="Theme.DecaPay.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.DecaPay.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Date Picker Style-->
+    <!--
+    <style name="MonthPickerDialogStyle">
+        <item name="monthBgColor">@color/white</item>
+        <item name="monthBgSelectedColor">@color/orange</item>
+        <item name="monthFontColorSelected">@color/white</item>
+        <item name="monthFontColorNormal">@android:color/black</item>
+        <item name="monthFontColorDisabled">@android:color/darker_gray</item>
+
+        <item name="headerBgColor">@color/orange</item>
+        <item name="headerFontColorSelected">#fff</item>
+        <item name="headerFontColorNormal">#85FFFFFF</item>
+        <item name="headerTitleColor">#fff</item>
+
+        <item name="dialogActionButtonColor">@color/orange</item>
+    </style>
+    -->
+
+    <!--This is the function theme for the Bottomsheet-->
+    <style name="BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+    <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
 </resources>
