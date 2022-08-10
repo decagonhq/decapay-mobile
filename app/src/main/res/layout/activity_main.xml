@@ -20,6 +20,7 @@
             android:src="@drawable/ic_hamburger"
             android:elevation="5dp"
             android:layout_marginStart="20dp"
+            android:paddingBottom="10dp"
             android:background="@android:color/transparent"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
