@@ -94,7 +94,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         // println("Clicked on an item elipsis")
         Log.d(TAG, "here is the content with budgetId: ${currentBudget.id}")
-        showPopupMenu(position, view)
+        showPopupMenu(position, view, currentBudget)
     }
 
     private fun goToBudgetDetails(currentBudget: Content) {
@@ -103,13 +103,15 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 
-    private fun showPopupMenu(position: Int, view: View) =
+    private fun showPopupMenu(position: Int, view: View, currentBudget: Content) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.budget_item_menu, menu)
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-                        findNavController().navigate(R.id.editBudgetFragment)
+                        val bundle = Bundle()
+                        bundle.putInt("BUDGET_ID", currentBudget.id)
+                        findNavController().navigate(R.id.editBudgetFragment, bundle)
                     }
                     "View details" -> {
                         val bundle = Bundle()
