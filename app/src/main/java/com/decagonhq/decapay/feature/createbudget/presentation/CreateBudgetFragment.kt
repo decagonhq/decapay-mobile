@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -369,6 +370,7 @@ class CreateBudgetFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            Log.d(TAG, "Here is the budgetId: ${it.data.data?.id}")
                             findNavController().navigate(R.id.budgetListFragment)
                         }
                         is Resource.Error -> {

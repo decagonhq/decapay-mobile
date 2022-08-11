@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private var _binding: FragmentBudgetListBinding? = null
     private lateinit var adapter: BudgetListAdapter
     private val binding get() = _binding!!
+    private val TAG = "BUDGETLISTFRAGMENT"
 
     private val list = mutableListOf<Content>()
 
@@ -91,6 +93,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         // println("Clicked on an item elipsis")
+        Log.d(TAG, "here is the content with budgetId: ${currentBudget.id}")
         showPopupMenu(position, view)
     }
 
