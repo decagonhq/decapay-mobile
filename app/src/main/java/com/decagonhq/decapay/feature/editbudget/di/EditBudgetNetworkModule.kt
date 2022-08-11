@@ -2,7 +2,7 @@ package com.decagonhq.decapay.feature.editbudget.di
 
 import com.decagonhq.decapay.feature.editbudget.data.network.api.EditBudgetApi
 import com.decagonhq.decapay.feature.editbudget.data.network.repository.FetchBudgetToEditRepositoryImpl
-import com.decagonhq.decapay.feature.editbudget.domain.FetchUserBudgetToEditRepository
+import com.decagonhq.decapay.feature.editbudget.domain.repository.FetchUserBudgetToEditRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

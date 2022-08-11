@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.editbudget.domain
+package com.decagonhq.decapay.feature.editbudget.domain.repository
 
 import com.decagonhq.decapay.feature.editbudget.data.network.model.FetchEditBudgetResponse
 
