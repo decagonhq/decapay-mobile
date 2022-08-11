@@ -19,10 +19,10 @@ class FetchBudgetUsecase @Inject constructor(
             emit(Resource.Loading())
             val response = fetchUserBudgetToEditRepository.fetchBudgetToEdit(budgetId)
             emit(Resource.Success(response))
-        } catch (e: HttpException){
+        } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)
             emit(Resource.Error(message))
-        } catch (e: IOException){
+        } catch (e: IOException) {
             emit(Resource.Error("Couldn't reach server check your internet connection"))
         }
     }
