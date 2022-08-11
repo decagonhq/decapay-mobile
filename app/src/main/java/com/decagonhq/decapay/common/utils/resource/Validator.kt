@@ -17,7 +17,7 @@ class Validator {
         }
 
         fun validatePassword(password: String): Boolean {
-            val passwordRegex = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\$")
+            val passwordRegex = Regex(".{8,}")
             return !(password.isEmpty() || !password.trim().matches(passwordRegex))
         }
 
@@ -43,15 +43,7 @@ class Validator {
             if (passwordText.length < 8) {
                 return "Password must have a minimum of 8 characters."
             }
-            if (!passwordText.matches(".*[0-9].*".toRegex())) {
-                return "Password must contain at least 1 number."
-            }
-            if (!passwordText.matches(".*[A-Z].*".toRegex())) {
-                return "Password must contain at least 1 upper case character."
-            }
-            if (!passwordText.matches(".*[a-z].*".toRegex())) {
-                return "Password must contain at least 1 lower case character."
-            }
+
             return ""
         }
     }
