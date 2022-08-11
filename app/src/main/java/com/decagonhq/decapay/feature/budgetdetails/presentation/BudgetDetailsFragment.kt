@@ -29,15 +29,14 @@ class BudgetDetailsFragment : Fragment() {
     lateinit var preference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,14 +45,8 @@ class BudgetDetailsFragment : Fragment() {
 
         initObserver()
 
-
-
-
         budgetDetailsViewModel.getBudgetDetails(budget.id)
-
-
     }
-
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -61,12 +54,12 @@ class BudgetDetailsFragment : Fragment() {
                 budgetDetailsViewModel.budgetDetailsResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            val budgetDetails = it.data.data;
+                            val budgetDetails = it.data.data
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
                             binding.budgetDetailsHeaderAmountTv.text = budgetDetails.displayProjectedAmount
                             binding.budgetDetailsTasAmountTv.text = budgetDetails.displayTotalAmountSpentSoFar
-                            binding.budgetDetailsPercentageAmountTv.text =    budgetDetails.displayPercentageSpentSoFar
+                            binding.budgetDetailsPercentageAmountTv.text = budgetDetails.displayPercentageSpentSoFar
 
                             val formatter = SimpleDateFormat("yyyy.MM.dd, HH:mm")
 
@@ -81,24 +74,18 @@ class BudgetDetailsFragment : Fragment() {
                             val startDateTimeMillis = startFormattedDate.time
                             val endDateTimiMillis = endFormattedDate.time
 
-
-
                             binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
                             binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
 
                             // binding.budgetDetailsCalendarCv.d
-
                         }
                         is Resource.Error -> {
-
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
             }
         }
     }
-
 }

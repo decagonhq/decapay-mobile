@@ -74,4 +74,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/editBudgetFragment"
+        android:name="com.decagonhq.decapay.feature.editbudget.presentation.EditBudgetFragment"
+        android:label="fragment_edit_budget"
+        tools:layout="@layout/fragment_edit_budget" />
 </navigation>

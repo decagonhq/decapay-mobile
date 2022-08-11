@@ -106,6 +106,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        findNavController().navigate(R.id.editBudgetFragment)
                     }
                     "View details" -> {
                         val bundle = Bundle()

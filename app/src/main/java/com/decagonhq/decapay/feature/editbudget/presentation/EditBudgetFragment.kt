@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,11 @@ class EditBudgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentEditBudgetBinding.bind(view)
+
+        // navigate to the BudgetListFragment
+        binding.editBudgetFragmentBackNavigationIv.setOnClickListener {
+            findNavController().navigate(R.id.budgetListFragment)
+        }
     }
 
     override fun onDestroy() {

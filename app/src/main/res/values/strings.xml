@@ -67,7 +67,7 @@
     <string name="create_budget_fragment_title_tv">Create Budget</string>
     <string name="create_budget_fragment_label_title">Title</string>
     <string name="create_budget_fragment_hint_title">Enter title</string>
-    <string name="create_budget_fragment_label_amount">Amount</string>
+    <string name="create_budget_fragment_label_amount">Projected Amount</string>
     <string name="create_budget_fragment_hint_amount">Enter amount</string>
     <string name="create_budget_fragment_label_buget_period">Budget period</string>
     <string name="create_budget_fragment_hint_select">Select</string>
@@ -118,6 +118,7 @@
     </string-array>
     <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
     <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
+    <string name="edit_budget_fragment_title">Edit Budget</string>
 
 
 </resources>
