@@ -42,14 +42,16 @@ class BudgetDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val budget = arguments?.getSerializable("BUDGET_ITEM") as Content
+        val budgetId = arguments?.getInt("BUDGET_ID")
 
         initObserver()
 
 
 
 
-        budgetDetailsViewModel.getBudgetDetails(budget.id)
+        if (budgetId != null) {
+            budgetDetailsViewModel.getBudgetDetails(budgetId)
+        }
 
 
     }
