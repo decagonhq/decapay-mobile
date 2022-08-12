@@ -1,7 +1,7 @@
 package com.decagonhq.decapay.feature.editbudget.data.network.model.editbudgetmodel
 
 data class UpdateBudgetRequestBody(
-    val amount: Int?,
+    val amount: Double?,
     val budgetEndDate: String?,
     val budgetStartDate: String?,
     val description: String?,

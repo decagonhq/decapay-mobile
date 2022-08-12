@@ -23,6 +23,7 @@ import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
+import com.decagonhq.decapay.feature.editbudget.data.network.model.editbudgetmodel.UpdateBudgetRequestBody
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,10 +44,15 @@ class EditBudgetFragment : Fragment() {
     lateinit var editCustomSelectedDate: String
     lateinit var editCustomeBudgetStartDate: String
     lateinit var editCustomBudgetEndDate: String
+    lateinit var editBudgetTitle: String
+    lateinit var editBudgetAmount: String
+    lateinit var editBudgetDescription: String
+    lateinit var editWeeklyDuration: String
     private var pleaseWaitDialog: AlertDialog? = null
     private var _binding: FragmentEditBudgetBinding? = null
     private val binding: FragmentEditBudgetBinding get() = _binding!!
     private val fetchUserBudgetToEditViewModel: FetchUserBudgetToEditViewModel by viewModels()
+    private val updateEditBudgetViewModel: UpdateEditBudgetViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,6 +162,94 @@ class EditBudgetFragment : Fragment() {
             }
         }
 
+        // on click of the editBudgetButtonDone
+        binding.editBudgetFragmentDoneButtonBtn.setOnClickListener {
+            // capture the input
+            editBudgetTitle = binding.editBudgetFragmentTitleTiedt.text?.trim().toString()
+            editBudgetAmount = binding.editBudgetFragmentAmountTiedt.text?.trim().toString()
+            editBudgetDescription = binding.editBudgetFragmentDescriptionTiedt.text?.trim().toString()
+            editWeeklyDuration = binding.editBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
+
+            // check validation
+            if (editBudgetTitle.isEmpty() || editBudgetAmount.isEmpty() || editBudgetPeriodType.isEmpty() || editBudgetDescription.isEmpty()) {
+                Snackbar.make(
+                    binding.root,
+                    "Please enter appropriate details to edit your budget",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                // Make a network call with the input values based on the periodType
+                when (editBudgetPeriodType) {
+                    "Annual" -> {
+                        // make this network call
+                        updateEditBudgetViewModel.userUpdateBudget(
+                            UpdateBudgetRequestBody(
+                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetDescription, null, null, BudgetPeriodConstant.ANNUAL,
+                                editBudgetTitle, editAnnualPeriodYear.toInt()
+                            ),
+                            budgetId
+                        )
+                        // show dialog
+                        pleaseWaitDialog?.show()
+                    }
+                    "Monthly" -> {
+                        // make this network call
+                        updateEditBudgetViewModel.userUpdateBudget(
+                            UpdateBudgetRequestBody(
+                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetDescription, null, CalendarMonth.convertMonthStringValueToInt(editMonthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
+                                editBudgetTitle, editMonthlyPeriodYear.toInt()
+                            ),
+                            budgetId
+                        )
+                        // show dialog
+                        pleaseWaitDialog?.show()
+                    }
+                    "Weekly" -> {
+                        // make this network call
+                        updateEditBudgetViewModel.userUpdateBudget(
+                            UpdateBudgetRequestBody(
+                                editBudgetAmount.toDouble(), null, editWeeklyStartDate,
+                                editBudgetDescription, editWeeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
+                                editBudgetTitle, null
+                            ),
+                            budgetId
+                        )
+
+                        // show dialog
+                        pleaseWaitDialog?.show()
+                    }
+                    "Daily" -> {
+                        // make this network call
+                        updateEditBudgetViewModel.userUpdateBudget(
+                            UpdateBudgetRequestBody(
+                                editBudgetAmount.toDouble(), editDailyStartDateSelected, editDailyStartDateSelected,
+                                editBudgetDescription, null, null, BudgetPeriodConstant.DAILY,
+                                editBudgetTitle, null
+                            ),
+                            budgetId
+                        )
+                        // show dialog
+                        pleaseWaitDialog?.show()
+                    }
+                    "Custom" -> {
+                        // make this network call
+                        updateEditBudgetViewModel.userUpdateBudget(
+                            UpdateBudgetRequestBody(
+                                editBudgetAmount.toDouble(), editCustomBudgetEndDate, editCustomeBudgetStartDate,
+                                editBudgetDescription, null, null, BudgetPeriodConstant.CUSTOM,
+                                editBudgetTitle, null
+                            ),
+                            budgetId
+                        )
+                        // show dialog
+                        pleaseWaitDialog?.show()
+                    }
+                }
+            }
+        }
+
         // navigate to the BudgetListFragment
         binding.editBudgetFragmentBackNavigationIv.setOnClickListener {
             findNavController().navigate(R.id.budgetListFragment)
@@ -163,6 +257,7 @@ class EditBudgetFragment : Fragment() {
 
         // observe the response
         initObserver()
+        initUpdateBudgetObserver()
     }
 
     private fun initObserver() {
@@ -292,6 +387,35 @@ class EditBudgetFragment : Fragment() {
                                     binding.editBudgetFragmentDescriptionTiedt.setText(it.data.data.description)
                                 }
                             }
+                        }
+                        is Resource.Error -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        is Resource.Loading -> {
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initUpdateBudgetObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                updateEditBudgetViewModel.updateBudgetResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                "${it.messages}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
