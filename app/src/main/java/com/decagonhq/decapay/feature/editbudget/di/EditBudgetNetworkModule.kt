@@ -2,7 +2,9 @@ package com.decagonhq.decapay.feature.editbudget.di
 
 import com.decagonhq.decapay.feature.editbudget.data.network.api.EditBudgetApi
 import com.decagonhq.decapay.feature.editbudget.data.network.repository.FetchBudgetToEditRepositoryImpl
+import com.decagonhq.decapay.feature.editbudget.data.network.repository.UpdateEditBudgetRepositoryImpl
 import com.decagonhq.decapay.feature.editbudget.domain.repository.FetchUserBudgetToEditRepository
+import com.decagonhq.decapay.feature.editbudget.domain.repository.UpdateEditBudgetRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +26,12 @@ object EditBudgetNetworkModule {
     @Singleton
     fun provideFetchBudgetToEditRepository(editBudgetApi: EditBudgetApi): FetchUserBudgetToEditRepository {
         return FetchBudgetToEditRepositoryImpl(editBudgetApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateEditBudgetRepository(editBudgetApi: EditBudgetApi): UpdateEditBudgetRepository {
+        return UpdateEditBudgetRepositoryImpl(editBudgetApi)
     }
 
 }
