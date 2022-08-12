@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,10 +49,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // binding.budgetListFragmentBudgetListRv.visibility = View.GONE
-
-        // val list = mutableListOf<Int>()
-
         budgetListViewModel.getBudgetList()
         adapter = BudgetListAdapter(list, this)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
@@ -93,13 +88,17 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         // println("Clicked on an item elipsis")
-        Log.d(TAG, "here is the content with budgetId: ${currentBudget.id}")
         showPopupMenu(position, view, currentBudget)
     }
 
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
+        /*
         bundle.putInt("BUDGET_ID", currentBudget.id)
+        findNavController().navigate(R.id.budgetDetailsFragment, bundle)
+
+         */
+        bundle.putSerializable("BUDGET_ITEM", currentBudget)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 

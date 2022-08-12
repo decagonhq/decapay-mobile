@@ -423,7 +423,7 @@ class EditBudgetFragment : Fragment() {
                             // get the new budgetId and use it to view itss details
                             val newBudgetId = it.data.data?.id
                             val bundle = Bundle()
-                            bundle.putInt("NEW_BUDGET_ID", newBudgetId!!)
+                            bundle.putInt("BUDGET_ID", newBudgetId!!)
                             findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                         }
                         is Resource.Error -> {

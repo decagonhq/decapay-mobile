@@ -361,8 +361,10 @@ class CreateBudgetFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "Here is the budgetId: ${it.data.data?.id}")
-                            findNavController().navigate(R.id.budgetListFragment)
+                            val budgetId = it.data.data?.id
+                            val bundle = Bundle()
+                            bundle.putInt("BUDGET_ID", budgetId!!)
+                            findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
