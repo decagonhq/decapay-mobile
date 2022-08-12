@@ -22,8 +22,9 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
                 android:src="@drawable/ic_arrow_back"
-                />
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/edit_budget_fragment_title_tv"
