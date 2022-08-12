@@ -109,15 +109,7 @@ class CreateNewPasswordFragment : Fragment() {
             binding.createNewPasswordFragmentNewPasswordTil.error = "Password cannot be empty"
         } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
             binding.createNewPasswordFragmentNewPasswordTil.error = "Password must have a minimum of 8 characters."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.createNewPasswordFragmentNewPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.createNewPasswordFragmentNewPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 upper case character.") {
-            binding.createNewPasswordFragmentNewPasswordTil.error = "Password must contain at least 1 upper case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character.") {
-            binding.createNewPasswordFragmentNewPasswordTil.error = "Password must contain at least 1 lower case character."
-        } else {
+        }  else {
             binding.createNewPasswordFragmentNewPasswordTil.error = ""
         }
     }

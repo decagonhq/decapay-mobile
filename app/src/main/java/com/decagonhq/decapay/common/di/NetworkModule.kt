@@ -31,7 +31,6 @@ object NetworkModule {
         return HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 
-
     /**
      * provide the logger
      * this logs out every response to and from the web service
@@ -104,6 +103,4 @@ object NetworkModule {
     fun provideErrorHandle(@ApplicationContext context: Context): ExceptionHandler {
         return ExceptionHandler(context)
     }
-
-
 }

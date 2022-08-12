@@ -31,14 +31,15 @@ class BudgetDetailsFragment : Fragment() {
     lateinit var preference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
 
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +49,7 @@ class BudgetDetailsFragment : Fragment() {
 //        val budget = arguments?.let { it.getSerializable("BUDGET_ITEM") as Content }
 //        budget?.let { budgetDetailsViewModel.getBudgetDetails(it.id) }
 
+        val budgetId = arguments?.getInt("BUDGET_ID")
         if (arguments?.getSerializable("BUDGET_ITEM") == null) {
             val budgetId = arguments?.getInt("NEW_BUDGET_ID")
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
@@ -60,7 +62,17 @@ class BudgetDetailsFragment : Fragment() {
 //        budgetDetailsViewModel.getBudgetDetails(budgetId!!)
 
         initObserver()
+
+
+
+
+        if (budgetId != null) {
+            budgetDetailsViewModel.getBudgetDetails(budgetId)
+        }
+
+
     }
+
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -68,7 +80,7 @@ class BudgetDetailsFragment : Fragment() {
                 budgetDetailsViewModel.budgetDetailsResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            val budgetDetails = it.data.data
+                            val budgetDetails = it.data.data;
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
                             binding.budgetDetailsHeaderAmountTv.text = budgetDetails.displayProjectedAmount
