@@ -345,6 +345,7 @@ class EditBudgetFragment : Fragment() {
                                     binding.editBudgetFragmentTitleTiedt.setText(it.data.data.title)
                                     binding.editBudgetFragmentAmountTiedt.setText(it.data.data.amount.toString())
                                     binding.editBudgetFragmentBudgetPeriodWeeklyStartDateTv.text = it.data.data.budgetStartDate
+                                    editWeeklyStartDate = it.data.data.budgetStartDate.toString()
                                     binding.editBudgetFragmentBudgetPeriodWeeklyDurationEdittext.setText(it.data.data.duration.toString())
                                     binding.editBudgetFragmentDescriptionTiedt.setText(it.data.data.description)
                                 }
@@ -365,6 +366,7 @@ class EditBudgetFragment : Fragment() {
                                     binding.editBudgetFragmentTitleTiedt.setText(it.data.data.title)
                                     binding.editBudgetFragmentAmountTiedt.setText(it.data.data.amount.toString())
                                     binding.editBudgetFragmentBudgetPeriodDailyStartDateTv.text = it.data.data.budgetStartDate
+                                    editDailyStartDateSelected = it.data.data.budgetStartDate.toString()
                                     binding.editBudgetFragmentDescriptionTiedt.setText(it.data.data.description)
                                 }
                                 BudgetPeriodConstant.CUSTOM -> {
@@ -384,6 +386,8 @@ class EditBudgetFragment : Fragment() {
                                     binding.editBudgetFragmentTitleTiedt.setText(it.data.data.title)
                                     binding.editBudgetFragmentAmountTiedt.setText(it.data.data.amount.toString())
                                     binding.editBudgetFragmentBudgetPeriodCustomTv.text = "${it.data.data.budgetStartDate}, ${it.data.data.budgetEndDate}"
+                                    editCustomeBudgetStartDate = it.data.data.budgetStartDate.toString()
+                                    editCustomBudgetEndDate = it.data.data.budgetEndDate.toString()
                                     binding.editBudgetFragmentDescriptionTiedt.setText(it.data.data.description)
                                 }
                             }
@@ -413,9 +417,14 @@ class EditBudgetFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
                                 binding.root,
-                                "${it.messages}",
+                                "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            // get the new budgetId and use it to view itss details
+                            val newBudgetId = it.data.data?.id
+                            val bundle = Bundle()
+                            bundle.putInt("NEW_BUDGET_ID", newBudgetId!!)
+                            findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

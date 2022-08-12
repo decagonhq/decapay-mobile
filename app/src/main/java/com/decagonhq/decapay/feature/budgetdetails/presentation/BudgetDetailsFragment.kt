@@ -13,6 +13,7 @@ import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BudgetDetailsFragment : Fragment() {
 
+    private val TAG = "BUDGETDETAILSFRAG"
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
 
@@ -40,12 +42,24 @@ class BudgetDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        val budgetID = arguments?.getInt("BUDGET_ITEM")
+//        Log.d(TAG, "budgetId content: ${budgetID}")
+//        budgetDetailsViewModel.getBudgetDetails(budgetID!!)
+//        val budget = arguments?.let { it.getSerializable("BUDGET_ITEM") as Content }
+//        budget?.let { budgetDetailsViewModel.getBudgetDetails(it.id) }
 
-        val budget = arguments?.getSerializable("BUDGET_ITEM") as Content
+        if (arguments?.getSerializable("BUDGET_ITEM") == null) {
+            val budgetId = arguments?.getInt("NEW_BUDGET_ID")
+            budgetDetailsViewModel.getBudgetDetails(budgetId!!)
+        } else if (arguments?.getInt("NEW_BUDGET_ID") == null) {
+            val budget = arguments?.let { it.getSerializable("BUDGET_ITEM") as Content }
+            budget?.let { budgetDetailsViewModel.getBudgetDetails(it.id) }
+        }
+
+//        val budgetId = arguments?.getInt("NEW_BUDGET_ID")
+//        budgetDetailsViewModel.getBudgetDetails(budgetId!!)
 
         initObserver()
-
-        budgetDetailsViewModel.getBudgetDetails(budget.id)
     }
 
     private fun initObserver() {
@@ -80,6 +94,11 @@ class BudgetDetailsFragment : Fragment() {
                             // binding.budgetDetailsCalendarCv.d
                         }
                         is Resource.Error -> {
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Loading -> {
                         }
