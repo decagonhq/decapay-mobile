@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -43,13 +44,13 @@ class BudgetDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (requireArguments().containsKey("BUDGET_ID")) {
-            val budgetId = arguments?.getInt("BUDGET_ID")
+        if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
+            val budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
             if (budgetId != null) {
                 budgetDetailsViewModel.getBudgetDetails(budgetId)
             }
         } else {
-            val detailsBudgetId = arguments?.getSerializable("BUDGET_ITEM") as Content
+            val detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
             if (detailsBudgetId != null) {
                 budgetDetailsViewModel.getBudgetDetails(detailsBudgetId.id)
             }

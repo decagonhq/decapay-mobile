@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -98,7 +99,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
 
          */
-        bundle.putSerializable("BUDGET_ITEM", currentBudget)
+        bundle.putSerializable(DataConstant.BUDGET_ITEM, currentBudget)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 
@@ -109,12 +110,12 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                 when (item.title) {
                     "Edit" -> {
                         val bundle = Bundle()
-                        bundle.putInt("BUDGET_ID", currentBudget.id)
+                        bundle.putInt(DataConstant.BUDGET_ID, currentBudget.id)
                         findNavController().navigate(R.id.editBudgetFragment, bundle)
                     }
                     "View details" -> {
                         val bundle = Bundle()
-                        bundle.putSerializable("BUDGET_ITEM", adapter.list[position])
+                        bundle.putSerializable(DataConstant.BUDGET_ITEM, adapter.list[position])
                         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                     }
                     "Delete" -> {
