@@ -43,7 +43,7 @@ class BudgetDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments!!.containsKey("BUDGET_ID")) {
+        if (requireArguments().containsKey("BUDGET_ID")) {
             val budgetId = arguments?.getInt("BUDGET_ID")
             if (budgetId != null) {
                 budgetDetailsViewModel.getBudgetDetails(budgetId)
