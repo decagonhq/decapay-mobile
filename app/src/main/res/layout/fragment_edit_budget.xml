@@ -249,6 +249,10 @@
                 android:text="@string/create_budget_fragment_done_button"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
