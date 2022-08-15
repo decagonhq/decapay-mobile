@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -33,6 +34,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private var _binding: FragmentBudgetListBinding? = null
     private lateinit var adapter: BudgetListAdapter
     private val binding get() = _binding!!
+    private val TAG = "BUDGETLISTFRAGMENT"
 
     private val list = mutableListOf<Content>()
 
@@ -47,10 +49,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // binding.budgetListFragmentBudgetListRv.visibility = View.GONE
-
-        // val list = mutableListOf<Int>()
 
         budgetListViewModel.getBudgetList()
         adapter = BudgetListAdapter(list, this)
@@ -91,25 +89,33 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
         // println("Clicked on an item elipsis")
-        showPopupMenu(position, view)
+        showPopupMenu(position, view, currentBudget)
     }
 
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
+        /*
         bundle.putInt("BUDGET_ID", currentBudget.id)
+        findNavController().navigate(R.id.budgetDetailsFragment, bundle)
+
+         */
+        bundle.putSerializable(DataConstant.BUDGET_ITEM, currentBudget)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 
-    private fun showPopupMenu(position: Int, view: View) =
+    private fun showPopupMenu(position: Int, view: View, currentBudget: Content) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.budget_item_menu, menu)
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        val bundle = Bundle()
+                        bundle.putInt(DataConstant.BUDGET_ID, currentBudget.id)
+                        findNavController().navigate(R.id.editBudgetFragment, bundle)
                     }
                     "View details" -> {
                         val bundle = Bundle()
-                        bundle.putSerializable("BUDGET_ITEM", adapter.list[position])
+                        bundle.putSerializable(DataConstant.BUDGET_ITEM, adapter.list[position])
                         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                     }
                     "Delete" -> {

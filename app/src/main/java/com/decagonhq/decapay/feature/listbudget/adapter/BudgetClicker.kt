@@ -5,8 +5,7 @@ import com.decagonhq.decapay.common.data.model.Content
 
 interface BudgetClicker {
 
-    fun onClickItem(currentBudget: Content, position:Int)
+    fun onClickItem(currentBudget: Content, position: Int)
 
-    fun onClickItemEllipsis(currentBudget: Content, position:Int, view: View)
-
+    fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View)
 }

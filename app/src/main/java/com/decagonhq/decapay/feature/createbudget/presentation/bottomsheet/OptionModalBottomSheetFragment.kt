@@ -54,27 +54,6 @@ class OptionModalBottomSheetFragment(private val listener: BottomSheetOnclickInt
                 "I am clicked",
                 Toast.LENGTH_LONG
             ).show()
-
-            /*
-            val calenda = Calendar.getInstance()
-            val myYear = calenda.get(Calendar.YEAR)
-            val myMonth = calenda.get(Calendar.MONTH)
-            val myDay = calenda.get(Calendar.DAY_OF_MONTH)
-            val id = Locale("en", "NG")
-            val simpleDateFormat = SimpleDateFormat("dd/mm/yy", id)
-            val datePickeDialog = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    Log.d(TAG, "$year")
-                    val action = OptionModalBottomSheetFragmentDirections.actionOptionModalBottomSheetFragmentToCreateBudgetFragment(
-                        year.toString()
-                    )
-                    findNavController().navigate(action)
-                },
-                myYear, myMonth, myDay
-            )
-            datePickeDialog.show()
-            */
         }
         /** on click of the monthly period */
 //        binding.optionModalBottomSheetFragmentOptionsMonthlyTv.setOnClickListener { }
@@ -104,7 +83,6 @@ class OptionModalBottomSheetFragment(private val listener: BottomSheetOnclickInt
             )
             datePickerDialog.setTitle("Select Date")
             datePickerDialog.show()
-//            findNavController().navigate(R.id.createBudgetFragment)
         }
 
         /** on click of the custom period */

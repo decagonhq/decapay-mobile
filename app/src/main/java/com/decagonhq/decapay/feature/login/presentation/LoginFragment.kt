@@ -172,6 +172,7 @@ class LoginFragment : Fragment() {
                             preference.putToken(token!!)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
+                            Log.d(TAG, "Here is the token: $token")
 
                             // on successfuly loggedin, navigate to your list of budgets
                         }

@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.constants.UserPeriodConstant
+import com.decagonhq.decapay.common.constants.BudgetPeriodConstant
+import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
@@ -26,7 +28,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -181,7 +182,7 @@ class CreateBudgetFragment : Fragment() {
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
-                                budgetDescription, null, null, UserPeriodConstant.ANNUAL,
+                                budgetDescription, null, null, BudgetPeriodConstant.ANNUAL,
                                 budgetTitle, annualPeriodYear.toInt()
                             )
                         )
@@ -193,7 +194,7 @@ class CreateBudgetFragment : Fragment() {
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, null,
-                                budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), UserPeriodConstant.MONTHLY,
+                                budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
                                 budgetTitle, monthlyPeriodYear.toInt()
                             )
                         )
@@ -205,7 +206,7 @@ class CreateBudgetFragment : Fragment() {
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), null, weeklyStartDate,
-                                budgetDescription, weeklyDuration.toInt(), null, UserPeriodConstant.WEEKLY,
+                                budgetDescription, weeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
                                 budgetTitle, null
                             )
                         )
@@ -218,7 +219,7 @@ class CreateBudgetFragment : Fragment() {
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), dailyStartDateSelected, dailyStartDateSelected,
-                                budgetDescription, null, null, UserPeriodConstant.DAILY,
+                                budgetDescription, null, null, BudgetPeriodConstant.DAILY,
                                 budgetTitle, null
                             )
                         )
@@ -230,7 +231,7 @@ class CreateBudgetFragment : Fragment() {
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
                                 budgetAmount.toDouble(), customBudgetEndDate, customeBudgetStartDate,
-                                budgetDescription, null, null, UserPeriodConstant.CUSTOM,
+                                budgetDescription, null, null, BudgetPeriodConstant.CUSTOM,
                                 budgetTitle, null
                             )
                         )
@@ -348,15 +349,6 @@ class CreateBudgetFragment : Fragment() {
         }
     }
 
-    private fun convertLongToTime(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat(
-            "dd/MM/yyyy",
-            Locale.getDefault()
-        )
-        return format.format(date)
-    }
-
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -369,7 +361,10 @@ class CreateBudgetFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.budgetListFragment)
+                            val budgetId = it.data.data?.id
+                            val bundle = Bundle()
+                            bundle.putInt("BUDGET_ID", budgetId!!)
+                            findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

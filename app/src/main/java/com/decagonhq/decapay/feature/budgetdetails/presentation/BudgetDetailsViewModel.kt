@@ -14,27 +14,16 @@ import javax.inject.Inject
 @HiltViewModel
 class BudgetDetailsViewModel @Inject constructor(
     private val budgetsDetailsUseCase: BudgetsDetailsUseCase
-):ViewModel(){
+) : ViewModel() {
     private val _budgetDetailsResponse = MutableStateFlow<Resource<BudgetDetailsResponse>>(Resource.Loading())
     val budgetDetailsResponse: StateFlow<Resource<BudgetDetailsResponse>> get() = _budgetDetailsResponse
 
-
-
-
-    fun getBudgetDetails(budgetId:Int){
+    fun getBudgetDetails(budgetId: Int) {
         viewModelScope.launch {
 
-            budgetsDetailsUseCase(budgetId).collect{
+            budgetsDetailsUseCase(budgetId).collect {
                 _budgetDetailsResponse.value = it
             }
-
         }
     }
-
-
-
-
-
-
-
 }

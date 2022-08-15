@@ -1,6 +1,6 @@
 package com.decagonhq.decapay.common.constants
 
-object UserPeriodConstant {
+object BudgetPeriodConstant {
     const val ANNUAL = "ANNUAL"
     const val MONTHLY = "MONTHLY"
     const val WEEKLY = "WEEKLY"
