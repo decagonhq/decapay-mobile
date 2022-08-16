@@ -79,4 +79,9 @@
         android:name="com.decagonhq.decapay.feature.editbudget.presentation.EditBudgetFragment"
         android:label="fragment_edit_budget"
         tools:layout="@layout/fragment_edit_budget" />
+    <fragment
+        android:id="@+id/createBudgetCategoryFragment"
+        android:name="com.decagonhq.decapay.feature.createbudgetcategory.presentation.CreateBudgetCategoryFragment"
+        android:label="fragment_create_budget_category"
+        tools:layout="@layout/fragment_create_budget_category" />
 </navigation>

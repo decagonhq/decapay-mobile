@@ -177,7 +177,7 @@
                     android:id="@+id/edit_budget_fragment_budget_period_weekly_duration_edittext"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:layout_marginTop="48dp"
                     android:inputType="number"
                     android:fontFamily="@font/roboto_light"
@@ -249,6 +249,10 @@
                 android:text="@string/create_budget_fragment_done_button"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

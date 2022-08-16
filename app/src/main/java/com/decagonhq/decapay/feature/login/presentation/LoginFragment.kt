@@ -187,7 +187,6 @@ class LoginFragment : Fragment() {
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
                         }
                         is Resource.Loading -> {
-                            pleaseWaitDialog!!.dismiss()
                         }
                     }
                 }
