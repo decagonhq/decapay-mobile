@@ -119,6 +119,11 @@
     <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
     <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
     <string name="edit_budget_fragment_title">Edit Budget</string>
+    <string name="create_budget_category_fragment_title">Create Category</string>
+    <string name="create_budget_category_fragment_callout">What do you usually spend on\?</string>
+    <string name="create_budget_category_fragment_name_category">Name of Category</string>
+    <string name="create_budget_category_fragment_name_category_hint">Enter name of item</string>
+    <string name="create_budget_category_fragment_name_category_add">Add</string>
 
 
 </resources>
