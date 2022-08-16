@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
@@ -31,6 +34,28 @@ class BudgetDetailsFragment : Fragment() {
     @Inject
     lateinit var preference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // this handles the backPress; all navigation moves to list budget
+        activity?.onBackPressedDispatcher?.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (shouldInterceptBackpress()) {
+                        findNavController().navigate(
+                            R.id.budgetListFragment
+                        )
+                    } else {
+                        isEnabled = false
+                        activity?.onBackPressed()
+                    }
+                }
+            }
+        )
+    }
+
+    fun shouldInterceptBackpress() = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
