@@ -119,6 +119,9 @@
     <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
     <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
     <string name="edit_budget_fragment_title">Edit Budget</string>
+    <string name="no_budget_yet">No Budget yet</string>
+    <string name="plan_ahead_header">Plan ahead your expenses and \ntake total control</string>
+    <string name="take_control_subheader">Take control of your money by tracking expenses</string>
 
 
 </resources>
