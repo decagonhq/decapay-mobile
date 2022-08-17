@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_budget_list.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_create_budget_category.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_create_budget_line_item_bottom_sheet.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.13496376811594202" />
         <entry key="app/src/main/res/layout/fragment_edit_budget.xml" value="0.20260416666666667" />
         <entry key="app/src/main/res/layout/fragment_edit_budget_category.xml" value="0.25833333333333336" />

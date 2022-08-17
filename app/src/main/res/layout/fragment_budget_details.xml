@@ -165,6 +165,16 @@
             android:text="@string/no_line_item"
             />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/budget_details_floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:src="@drawable/ic_plus" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
