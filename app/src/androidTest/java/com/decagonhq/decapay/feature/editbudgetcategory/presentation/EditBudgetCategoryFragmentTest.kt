@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.createbudgetcategory.presentation
+package com.decagonhq.decapay.feature.editbudgetcategory.presentation
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class CreateBudgetCategoryFragmentTest {
+class EditBudgetCategoryFragmentTest {
 
     @get: Rule
     val hiltRule = HiltAndroidRule(this)
@@ -30,19 +30,13 @@ class CreateBudgetCategoryFragmentTest {
     }
 
     @Test
-    fun createBudgetCategoryFragment_launchFragment() {
-        launchFragmentInHiltContainer<CreateBudgetCategoryFragment>()
-        onView(withId(R.id.create_budget_category_fragment_title_tv))
+    fun editBudgetCategoryFragment_launchFragment() {
+        launchFragmentInHiltContainer<EditBudgetCategoryFragment>()
+        onView(withId(R.id.edit_budget_category_fragment_title_tv))
             .check(matches(isDisplayed()))
-        onView(withId(R.id.create_budget_category_fragment_callout_tv))
+        onView(withId(R.id.edit_budget_category_fragment_callout_tv))
             .check(matches(isDisplayed()))
-        onView(withId(R.id.create_budget_category_fragment_name_category_tv))
-            .check(matches(isDisplayed()))
-        onView(withId(R.id.create_budget_category_fragment_name_category_til))
-            .check(matches(isDisplayed()))
-        onView(withId(R.id.create_budget_category_fragment_name_category_tiedt))
-            .check(matches(isDisplayed()))
-        onView(withId(R.id.create_budget_category_fragment_name_category_add_button_btn))
+        onView(withId(R.id.edit_budget_category_fragment_name_category_tiedt))
             .check(matches(isDisplayed()))
     }
 }
