@@ -5,18 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
+import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
+import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,11 +29,13 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BudgetDetailsFragment : Fragment() {
+class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     private val TAG = "BUDGETDETAILSFRAG"
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
+    private val list = mutableListOf<Int>()
+    private lateinit var adapter: LineItemAdaptor
 
     @Inject
     lateinit var preference: Preferences
@@ -81,6 +87,24 @@ class BudgetDetailsFragment : Fragment() {
             }
         }
         initObserver()
+
+        val testList = mutableListOf<Int>(1, 2, 3, 3, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7)
+        list.addAll(testList)
+        adapter = LineItemAdaptor(list, this);
+        binding.budgetDetailsLineItemsRv.adapter = adapter
+        binding.budgetDetailsLineItemsRv.layoutManager =
+            LinearLayoutManager(requireContext())
+        setDataLoaded(list);
+    }
+
+    private fun setDataLoaded(list: MutableList<Int>) {
+        if (list.isEmpty()) {
+            binding.budgetDetailsEmptyLineItemsLl.visibility = View.GONE
+        } else {
+            list.addAll(list)
+            adapter.setLineItems()
+        }
+
     }
 
     private fun initObserver() {
@@ -97,9 +121,12 @@ class BudgetDetailsFragment : Fragment() {
                             val budgetDetails = it.data.data
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
-                            binding.budgetDetailsHeaderAmountTv.text = budgetDetails.displayProjectedAmount
-                            binding.budgetDetailsTasAmountTv.text = budgetDetails.displayTotalAmountSpentSoFar
-                            binding.budgetDetailsPercentageAmountTv.text = budgetDetails.displayPercentageSpentSoFar
+                            binding.budgetDetailsHeaderAmountTv.text =
+                                budgetDetails.displayProjectedAmount
+                            binding.budgetDetailsTasAmountTv.text =
+                                budgetDetails.displayTotalAmountSpentSoFar
+                            binding.budgetDetailsPercentageAmountTv.text =
+                                budgetDetails.displayPercentageSpentSoFar
 
                             val formatter = SimpleDateFormat("yyyy.MM.dd, HH:mm")
 
@@ -133,4 +160,25 @@ class BudgetDetailsFragment : Fragment() {
             }
         }
     }
+
+    override fun onClickItemEllipsis(currentBudget: Int, position: Int, view: View) {
+        showPopupMenu(position, view, currentBudget)
+    }
+
+    private fun showPopupMenu(position: Int, view: View, currentBudget: Int) =
+        PopupMenu(view.context, view).run {
+            menuInflater.inflate(R.menu.category_item_menu, menu)
+            setOnMenuItemClickListener { item ->
+                when (item.title) {
+                    "Edit" -> {
+
+                    }
+                    "Delete" -> {
+                        adapter.deleteItemAtIndex(position)
+                    }
+                }
+                true
+            }
+            show()
+        }
 }

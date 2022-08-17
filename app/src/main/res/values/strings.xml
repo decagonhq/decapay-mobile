@@ -127,7 +127,10 @@
     <string name="create_budget_category_fragment_name_category">Name of Category</string>
     <string name="create_budget_category_fragment_name_category_hint">Enter name of item</string>
     <string name="create_budget_category_fragment_name_category_add">Add</string>
-
+    <string name="view_expenses">View expenses</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
 
 
 </resources>
