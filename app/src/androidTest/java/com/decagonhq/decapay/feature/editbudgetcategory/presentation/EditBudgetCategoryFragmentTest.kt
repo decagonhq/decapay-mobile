@@ -38,5 +38,7 @@ class EditBudgetCategoryFragmentTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.edit_budget_category_fragment_name_category_tiedt))
             .check(matches(isDisplayed()))
+        onView(withId(R.id.edit_budget_category_fragment_save_button_btn))
+            .check(matches(isDisplayed()))
     }
 }
