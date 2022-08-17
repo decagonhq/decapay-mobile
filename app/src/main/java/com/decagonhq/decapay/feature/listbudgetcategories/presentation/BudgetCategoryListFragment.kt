@@ -6,19 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryListAdaptor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class BudgetCategoryList : Fragment(), CategoryClicker {
+class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     private var _binding: FragmentBudgetCategoryListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CategoryListAdaptor
+    private val budgetCategoryViewModel : BudgetCategoryViewModel by  viewModels()
 
     private val list = mutableListOf<Int>()
 
@@ -34,6 +41,8 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpFlowListener()
+
         val testList = mutableListOf<Int>(1, 2, 3, 3, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7)
         list.addAll(testList)
         adapter = CategoryListAdaptor(list, this);
@@ -41,6 +50,25 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
             LinearLayoutManager(requireContext())
         setDataLoaded(list);
+    }
+
+    private fun setUpFlowListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                budgetCategoryViewModel.budgetCategoryListResponse.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            setIsLoadingScreen()
+                        }
+
+                        is Resource.Success -> {
+
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
     }
 
 
