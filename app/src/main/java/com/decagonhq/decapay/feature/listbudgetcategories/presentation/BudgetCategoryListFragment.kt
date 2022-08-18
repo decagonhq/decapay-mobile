@@ -79,8 +79,8 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
     }
 
 
-    override fun onClickItemEllipsis(currentCategory: Data, position: Int, view: View) {
-        showPopupMenu(position, view, currentCategory)
+    override fun onClickItemEllipsis(currentBudget: Data, position: Int, view: View) {
+        showPopupMenu(position, view, currentBudget)
     }
 
     private fun showDialog(position: Int) {
