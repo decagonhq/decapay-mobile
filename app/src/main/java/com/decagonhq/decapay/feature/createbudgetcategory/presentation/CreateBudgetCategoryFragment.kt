@@ -75,7 +75,7 @@ class CreateBudgetCategoryFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 creatBudgetCategoryViewModel.createBudgetCategoryCaptureResponse.collect {
-                    when(it) {
+                    when (it) {
                         is Resource.Success -> {
                             pleaseWaitDialog?.let { it.dismiss() }
                             Snackbar.make(
@@ -93,7 +93,6 @@ class CreateBudgetCategoryFragment : Fragment() {
                             ).show()
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
