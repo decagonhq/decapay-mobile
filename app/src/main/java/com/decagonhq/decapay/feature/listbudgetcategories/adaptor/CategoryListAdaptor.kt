@@ -6,14 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.data.model.Content
-import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 
-
-class CategoryListAdaptor(var list: MutableList<Int>, var clicker: CategoryClicker) :RecyclerView.Adapter<CategoryListAdaptor.CategoryViewHolder>() {
-
-
-
+class CategoryListAdaptor(var list: MutableList<Int>, var clicker: CategoryClicker) : RecyclerView.Adapter<CategoryListAdaptor.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
@@ -29,7 +23,6 @@ class CategoryListAdaptor(var list: MutableList<Int>, var clicker: CategoryClick
         return list.size
     }
 
-
     fun setCategory() {
         notifyDataSetChanged()
     }
@@ -40,7 +33,7 @@ class CategoryListAdaptor(var list: MutableList<Int>, var clicker: CategoryClick
         notifyItemRangeChanged(index, list.size)
     }
 
-    class CategoryViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
+    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.category_list_item_elipsis_ib)
 
         fun initialize(currentCategoryItem: Int, clicker: CategoryClicker) {
@@ -48,7 +41,6 @@ class CategoryListAdaptor(var list: MutableList<Int>, var clicker: CategoryClick
             button.setOnClickListener {
                 clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, button)
             }
-
         }
     }
 }
