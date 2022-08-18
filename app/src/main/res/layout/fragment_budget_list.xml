@@ -54,7 +54,7 @@
             android:paddingBottom="10dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="No Budget yet" />
+            android:text="@string/no_budget_yet" />
 
         <TextView
             android:layout_width="match_parent"
