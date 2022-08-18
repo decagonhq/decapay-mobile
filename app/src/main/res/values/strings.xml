@@ -122,6 +122,9 @@
     <string name="no_budget_yet">No Budget yet</string>
     <string name="plan_ahead_header">Plan ahead your expenses and \ntake total control</string>
     <string name="take_control_subheader">Take control of your money by tracking expenses</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
 </resources>

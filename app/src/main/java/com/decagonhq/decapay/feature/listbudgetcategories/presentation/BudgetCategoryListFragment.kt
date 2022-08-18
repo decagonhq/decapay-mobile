@@ -1,9 +1,12 @@
 package com.decagonhq.decapay.feature.listbudgetcategories.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -72,6 +75,27 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
     }
 
 
+    private fun showDialog( position:Int) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.delete_modal_layout)
+
+        val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
+        val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
+        noBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        yesBtn.setOnClickListener {
+            dialog.dismiss()
+            adapter.deleteItemAtIndex(position)
+        }
+        dialog.show()
+
+    }
+
+
+
     override fun onClickItemEllipsis(currentCategory: Int, position: Int, view: View) {
         showPopupMenu(position, view, currentCategory)
     }
@@ -85,7 +109,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
                     }
                     "Delete" -> {
-                        adapter.deleteItemAtIndex(position)
+                       showDialog(position)
                     }
                 }
                 true
