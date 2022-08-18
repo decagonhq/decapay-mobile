@@ -10,7 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.CreateBudgetCategoryInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetCategoryBinding
@@ -51,6 +54,7 @@ class CreateBudgetCategoryFragment : Fragment() {
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         // on click on the add button
         binding.createBudgetCategoryFragmentNameCategoryAddButtonBtn.setOnClickListener {
+            hideKeyboard()
             // receive the value from the input field
             val categoryName = binding.createBudgetCategoryFragmentNameCategoryTiedt.text?.trim().toString()
             // validate input
@@ -83,6 +87,7 @@ class CreateBudgetCategoryFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            findNavController().navigate(R.id.budgetCategoryList)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

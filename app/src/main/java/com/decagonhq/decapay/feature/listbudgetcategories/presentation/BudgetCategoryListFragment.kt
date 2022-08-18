@@ -12,12 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryListAdaptor
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BudgetCategoryListFragment : Fragment(), CategoryClicker {
@@ -37,18 +35,21 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val testList = mutableListOf<Int>(1, 2, 3, 3, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7)
         list.addAll(testList)
-        adapter = CategoryListAdaptor(list, this);
+        adapter = CategoryListAdaptor(list, this)
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
             LinearLayoutManager(requireContext())
-        setDataLoaded(list);
-    }
+        setDataLoaded(list)
 
+        // on click on the fab
+        binding.budgetCategoryListFragmentCreateCategoryFab.setOnClickListener {
+            findNavController().navigate(R.id.createBudgetCategoryFragment)
+        }
+    }
 
     override fun onClickItemEllipsis(currentCategory: Int, position: Int, view: View) {
         showPopupMenu(position, view, currentCategory)
@@ -68,7 +69,6 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         }
         noBtn.setOnClickListener { dialog.dismiss() }
         dialog.show()
-
     }
 
     private fun showPopupMenu(position: Int, view: View, currentCategory: Int) =
@@ -77,10 +77,9 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-
                     }
                     "Delete" -> {
-                      showDialog(position)
+                        showDialog(position)
                     }
                 }
                 true
@@ -88,13 +87,11 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
             show()
         }
 
-
     private fun setIsLoadingScreen() {
         binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.VISIBLE
-
     }
 
     private fun setEmptyListScreen() {
@@ -119,6 +116,4 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.GONE
     }
-
-
 }

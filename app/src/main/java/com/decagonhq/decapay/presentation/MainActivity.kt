@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                     // navController.navigate(R.id.testFragment)
                 }
                 R.id.menu_budget_category -> {
-                    // navController.navigate(R.id.loginFragment)
+                    navController.navigate(R.id.budgetCategoryList)
                 }
                 R.id.menu_logout -> {
                     activityViewModel.signOutUser(SignOutRequestBody(preference.getToken()))
