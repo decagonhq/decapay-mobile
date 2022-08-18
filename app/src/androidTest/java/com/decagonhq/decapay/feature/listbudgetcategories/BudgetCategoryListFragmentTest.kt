@@ -38,6 +38,8 @@ class BudgetCategoryListFragmentTest {
 
     @Test
     fun screen_renders() {
+
+
         val scenario = launchFragmentInHiltContainer<BudgetCategoryListFragment>()
         Espresso.onView(ViewMatchers.withId(R.id.budgetCategoryListFragment_create_category_fab))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
