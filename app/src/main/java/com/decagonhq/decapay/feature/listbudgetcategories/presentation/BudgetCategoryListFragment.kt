@@ -1,21 +1,26 @@
 package com.decagonhq.decapay.feature.listbudgetcategories.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryListAdaptor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class BudgetCategoryList : Fragment(), CategoryClicker {
+class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     private var _binding: FragmentBudgetCategoryListBinding? = null
     private val binding get() = _binding!!
@@ -32,24 +37,38 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val testList = mutableListOf<Int>(1, 2, 3, 3, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7)
         list.addAll(testList)
-        adapter = CategoryListAdaptor(list, this)
+        adapter = CategoryListAdaptor(list, this);
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
             LinearLayoutManager(requireContext())
-        setDataLoaded(list)
-
-        // on click floating action button
-        binding.budgetCategoryListFragmentCreateCategoryFab.setOnClickListener {
-            findNavController().navigate(R.id.createBudgetCategoryFragment)
-        }
+        setDataLoaded(list);
     }
+
 
     override fun onClickItemEllipsis(currentCategory: Int, position: Int, view: View) {
         showPopupMenu(position, view, currentCategory)
+    }
+
+    private fun showDialog(position: Int) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.delete_modal_layout)
+
+        val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
+        val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
+        yesBtn.setOnClickListener {
+            adapter.deleteItemAtIndex(position)
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+
     }
 
     private fun showPopupMenu(position: Int, view: View, currentCategory: Int) =
@@ -58,10 +77,10 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-                        findNavController().navigate(R.id.editBudgetCategoryFragment)
+
                     }
                     "Delete" -> {
-                        adapter.deleteItemAtIndex(position)
+                      showDialog(position)
                     }
                 }
                 true
@@ -69,11 +88,13 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
             show()
         }
 
+
     private fun setIsLoadingScreen() {
         binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.VISIBLE
+
     }
 
     private fun setEmptyListScreen() {
@@ -99,8 +120,5 @@ class BudgetCategoryList : Fragment(), CategoryClicker {
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.GONE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+
 }
