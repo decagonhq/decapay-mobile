@@ -61,10 +61,7 @@
         android:name="com.decagonhq.decapay.feature.budgetdetails.presentation.BudgetDetailsFragment"
         android:label="fragment_budget_details"
         tools:layout="@layout/fragment_budget_details" />
-        android:id="@+id/testFragment"
-        android:name="com.decagonhq.decapay.feature.testfragment.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+
     <fragment
         android:id="@+id/createBudgetFragment"
         android:name="com.decagonhq.decapay.feature.createbudget.presentation.CreateBudgetFragment"
@@ -81,13 +78,19 @@
         tools:layout="@layout/fragment_edit_budget" />
     <fragment
         android:id="@+id/budgetCategoryList"
-        android:name="com.decagonhq.decapay.feature.listbudgetcategories.presentation.BudgetCategoryList"
+        android:name="com.decagonhq.decapay.feature.listbudgetcategories.presentation.BudgetCategoryListFragment"
         android:label="fragment_budget_category_list"
         tools:layout="@layout/fragment_budget_category_list" />
-        
+    <fragment
         android:id="@+id/createBudgetCategoryFragment"
         android:name="com.decagonhq.decapay.feature.createbudgetcategory.presentation.CreateBudgetCategoryFragment"
         android:label="fragment_create_budget_category"
         tools:layout="@layout/fragment_create_budget_category" />
+    <fragment
+        android:id="@+id/editBudgetCategoryFragment"
+        android:name="com.decagonhq.decapay.feature.editbudgetcategory.presentation.EditBudgetCategoryFragment"
+        android:label="fragment_edit_budget_category"
+        tools:layout="@layout/fragment_edit_budget_category" />
+
 
 </navigation>

@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/delete_modal_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/are_you_sure_you_want_to_delete"
@@ -21,6 +22,7 @@
         />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_modal_yes_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/decapay_green"
@@ -35,6 +37,7 @@
         />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_modal_no_btn"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
