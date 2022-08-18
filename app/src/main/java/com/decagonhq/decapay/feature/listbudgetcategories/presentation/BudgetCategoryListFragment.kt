@@ -9,13 +9,17 @@ import android.view.Window
 import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryListAdaptor
+import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.Data
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,8 +29,10 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
     private var _binding: FragmentBudgetCategoryListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CategoryListAdaptor
+    private val budgetCategoryViewModel: BudgetCategoryViewModel by viewModels()
 
-    private val list = mutableListOf<Int>()
+
+    private val list = mutableListOf<Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,17 +46,40 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val testList = mutableListOf<Int>(1, 2, 3, 3, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7)
-        list.addAll(testList)
+
+
         adapter = CategoryListAdaptor(list, this);
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
             LinearLayoutManager(requireContext())
-        setDataLoaded(list);
+        budgetCategoryViewModel.getBudgetCategoryList()
+        setUpFlowListener()
     }
 
 
-    override fun onClickItemEllipsis(currentCategory: Int, position: Int, view: View) {
+    private fun setUpFlowListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                budgetCategoryViewModel.budgetCategoryListResponse.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            setIsLoadingScreen()
+                        }
+
+                        is Resource.Success -> {
+                            setDataLoaded(it.data.data.toMutableList())
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    override fun onClickItemEllipsis(currentCategory: Data, position: Int, view: View) {
         showPopupMenu(position, view, currentCategory)
     }
 
@@ -71,7 +100,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     }
 
-    private fun showPopupMenu(position: Int, view: View, currentCategory: Int) =
+    private fun showPopupMenu(position: Int, view: View, currentCategory: Data) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.category_item_menu, menu)
             setOnMenuItemClickListener { item ->
@@ -80,7 +109,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
                     }
                     "Delete" -> {
-                      showDialog(position)
+                        showDialog(position)
                     }
                 }
                 true
@@ -91,7 +120,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     private fun setIsLoadingScreen() {
         binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
-        binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
+        binding.budgetCategoryListFragmentEmptyListHeaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.VISIBLE
 
@@ -104,7 +133,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.VISIBLE
     }
 
-    private fun setDataLoaded(newList: MutableList<Int>) {
+    private fun setDataLoaded(newList: MutableList<Data>) {
 
         if (newList.isEmpty() && list.isEmpty()) {
             setEmptyListScreen()
