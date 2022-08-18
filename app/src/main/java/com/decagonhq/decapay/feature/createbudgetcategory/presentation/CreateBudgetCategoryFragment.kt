@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.CreateBudgetCategoryInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetCategoryBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateBudgetCategoryFragment : Fragment() {
     /**
      * declare views and variables
