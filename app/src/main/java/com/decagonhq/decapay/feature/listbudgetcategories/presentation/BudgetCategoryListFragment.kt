@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -52,6 +54,23 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         showPopupMenu(position, view, currentCategory)
     }
 
+    private fun showDialog(position: Int) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.delete_modal_layout)
+
+        val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
+        val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
+        yesBtn.setOnClickListener {
+            adapter.deleteItemAtIndex(position)
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+
+    }
+
     private fun showPopupMenu(position: Int, view: View, currentCategory: Int) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.category_item_menu, menu)
@@ -61,7 +80,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
                     }
                     "Delete" -> {
-                        adapter.deleteItemAtIndex(position)
+                      showDialog(position)
                     }
                 }
                 true
