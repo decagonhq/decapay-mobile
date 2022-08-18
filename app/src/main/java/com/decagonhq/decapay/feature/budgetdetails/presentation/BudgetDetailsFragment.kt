@@ -165,6 +165,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         showPopupMenu(position, view, currentBudget)
     }
 
+    override fun onClickItemLog(currentBudget: Int, position: Int, view: View) {
+
+    }
+
     private fun showPopupMenu(position: Int, view: View, currentBudget: Int) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.category_item_menu, menu)

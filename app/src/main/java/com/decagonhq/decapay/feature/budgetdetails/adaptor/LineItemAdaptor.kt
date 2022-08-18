@@ -40,12 +40,17 @@ class LineItemAdaptor(var list: MutableList<Int>, var clicker: LineItemClicker) 
     }
 
     class LineItemViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
-        private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
+        private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
+        private var logButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
 
         fun initialize(currentCategoryItem: Int, clicker: LineItemClicker) {
 
-            button.setOnClickListener {
-                clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, button)
+            ellipsisButton.setOnClickListener {
+                clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, itemView)
+            }
+
+            logButton.setOnClickListener {
+                clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, itemView)
             }
 
         }
