@@ -46,8 +46,6 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         adapter = CategoryListAdaptor(list, this);
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =

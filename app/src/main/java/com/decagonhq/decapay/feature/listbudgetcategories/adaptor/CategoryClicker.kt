@@ -5,5 +5,5 @@ import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.Dat
 
 interface CategoryClicker {
 
-    fun onClickItemEllipsis(currentBudget: Data, position: Int, view: View)
+    fun onClickItemEllipsis(currentCategory: Data, position: Int, view: View)
 }
