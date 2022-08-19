@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.listbudgetcategories.domain.usecase
 
 import com.decagonhq.decapay.common.utils.errorhelper.ExceptionHandler
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.BudgetCategoriesResponse
 import com.decagonhq.decapay.feature.listbudgetcategories.domain.repository.BudgetCategoryListRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,7 +14,7 @@ class BudgetCategoryListUseCase @Inject constructor(
     private val budgetCategoryListRepository: BudgetCategoryListRepository,
     private val exceptionHandler: ExceptionHandler
 ) {
-    operator fun invoke(): Flow<Resource<Any>> = flow {
+    operator fun invoke(): Flow<Resource<BudgetCategoriesResponse>> = flow {
 
         try {
             emit(Resource.Loading())
