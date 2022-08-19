@@ -129,6 +129,11 @@
     <string name="create_budget_category_fragment_name_category_add">Add</string>
     <string name="edit_budget_category_fragment_title">Edit Category</string>
     <string name="edit_budget_category_fragment_name_category_save">Save</string>
+    <string name="create_budget_line_item_bottom_sheet_title">Create Budget Line Item</string>
+    <string name="create_budget_line_item_bottom_sheet_label_category">Category</string>
+    <string name="create_budget_line_item_bottom_sheet_label_projected_amount">Projected Amount</string>
+    <string name="create_budget_line_item_bottom_sheet_label_projected_amount_hint">N0.00</string>
+    <string name="create_budget_line_item_bottom_sheet_fragment_create_button">Create</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>

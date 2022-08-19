@@ -87,6 +87,12 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                 budgetDetailsViewModel.getBudgetDetails(detailsBudgetId.id)
             }
         }
+
+        // to add budgetlineItems
+        binding.budgetDetailsFloatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
+        }
+
         initObserver()
 
 //        val testList = mutableListOf<LineItem>()
