@@ -1,5 +1,6 @@
 package com.decagonhq.decapay.feature.createbudgetlineitems.di
 
+import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.api.CreateBudgetLineItemApi
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.api.GetBudgetCategoryListApi
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.repository.GetBudgetCategoryListRepositoryImpl
 import com.decagonhq.decapay.feature.createbudgetlineitems.domain.repository.GetBudgetCategoryListRepository
@@ -24,5 +25,11 @@ object CreateBudgetLineItemNetworkModule {
     @Singleton
     fun provideGetBudgetCategoryListRepository(getBudgetCategoryListApi: GetBudgetCategoryListApi): GetBudgetCategoryListRepository {
         return GetBudgetCategoryListRepositoryImpl(getBudgetCategoryListApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateBudgetLineItemApi(retrofit: Retrofit): CreateBudgetLineItemApi {
+        return retrofit.create(CreateBudgetLineItemApi::class.java)
     }
 }
