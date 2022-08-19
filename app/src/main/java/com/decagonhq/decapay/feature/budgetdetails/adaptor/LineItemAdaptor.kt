@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 
 
-
-class LineItemAdaptor(var list: MutableList<Int>, var clicker: LineItemClicker) :RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
+class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker) :RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
 
 
 
@@ -42,15 +43,25 @@ class LineItemAdaptor(var list: MutableList<Int>, var clicker: LineItemClicker) 
     class LineItemViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
         private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
         private var logButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
+        private var title :TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
+        private var projectedAmount :TextView = itemView.findViewById<TextView>(R.id.budget_line_item_projected_amount_tv)
+        private var amountSoFar: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_amount_so_far_tv)
+        private var percentage: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_percentage_tv)
 
-        fun initialize(currentCategoryItem: Int, clicker: LineItemClicker) {
+        fun initialize(currentLineItem: LineItem, clicker: LineItemClicker) {
+
+            title.text = currentLineItem.category
+            projectedAmount.text = currentLineItem.displayProjectedAmount
+            amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
+            percentage.text = currentLineItem.displayPercentageSpentSoFar
+
 
             ellipsisButton.setOnClickListener {
-                clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, itemView)
+                clicker.onClickItemEllipsis(currentLineItem, adapterPosition, ellipsisButton)
             }
 
             logButton.setOnClickListener {
-                clicker.onClickItemEllipsis(currentCategoryItem, adapterPosition, itemView)
+                clicker.onClickItemEllipsis(currentLineItem, adapterPosition, itemView)
             }
 
         }
