@@ -2,7 +2,9 @@ package com.decagonhq.decapay.feature.createbudgetlineitems.di
 
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.api.CreateBudgetLineItemApi
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.api.GetBudgetCategoryListApi
+import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.repository.CreateBudgetLineItemRepositoryImpl
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.repository.GetBudgetCategoryListRepositoryImpl
+import com.decagonhq.decapay.feature.createbudgetlineitems.domain.repository.CreateBudgetLineItemRepository
 import com.decagonhq.decapay.feature.createbudgetlineitems.domain.repository.GetBudgetCategoryListRepository
 import dagger.Module
 import dagger.Provides
@@ -31,5 +33,11 @@ object CreateBudgetLineItemNetworkModule {
     @Singleton
     fun provideCreateBudgetLineItemApi(retrofit: Retrofit): CreateBudgetLineItemApi {
         return retrofit.create(CreateBudgetLineItemApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateBudgetLineItemRepository(createBudgetLineItemApi: CreateBudgetLineItemApi): CreateBudgetLineItemRepository {
+        return CreateBudgetLineItemRepositoryImpl(createBudgetLineItemApi)
     }
 }
