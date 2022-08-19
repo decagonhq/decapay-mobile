@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
-import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,7 +68,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             val budgetCategoryList = ArrayList<String>()
                             val categories = it.data.data
                             if (categories != null) {
-                                for (item in categories){
+                                for (item in categories) {
                                     if (item != null) {
                                         item.title?.let { category -> budgetCategoryList.add(category) }
                                     }
@@ -77,7 +76,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             }
                             val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
                             binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
-                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
                                     parent: AdapterView<*>?,
                                     view: View?,
@@ -85,7 +84,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                     id: Long
                                 ) {
                                     selectedCategory = parent?.getItemAtPosition(position).toString()
-                                    Log.d(TAG, "${selectedCategory}, the id is: ${id}, here is the position: ${position}")
+                                    Log.d(TAG, "$selectedCategory, the id is: $id, here is the position: $position")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
