@@ -89,7 +89,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
 
         // to add budgetlineItems
-        binding.budgetDetailsFloatingActionButton.setOnClickListener {
+        binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
         }
 
