@@ -81,7 +81,7 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
     <Button
-        android:id="@+id/create_budget_line_item_bottom_sheet_fragment_done_button_btn"
+        android:id="@+id/create_budget_line_item_bottom_sheet_fragment_create_button_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

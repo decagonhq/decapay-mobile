@@ -30,6 +30,8 @@ class BudgetDetailsFragment : Fragment() {
     private val TAG = "BUDGETDETAILSFRAG"
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
+    private var budgetId: Int? = null
+    private lateinit var detailsBudgetId: Content
 
     @Inject
     lateinit var preference: Preferences
@@ -70,12 +72,12 @@ class BudgetDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
-            val budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
+            budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
             if (budgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(budgetId)
+                budgetDetailsViewModel.getBudgetDetails(budgetId!!)
             }
         } else {
-            val detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
+            detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
             if (detailsBudgetId != null) {
                 budgetDetailsViewModel.getBudgetDetails(detailsBudgetId.id)
             }
@@ -83,7 +85,16 @@ class BudgetDetailsFragment : Fragment() {
 
         // to add budgetlineItems
         binding.budgetDetailsFloatingActionButton.setOnClickListener {
-            findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
+            // I have two source of budgetId, budgetId and detailsBudgetId
+            // check if null and add to bundle
+            val bundle = Bundle()
+            if (budgetId != null && detailsBudgetId.id == null) {
+                bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
+                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
+            } else {
+                bundle.putInt(DataConstant.BUDGET_ITEM_BOTTOMSHEET, detailsBudgetId.id)
+                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
+            }
         }
 
         initObserver()
