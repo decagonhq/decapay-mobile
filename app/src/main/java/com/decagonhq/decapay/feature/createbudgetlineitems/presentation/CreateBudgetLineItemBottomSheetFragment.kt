@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -71,6 +72,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         // observers
         initObserver()
         // to create a budgetLineItem
+
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.text?.trim().toString()
@@ -138,16 +140,12 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             }
                                         }
                                     }
-                                    Log.d(TAG, "here is the budgetLineItemId: $budgetLineItemId")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
                                     //
                                 }
                             }
-                            Log.d(TAG, "here is the output: ${it.data.message}")
-                            // locate the budgetLineItemId
-
                             Snackbar.make(
                                 binding.root,
                                 "${it.data.message}",
@@ -173,26 +171,23 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 createBudgetLineItemViewModel.createBudgetLineItemResponse.collect {
-                    when(it) {
+                    when (it) {
                         is Resource.Success -> {
-                            Snackbar.make(
-                                binding.root,
+                            Toast.makeText(
+                                requireContext(),
                                 "${it.data.message}",
-                                Snackbar.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, " here is the outut of create a budgetline item: ${it.data.message}")
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
+                            Toast.makeText(
+                                requireContext(),
                                 "${it.message}",
-                                Snackbar.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
-                            findNavController().popBackStack()
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
