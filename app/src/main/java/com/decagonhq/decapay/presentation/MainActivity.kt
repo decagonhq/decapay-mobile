@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_dashboard -> {
 
-                    // navController.navigate(R.id.loginFragment)
+                    navController.navigate(R.id.budgetListFragment)
                 }
                 R.id.menu_budget -> {
                     // navController.navigate(R.id.testFragment)
