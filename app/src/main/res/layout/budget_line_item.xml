@@ -5,17 +5,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
 
-    android:elevation="3dp">
+    android:elevation="1dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:layout_weight="3"
             android:orientation="vertical">
 
@@ -26,26 +27,59 @@
                 android:text="Groceries"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/budget_line_item_projected_amount_tv"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Projected amount - N5,500"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/budget_line_item_amount_so_far_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Amount so far - N2,500"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/budget_line_item_projected_amount_header_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/projected_amount"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/budget_line_item_projected_amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:text=""
+                    android:textSize="14sp"/>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/budget_line_item_amount_so_far_header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amount_so_far"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/budget_line_item_amount_so_far_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:text=""
+        android:textSize="14sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
 
             <TextView
                 android:id="@+id/budget_line_item_view_expenses_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="View expenses"
+                android:paddingBottom="5dp"
+                android:text="@string/view_expenses"
                 android:textColor="@color/decapay_green"
                 android:textSize="12sp" />
 
@@ -60,13 +94,18 @@
             android:paddingEnd="10dp"
 
             >
+            <ImageButton
+                android:id="@+id/budget_line_item_elipsis_ib"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_elipsis" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/budget_line_item_log_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/decapay_green"
-                android:gravity="center"
                 android:text="@string/log"
                 android:textAllCaps="false"
                 android:textSize="14sp"
@@ -77,7 +116,7 @@
                 android:id="@+id/budget_line_item_percentage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3.70%"
+                android:text=""
                 android:textColor="@color/decapay_green" />
 
 
