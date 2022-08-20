@@ -84,9 +84,9 @@ class BudgetDetailsFragment : Fragment() {
         }
 
         // to add budgetlineItems
+        /*
         binding.budgetDetailsFloatingActionButton.setOnClickListener {
-            // I have two source of budgetId, budgetId and detailsBudgetId
-            // check if null and add to bundle
+            // check budgetId and detailsBudgetId for BudgetID
             val bundle = Bundle()
             if (budgetId != null && detailsBudgetId.id == null) {
                 bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
@@ -96,6 +96,8 @@ class BudgetDetailsFragment : Fragment() {
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
         }
+
+         */
 
         initObserver()
     }
