@@ -174,6 +174,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                 createBudgetLineItemViewModel.createBudgetLineItemResponse.collect {
                     when (it) {
                         is Resource.Success -> {
+                            binding.createBudgetLineItemFragmentErrorMessageTv.visibility = View.INVISIBLE
                             Toast.makeText(
                                 requireContext(),
                                 "${it.data.message}",
@@ -182,11 +183,16 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
+                            /*
                             Toast.makeText(
                                 requireContext(),
                                 "${it.message}",
                                 Toast.LENGTH_LONG
                             ).show()
+
+                             */
+                            binding.createBudgetLineItemFragmentErrorMessageTv.visibility = View.VISIBLE
+                            binding.createBudgetLineItemFragmentErrorMessageTv.text = it.message
                         }
                         is Resource.Loading -> {
                         }
