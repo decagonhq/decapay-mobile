@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
@@ -103,6 +104,9 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        val bundle = Bundle()
+                        bundle.putString(DataConstant.BUDGET_CATEGORY_LIST_TITLE, currentCategory.title)
+                        findNavController().navigate(R.id.editBudgetCategoryFragment, bundle)
                     }
                     "Delete" -> {
                         showDialog(position)
