@@ -2,7 +2,6 @@ package com.decagonhq.decapay.feature.createbudgetlineitems.presentation
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,13 +43,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // get the budgetIds from bundle
-        if (requireArguments().containsKey(DataConstant.BUDGET_ID_BOTTOMSHEET)) {
-            budgetId = arguments?.getInt(DataConstant.BUDGET_ID_BOTTOMSHEET)
-            Log.d(TAG, "see the budgetId: $budgetId")
-        } else {
-            receivedDetailBudgetId = arguments?.getInt(DataConstant.BUDGET_ITEM_BOTTOMSHEET)
-            Log.d(TAG, "This is from the content: $receivedDetailBudgetId")
-        }
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID_BOTTOMSHEET)
     }
 
     override fun onCreateView(
@@ -84,16 +77,9 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             } else {
-                if (budgetId == null) {
-                    // make a network call
-                    createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        receivedDetailBudgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
-                    )
-                } else {
-                    createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
-                    )
-                }
+                createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                    budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
+                )
             }
         }
 
@@ -183,14 +169,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            /*
-                            Toast.makeText(
-                                requireContext(),
-                                "${it.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                             */
                             binding.createBudgetLineItemFragmentErrorMessageTv.visibility = View.VISIBLE
                             binding.createBudgetLineItemFragmentErrorMessageTv.text = it.message
                         }
@@ -200,24 +178,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        val layout = layoutInflater.inflate(R.layout.custom_toast, null)
-        /*
-        val toast = Toast(requireActivity()).apply {
-            duration = Toast.LENGTH_LONG
-            setGravity(Gravity.BOTTOM, 0, 0)
-            setText(message)
-            view = layout
-        }.show()
-
-         */
-        val toast = Toast(requireActivity())
-        toast.duration = Toast.LENGTH_LONG
-        toast.setGravity(Gravity.BOTTOM, 0, 0)
-        toast.setText(message)
-        toast.show()
     }
 
     override fun onDestroy() {

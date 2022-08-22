@@ -77,33 +77,18 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
-            budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
-            if (budgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(budgetId!!)
-            }
-        } else {
-            detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
-            if (detailsBudgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(detailsBudgetId!!.id)
-            }
+        budgetId = arguments?.getInt("BUDGET_ID")
+        if (budgetId != null) {
+            budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
 
         // to add budgetlineItems
-
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId and detailsBudgetId for BudgetID
             val bundle = Bundle()
-            if (budgetId != null && detailsBudgetId == null) {
+            if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-            } else {
-                bundle.putInt(DataConstant.BUDGET_ITEM_BOTTOMSHEET, detailsBudgetId!!.id)
-                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-            }
-            binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
-                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
             }
         }
 
