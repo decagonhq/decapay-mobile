@@ -77,7 +77,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        budgetId = arguments?.getInt("BUDGET_ID")
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
         if (budgetId != null) {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
@@ -88,7 +88,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             // check budgetId
             val bundle = Bundle()
             if (budgetId != null) {
-                bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
+                bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
         }
