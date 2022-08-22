@@ -105,8 +105,14 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
                 when (item.title) {
                     "Edit" -> {
                         val bundle = Bundle()
+                        bundle.putSerializable(DataConstant.BUDGET_CATEGORY_LIST_ITEM, currentCategory)
+                        findNavController().navigate(R.id.editBudgetCategoryFragment, bundle)
+                    /*
+                        val bundle = Bundle()
                         bundle.putString(DataConstant.BUDGET_CATEGORY_LIST_TITLE, currentCategory.title)
                         findNavController().navigate(R.id.editBudgetCategoryFragment, bundle)
+
+                         */
                     }
                     "Delete" -> {
                         showDialog(position)
