@@ -37,10 +37,10 @@ fun showCustomDialog(
     return dialog
 }
 
-fun Fragment.hideKeyboard(){
+fun Fragment.hideKeyboard() {
     val hideKeyboard = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     var currentFocus = requireActivity().currentFocus
-    if (currentFocus == null){
+    if (currentFocus == null) {
         currentFocus = View(requireActivity())
     }
     hideKeyboard.hideSoftInputFromWindow(currentFocus.windowToken, 0)

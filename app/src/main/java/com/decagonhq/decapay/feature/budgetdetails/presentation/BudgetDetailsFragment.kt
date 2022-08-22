@@ -35,6 +35,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private val TAG = "BUDGETDETAILSFRAG"
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
+    private var budgetId: Int? = null
+    private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
 
@@ -75,29 +77,27 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
-            val budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
-            if (budgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(budgetId)
-            }
-        } else {
-            val detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
-            if (detailsBudgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(detailsBudgetId.id)
-            }
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
+        if (budgetId != null) {
+            budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
 
         // to add budgetlineItems
+
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
-            findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
+            // check budgetId
+            val bundle = Bundle()
+            if (budgetId != null) {
+                bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
+                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
+            }
         }
 
         initObserver()
 
 //        val testList = mutableListOf<LineItem>()
 //        list.addAll(testList)
-        adapter = LineItemAdaptor(list, this);
+        adapter = LineItemAdaptor(list, this)
         binding.budgetDetailsLineItemsRv.adapter = adapter
         binding.budgetDetailsLineItemsRv.layoutManager =
             LinearLayoutManager(requireContext())
@@ -105,19 +105,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     private fun setDataLoaded(list: MutableList<LineItem>) {
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             binding.budgetDetailsEmptyLineItemsLl.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.budgetDetailsEmptyLineItemsLl.visibility = View.GONE
             this.list = list
-            adapter.list =list
+            adapter.list = list
             adapter.setLineItems()
-
         }
-
-
-
-
     }
 
 
@@ -201,7 +196,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
     }
 
-
     private fun showDeleteDialog(position: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -218,16 +212,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
         noBtn.setOnClickListener { dialog.dismiss() }
         dialog.show()
-
     }
 
     private fun showPopupMenu(position: Int, view: View, currentLineItem: LineItem) =
-        PopupMenu(view.context, view,Gravity.RIGHT).run {
+        PopupMenu(view.context, view, Gravity.RIGHT).run {
             menuInflater.inflate(R.menu.category_item_menu, menu)
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-
                     }
                     "Delete" -> {
                         showDeleteDialog(position)
@@ -243,6 +235,5 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
-
     }
 }

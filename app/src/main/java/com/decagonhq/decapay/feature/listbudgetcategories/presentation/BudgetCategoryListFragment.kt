@@ -13,8 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
@@ -31,7 +33,6 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
     private lateinit var adapter: CategoryListAdaptor
     private val budgetCategoryViewModel: BudgetCategoryViewModel by viewModels()
 
-
     private val list = mutableListOf<Data>()
 
     override fun onCreateView(
@@ -43,17 +44,19 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoryListAdaptor(list, this);
+        adapter = CategoryListAdaptor(list, this)
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
             LinearLayoutManager(requireContext())
         budgetCategoryViewModel.getBudgetCategoryList()
         setUpFlowListener()
+        // on click fab, createBudgetCategory
+        binding.budgetCategoryListFragmentCreateCategoryFab.setOnClickListener {
+            findNavController().navigate(R.id.createBudgetCategoryFragment)
+        }
     }
-
 
     private fun setUpFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -68,14 +71,12 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
                             setDataLoaded(it.data.data.toMutableList())
                         }
                         else -> {
-
                         }
                     }
                 }
             }
         }
     }
-
 
     override fun onClickItemEllipsis(currentCategory: Data, position: Int, view: View) {
         showPopupMenu(position, view, currentCategory)
@@ -95,7 +96,6 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         }
         noBtn.setOnClickListener { dialog.dismiss() }
         dialog.show()
-
     }
 
     private fun showPopupMenu(position: Int, view: View, currentCategory: Data) =
@@ -104,7 +104,9 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
-
+                        val bundle = Bundle()
+                        bundle.putString(DataConstant.BUDGET_CATEGORY_LIST_TITLE, currentCategory.title)
+                        findNavController().navigate(R.id.editBudgetCategoryFragment, bundle)
                     }
                     "Delete" -> {
                         showDialog(position)
@@ -115,13 +117,11 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
             show()
         }
 
-
     private fun setIsLoadingScreen() {
         binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListHeaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.VISIBLE
-
     }
 
     private fun setEmptyListScreen() {
@@ -146,6 +146,4 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
         binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.GONE
     }
-
-
 }

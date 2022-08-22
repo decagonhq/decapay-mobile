@@ -22,5 +22,7 @@
     <color name="light_yellow">#1AFFE088</color>
     <color name="light_blue">#0D009CF4</color>
     <color name="light_red">#0DF46CB4</color>
+    <color name="red">#E66565</color>
+
 
 </resources>

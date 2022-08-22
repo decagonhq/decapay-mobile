@@ -137,9 +137,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="custom_toast_tst">My feedback</string>
     <string name="view_expenses">view_expenses</string>
     <string name="projected_amount">Projected amount -</string>
     <string name="amount_so_far">Amount so far -</string>
+    <string name="createBudgetLineItem_fragment_error_message">The BudgetLine Item Already Exist</string>
 
 
 </resources>
