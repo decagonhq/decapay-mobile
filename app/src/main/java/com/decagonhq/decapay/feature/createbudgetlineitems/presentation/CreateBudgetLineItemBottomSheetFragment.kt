@@ -42,14 +42,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // get the budgetIds from bundle
-        if (requireArguments().containsKey(DataConstant.BUDGET_ID_BOTTOMSHEET)) {
-            budgetId = arguments?.getInt(DataConstant.BUDGET_ID_BOTTOMSHEET)
-            Log.d(TAG, "see the budgetId: $budgetId")
-        } else {
-            receivedDetailBudgetId = arguments?.getInt(DataConstant.BUDGET_ITEM_BOTTOMSHEET)
-            Log.d(TAG, "This is from the content: $receivedDetailBudgetId")
-        }
+        // get the budgetId from bundle
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID_BOTTOMSHEET)
     }
 
     override fun onCreateView(
@@ -66,7 +60,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        selectedCategory = ""
         // call the budgetcategory
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
