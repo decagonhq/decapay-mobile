@@ -56,7 +56,6 @@ class EditBudgetCategoryFragment : Fragment() {
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         // set the previous budget category to the text-filed
         // get the value from the bundle
-        val categoryTitle = arguments?.getString(DataConstant.BUDGET_CATEGORY_LIST_TITLE)
         val budgetCategoryData = arguments?.getSerializable(DataConstant.BUDGET_CATEGORY_LIST_ITEM) as Data
         binding.editBudgetCategoryFragmentNameCategoryTiedt.setText(budgetCategoryData.title)
 
