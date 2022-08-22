@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideDrawer() {
+     fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
