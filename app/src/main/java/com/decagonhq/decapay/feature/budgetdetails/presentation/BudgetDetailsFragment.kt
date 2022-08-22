@@ -81,31 +81,16 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         if (budgetId != null) {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
-        /*
-        if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
-            budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
-            if (budgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(budgetId!!)
-            }
-        } else {
-            detailsBudgetId = arguments?.getSerializable(DataConstant.BUDGET_ITEM) as Content
-            if (detailsBudgetId != null) {
-                budgetDetailsViewModel.getBudgetDetails(detailsBudgetId!!.id)
-            }
-        }
-
-         */
 
         // to add budgetlineItems
 
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId
             val bundle = Bundle()
-            if (budgetId != null){
+            if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
-
         }
 
         initObserver()
