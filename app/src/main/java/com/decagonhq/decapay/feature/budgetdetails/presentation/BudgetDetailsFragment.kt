@@ -77,7 +77,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        budgetId = arguments?.getInt("BUDGET_ID")
+        if (budgetId != null) {
+            budgetDetailsViewModel.getBudgetDetails(budgetId!!)
+        }
+        /*
         if (requireArguments().containsKey(DataConstant.BUDGET_ID)) {
             budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
             if (budgetId != null) {
@@ -90,21 +94,18 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             }
         }
 
+         */
+
         // to add budgetlineItems
 
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
-            // check budgetId and detailsBudgetId for BudgetID
+            // check budgetId
             val bundle = Bundle()
-            if (budgetId != null && detailsBudgetId == null) {
+            if (budgetId != null){
                 bundle.putInt(DataConstant.BUDGET_ID_BOTTOMSHEET, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-            } else {
-                bundle.putInt(DataConstant.BUDGET_ITEM_BOTTOMSHEET, detailsBudgetId!!.id)
-                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
-            binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
-                findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment)
-            }
+
         }
 
         initObserver()

@@ -88,19 +88,20 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     }
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
-        // println("Clicked on an item elipsis")
         showPopupMenu(position, view, currentBudget)
     }
 
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
-        /*
+
         bundle.putInt("BUDGET_ID", currentBudget.id)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
 
-         */
+         /*
         bundle.putSerializable(DataConstant.BUDGET_ITEM, currentBudget)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
+
+          */
     }
 
     private fun showPopupMenu(position: Int, view: View, currentBudget: Content) =
