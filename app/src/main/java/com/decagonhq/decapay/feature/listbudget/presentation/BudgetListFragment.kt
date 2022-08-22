@@ -95,7 +95,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
 
-        bundle.putInt("BUDGET_ID", currentBudget.id)
+        bundle.putInt(DataConstant.BUDGET_ID, currentBudget.id)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 

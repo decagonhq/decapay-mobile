@@ -43,7 +43,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // get the budgetIds from bundle
-        budgetId = arguments?.getInt(DataConstant.BUDGET_ID_BOTTOMSHEET)
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
     }
 
     override fun onCreateView(
