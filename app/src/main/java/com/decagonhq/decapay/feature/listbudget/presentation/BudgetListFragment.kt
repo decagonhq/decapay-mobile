@@ -97,10 +97,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
         bundle.putInt("BUDGET_ID", currentBudget.id)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
-
-
-//        bundle.putSerializable(DataConstant.BUDGET_ITEM, currentBudget)
-//        findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }
 
     private fun showPopupMenu(position: Int, view: View, currentBudget: Content) =
