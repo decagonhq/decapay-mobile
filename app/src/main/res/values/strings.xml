@@ -144,6 +144,7 @@
     <string name="createBudgetLineItem_fragment_error_message">The BudgetLine Item Already Exist</string>
     <string name="edit_budget_line_item_bottom_sheet_title">Edit Budget Line Item</string>
     <string name="edit_budget_line_item_bottom_sheet_fragment_create_button">Update</string>
+    <string name="editBudgetLineItem_category">Category</string>
 
 
 </resources>
