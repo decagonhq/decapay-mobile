@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditBudgetLineItemViewModel @Inject constructor(
     private val updateBudgetLineItemUsecase: UpdateBudgetLineItemUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel(){
 
     private val _updateBudgetLineItemResponse = MutableSharedFlow<Resource<EditBudgetLineItemResponse>>()
