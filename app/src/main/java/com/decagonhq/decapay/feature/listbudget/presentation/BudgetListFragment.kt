@@ -21,6 +21,7 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetListBinding
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
+import com.decagonhq.decapay.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,7 +50,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         budgetListViewModel.getBudgetList()
         adapter = BudgetListAdapter(list, this)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
@@ -88,13 +88,11 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     }
 
     override fun onClickItemEllipsis(currentBudget: Content, position: Int, view: View) {
-        // println("Clicked on an item elipsis")
         showPopupMenu(position, view, currentBudget)
     }
 
     private fun goToBudgetDetails(currentBudget: Content) {
         val bundle = Bundle()
-
         bundle.putInt(DataConstant.BUDGET_ID, currentBudget.id)
         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
     }

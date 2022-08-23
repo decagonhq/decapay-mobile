@@ -84,7 +84,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
         // to add budgetlineItems
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
-            // check budgetId and detailsBudgetId for BudgetID
+            // check budgetId
             val bundle = Bundle()
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
@@ -113,6 +113,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             adapter.setLineItems()
         }
     }
+
+
+
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -165,6 +168,31 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                budgetDetailsViewModel.budgetDeleteLineItemResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            Snackbar.make(
+                                binding.root,
+                                "Line Item Deleted",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        is Resource.Error -> {
+                            Snackbar.make(
+                                binding.root,
+                                it.message,
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        is Resource.Loading -> {
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun showDeleteDialog(position: Int) {
@@ -176,6 +204,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
+           budgetDetailsViewModel.deleteLineItem(list[position].budgetId,list[position].categoryId)
+           // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
             adapter.deleteItemAtIndex(position)
             dialog.dismiss()
         }

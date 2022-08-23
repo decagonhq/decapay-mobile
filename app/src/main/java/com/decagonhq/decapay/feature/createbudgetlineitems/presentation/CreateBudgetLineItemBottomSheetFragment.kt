@@ -42,7 +42,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // get the budgetIds from bundle
+        // get the budgetId from bundle
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
     }
 
@@ -60,7 +60,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        selectedCategory = ""
         // call the budgetcategory
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
@@ -77,9 +76,12 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             } else {
-                createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                    budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
-                )
+
+                if (budgetId != null) {
+                    createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
+                    )
+                }
             }
         }
 
