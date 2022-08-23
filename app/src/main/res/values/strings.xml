@@ -142,6 +142,10 @@
     <string name="projected_amount">Projected amount -</string>
     <string name="amount_so_far">Amount so far -</string>
     <string name="createBudgetLineItem_fragment_error_message">The BudgetLine Item Already Exist</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description</string>
+    <string name="time_logged">Time Logged</string>
+    <string name="no_expenses_yet">No Expenses Yet</string>
 
 
 </resources>
