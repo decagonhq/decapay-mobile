@@ -37,7 +37,7 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
 
     class LineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
-        private var logButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
+        private var logButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_log_btn)
         private var title: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
         private var projectedAmount: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_projected_amount_tv)
         private var amountSoFar: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_amount_so_far_tv)
@@ -55,7 +55,8 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             }
 
             logButton.setOnClickListener {
-                clicker.onClickItemEllipsis(currentLineItem, adapterPosition, itemView)
+//                clicker.onClickItemEllipsis(currentLineItem, adapterPosition, itemView)
+                clicker.onClickItemLog(currentLineItem, adapterPosition, itemView)
             }
         }
     }
