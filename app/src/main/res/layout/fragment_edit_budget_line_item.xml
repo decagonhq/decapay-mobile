@@ -3,9 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:background="@drawable/op_bottomsheet_layout_bg"
-    tools:context=".feature.editbudgetlineitem.presentation.EditBudgetLineItemBottomSheetFragment"
-    >
+    tools:context=".feature.editbudgetlineitem.presentation.EditBudgetLineItemBottomSheetFragment">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/option_modal_bg"
+        android:padding="16dp"
+        >
+        <TextView
+            android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_category_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/edit_budget_line_item_bottom_sheet_title"
+            android:textStyle="bold"
+            android:layout_weight="1.5"
+            android:textSize="@dimen/option_modal_bottom_sheet_fragment_select_title_txsiz" />
+        <ImageView
+            android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_close_icon_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:scaleType="fitEnd"
+            android:layout_weight="0.5"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <TextView
+        android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_label_category_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/create_budget_line_item_bottom_sheet_label_category"
+        />
+    <Spinner
+        android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_bg"
+        />
+    <TextView
+        android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_label_projected_amount_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/create_budget_line_item_bottom_sheet_label_projected_amount"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_amount_til"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_amount_tiedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/create_budget_line_item_bottom_sheet_label_projected_amount_hint"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_create_button_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/login_button_bg"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/edit_budget_line_item_bottom_sheet_fragment_create_button"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 
 
