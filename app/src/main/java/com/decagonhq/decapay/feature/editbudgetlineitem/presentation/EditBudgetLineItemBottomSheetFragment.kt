@@ -14,7 +14,6 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditBudgetLineItemBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
-import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.GetBudgetCategoryListViewModel
 import com.decagonhq.decapay.feature.editbudgetlineitem.data.network.model.EditBudgetLineItemRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
@@ -30,7 +29,6 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private val TAG = "EDITBUDGETLINEITEM"
     private var _binding: FragmentEditBudgetLineItemBinding? = null
     val binding: FragmentEditBudgetLineItemBinding get() = _binding!!
-    private val getBudgetCategoryListViewModel: GetBudgetCategoryListViewModel by viewModels()
     private lateinit var selectedCategory: String
     private var projectedAnount by Delegates.notNull<Double>()
     private var selectedCategoryId by Delegates.notNull<Int>()
@@ -59,9 +57,6 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // get category list
-        getBudgetCategoryListViewModel.getBudgetCategoryList()
-
         // set the category value to textview
         binding.editBudgetLineItemCategoryTv.text = selectedCategory
 
@@ -87,39 +82,10 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                 )
             }
         }
-
-        initObserver()
         initObserveUpdate()
         // close the bottomsheet
         binding.editBudgetLineItemBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
-        }
-    }
-
-    private fun initObserver() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                getBudgetCategoryListViewModel.getBudgetCategoryListResponse.collect {
-                    when (it) {
-                        is Resource.Success -> {
-                            Snackbar.make(
-                                binding.root,
-                                "${it.data.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                        is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                        is Resource.Loading -> {
-                        }
-                    }
-                }
-            }
         }
     }
 
