@@ -1,24 +1,23 @@
 package com.decagonhq.decapay.feature.editbudgetlineitem.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditBudgetLineItemBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.GetBudgetCategoryListViewModel
+import com.decagonhq.decapay.feature.editbudgetlineitem.data.network.model.EditBudgetLineItemRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
@@ -36,16 +35,15 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private var projectedAnount by Delegates.notNull<Double>()
     private var selectedCategoryId by Delegates.notNull<Int>()
     private var selectedBudgetId by Delegates.notNull<Int>()
+    private val editBudgetLineItemViewModel: EditBudgetLineItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val selectedBudgetLineItem = arguments?.getSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM) as LineItem
         selectedCategory = selectedBudgetLineItem.category
-        projectedAnount = selectedBudgetLineItem.budgetId.toDouble()
+        projectedAnount = selectedBudgetLineItem.projectedAmount.toDouble()
         selectedCategoryId = selectedBudgetLineItem.categoryId
         selectedBudgetId = selectedBudgetLineItem.budgetId
-        Log.d(TAG, "here is the categoryId: ${selectedCategoryId}")
-        Log.d(TAG, "here is the budgetId: ${selectedBudgetId}")
     }
 
     override fun onCreateView(
@@ -63,12 +61,35 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         // get category list
         getBudgetCategoryListViewModel.getBudgetCategoryList()
-        // disable the spinner from selection
-        binding.editBudgetLineItemBottomSheetFragmentCategorySpinner.isEnabled = false
+
+        // set the category value to textview
+        binding.editBudgetLineItemCategoryTv.text = selectedCategory
+
         // set the projected amount to the editable text input fields
         binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.setText(projectedAnount.toString())
 
+        // on click on update button
+        binding.editBudgetLineItemBottomSheetFragmentUpdateButtonBtn.setOnClickListener {
+            // get all the inputs
+            val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.text?.trim().toString()
+            // validate the amount field
+            if (actualProjectedAmount.isEmpty()) {
+                Snackbar.make(
+                    binding.root,
+                    "Amount field cannot be empty",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                // make a network call
+                editBudgetLineItemViewModel.updateBudgetLineItem(
+                    selectedBudgetId, selectedCategoryId,
+                    EditBudgetLineItemRequestBody(actualProjectedAmount.toDouble())
+                )
+            }
+        }
+
         initObserver()
+        initObserveUpdate()
         // close the bottomsheet
         binding.editBudgetLineItemBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
@@ -81,34 +102,44 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                 getBudgetCategoryListViewModel.getBudgetCategoryListResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            val budgetCategoryList = ArrayList<String>()
-                            val categories = it.data.data
-                            if (categories != null) {
-                                for (item in categories) {
-                                    if (item != null) {
-                                        item.title?.let { categoryTitle -> budgetCategoryList.add(categoryTitle) }
-                                    }
-                                }
-                            }
-                            val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
-                            binding.editBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
-                            binding.editBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    //
-                                }
-
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
-                                    //
-                                }
-                            }
-                            binding.editBudgetLineItemBottomSheetFragmentCategorySpinner.setSelection(budgetCategoryList.indexOf(selectedCategory))
+                            Snackbar.make(
+                                binding.root,
+                                "${it.data.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Error -> {
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        is Resource.Loading -> {
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initObserveUpdate() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                editBudgetLineItemViewModel.updateBudgetLineItemResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            binding.editBudgetLineItemFragmentErrorMessageTv.visibility = View.INVISIBLE
+                            Toast.makeText(
+                                requireContext(),
+                                "${it.data.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            findNavController().popBackStack()
+                        }
+                        is Resource.Error -> {
+                            binding.editBudgetLineItemFragmentErrorMessageTv.visibility = View.VISIBLE
+                            binding.editBudgetLineItemFragmentErrorMessageTv.text = it.message
                         }
                         is Resource.Loading -> {
                         }
