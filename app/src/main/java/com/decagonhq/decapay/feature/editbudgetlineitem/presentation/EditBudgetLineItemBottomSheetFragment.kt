@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.editbudgetlineitem.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,12 +34,18 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private val getBudgetCategoryListViewModel: GetBudgetCategoryListViewModel by viewModels()
     private lateinit var selectedCategory: String
     private var projectedAnount by Delegates.notNull<Double>()
+    private var selectedCategoryId by Delegates.notNull<Int>()
+    private var selectedBudgetId by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val selectedBudgetLineItem = arguments?.getSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM) as LineItem
         selectedCategory = selectedBudgetLineItem.category
         projectedAnount = selectedBudgetLineItem.budgetId.toDouble()
+        selectedCategoryId = selectedBudgetLineItem.categoryId
+        selectedBudgetId = selectedBudgetLineItem.budgetId
+        Log.d(TAG, "here is the categoryId: ${selectedCategoryId}")
+        Log.d(TAG, "here is the budgetId: ${selectedBudgetId}")
     }
 
     override fun onCreateView(
