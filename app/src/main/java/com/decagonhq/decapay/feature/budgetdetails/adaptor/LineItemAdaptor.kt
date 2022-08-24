@@ -9,11 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 
-
-class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker) :RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
-
-
-
+class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.budget_line_item, parent, false)
@@ -29,7 +25,6 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
         return list.size
     }
 
-
     fun setLineItems() {
         notifyDataSetChanged()
     }
@@ -40,11 +35,11 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
         notifyItemRangeChanged(index, list.size)
     }
 
-    class LineItemViewHolder(itemView: View)  : RecyclerView.ViewHolder(itemView) {
+    class LineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
         private var logButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
-        private var title :TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
-        private var projectedAmount :TextView = itemView.findViewById<TextView>(R.id.budget_line_item_projected_amount_tv)
+        private var title: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
+        private var projectedAmount: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_projected_amount_tv)
         private var amountSoFar: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_amount_so_far_tv)
         private var percentage: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_percentage_tv)
 
@@ -55,7 +50,6 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
             percentage.text = currentLineItem.displayPercentageSpentSoFar
 
-
             ellipsisButton.setOnClickListener {
                 clicker.onClickItemEllipsis(currentLineItem, adapterPosition, ellipsisButton)
             }
@@ -63,7 +57,6 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             logButton.setOnClickListener {
                 clicker.onClickItemEllipsis(currentLineItem, adapterPosition, itemView)
             }
-
         }
     }
 }

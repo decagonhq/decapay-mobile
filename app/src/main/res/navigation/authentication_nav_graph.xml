@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/expensesListFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
@@ -96,11 +96,15 @@
         android:name="com.decagonhq.decapay.feature.createbudgetlineitems.presentation.CreateBudgetLineItemBottomSheetFragment"
         android:label="fragment_create_budget_line_item_bottom_sheet"
         tools:layout="@layout/fragment_create_budget_line_item_bottom_sheet" />
+    <dialog
+        android:id="@+id/editBudgetLineItemBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.editbudgetlineitem.presentation.EditBudgetLineItemBottomSheetFragment"
+        android:label="fragment_edit_budget_line_item"
+        tools:layout="@layout/fragment_edit_budget_line_item" />
     <fragment
         android:id="@+id/expensesListFragment"
         android:name="com.decagonhq.decapay.feature.expenseslist.presentation.ExpensesListFragment"
         android:label="fragment_expenses_list"
         tools:layout="@layout/fragment_expenses_list" />
-
 
 </navigation>

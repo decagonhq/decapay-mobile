@@ -83,7 +83,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
 
         // to add budgetlineItems
-
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId
             val bundle = Bundle()
@@ -114,9 +113,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             adapter.setLineItems()
         }
     }
-
-
-
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -205,8 +201,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
-           budgetDetailsViewModel.deleteLineItem(list[position].budgetId,list[position].categoryId)
-           // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
+            budgetDetailsViewModel.deleteLineItem(list[position].budgetId, list[position].categoryId)
+            // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
             adapter.deleteItemAtIndex(position)
             dialog.dismiss()
         }
@@ -220,6 +216,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        val bundle = Bundle()
+                        bundle.putSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM, currentLineItem)
+                        findNavController().navigate(R.id.editBudgetLineItemBottomSheetFragment, bundle)
                     }
                     "Delete" -> {
                         showDeleteDialog(position)
