@@ -234,5 +234,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
+        findNavController().navigate(R.id.logExpenseBottomSheetFragment)
     }
 }
