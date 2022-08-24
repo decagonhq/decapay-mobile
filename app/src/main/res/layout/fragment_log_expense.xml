@@ -15,11 +15,11 @@
         android:padding="16dp"
         >
         <TextView
-            android:id="@+id/logExpense_bottom_sheet_fragment_category_title_tv"
+            android:id="@+id/logExpense_bottom_sheet_fragment_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
-            android:text="@string/logExpense_bottom_sheet_title"
+            android:text="@string/logExpense_bottom_sheet_fragment_add_expense"
             android:textStyle="bold"
             android:layout_weight="1.5"
             android:textSize="@dimen/option_modal_bottom_sheet_fragment_select_title_txsiz" />
@@ -33,6 +33,16 @@
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/logExpense_bottom_sheet_fragment_category_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/logExpense_bottom_sheet_title"
+        android:textSize="@dimen/logExpense_bottom_sheet_fragment_category_title_txsize" />
     <TextView
         android:id="@+id/logExpense_bottom_sheet_fragment_label_amount_spent_tv"
         android:layout_width="wrap_content"
