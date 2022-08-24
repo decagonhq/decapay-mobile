@@ -34,38 +34,9 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     <TextView
-        android:id="@+id/logExpense_bottom_sheet_fragment_description_tv"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/logExpense_bottom_sheet_fragment_description"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/logExpense_bottom_sheet_fragment_description_til"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:hintEnabled="false"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/logExpense_bottom_sheet_fragment_description_tiedt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/logExpense_bottom_sheet_fragment_description_hint"
-            android:inputType="text"
-            android:lines="1"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-    <TextView
         android:id="@+id/logExpense_bottom_sheet_fragment_label_amount_spent_tv"
         android:layout_width="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -91,6 +62,38 @@
             android:lines="1"
             />
     </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/logExpense_bottom_sheet_fragment_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/logExpense_bottom_sheet_fragment_description"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/logExpense_bottom_sheet_fragment_description_til"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/logExpense_bottom_sheet_fragment_description_tiedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/logExpense_bottom_sheet_fragment_description_hint"
+            android:inputType="text"
+            android:lines="1"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <TextView
         android:id="@+id/logExpense_bottom_sheet_fragment_label_projected_amount_tv"
         android:layout_width="wrap_content"
