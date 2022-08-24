@@ -1,7 +1,7 @@
 package com.decagonhq.decapay.feature.budgetdetails.data.network.model
 
-
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class LineItem(
     @SerializedName("budgetId")
@@ -22,4 +22,4 @@ data class LineItem(
     val projectedAmount: Int,
     @SerializedName("totalAmountSpentSoFar")
     val totalAmountSpentSoFar: Int
-)
+) : Serializable

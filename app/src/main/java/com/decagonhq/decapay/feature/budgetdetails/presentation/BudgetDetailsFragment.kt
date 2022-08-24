@@ -83,7 +83,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
 
         // to add budgetlineItems
-
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId
             val bundle = Bundle()
@@ -220,6 +219,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        val bundle = Bundle()
+                        bundle.putSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM, currentLineItem)
+                        findNavController().navigate(R.id.editBudgetLineItemBottomSheetFragment, bundle)
                     }
                     "Delete" -> {
                         showDeleteDialog(position)

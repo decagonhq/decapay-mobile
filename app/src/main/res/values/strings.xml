@@ -146,6 +146,9 @@
     <string name="description">Description</string>
     <string name="time_logged">Time Logged</string>
     <string name="no_expenses_yet">No Expenses Yet</string>
+    <string name="edit_budget_line_item_bottom_sheet_title">Edit Budget Line Item</string>
+    <string name="edit_budget_line_item_bottom_sheet_fragment_create_button">Update</string>
+    <string name="editBudgetLineItem_category">Category</string>
 
 
 </resources>
