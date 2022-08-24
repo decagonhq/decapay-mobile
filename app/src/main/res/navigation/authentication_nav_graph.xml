@@ -106,11 +106,5 @@
         android:name="com.decagonhq.decapay.feature.expenseslist.presentation.ExpensesListFragment"
         android:label="fragment_expenses_list"
         tools:layout="@layout/fragment_expenses_list" />
-    <dialog
-        android:id="@+id/editBudgetLineItemBottomSheetFragment"
-        android:name="com.decagonhq.decapay.feature.editbudgetlineitem.presentation.EditBudgetLineItemBottomSheetFragment"
-        android:label="fragment_edit_budget_line_item"
-        tools:layout="@layout/fragment_edit_budget_line_item" />
-
 
 </navigation>
