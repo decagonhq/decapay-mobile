@@ -34,31 +34,38 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     <TextView
-        android:id="@+id/logExpense_bottom_sheet_fragment_label_projected_amount_tv"
+        android:id="@+id/logExpense_bottom_sheet_fragment_description_tv"
         android:layout_width="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="@string/logExpense_bottom_sheet_fragment_transaction_date"
+        android:text="@string/logExpense_bottom_sheet_fragment_description"
         />
-    <TextView
-        android:id="@+id/logExpense_bottom_sheet_fragment_transaction_date_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/logExpense_bottom_sheet_fragment_description_til"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:fontFamily="@font/roboto_light"
-        android:background="@drawable/budget_period_bg"
-        android:drawableEnd="@drawable/ic_pick_date"
-        android:hint="@string/logExpense_bottom_sheet_fragment_transaction_date_hint"
-        />
+        android:layout_marginTop="8dp"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/logExpense_bottom_sheet_fragment_description_tiedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/logExpense_bottom_sheet_fragment_description_hint"
+            android:inputType="text"
+            android:lines="1"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/logExpense_bottom_sheet_fragment_label_amount_spent_tv"
         android:layout_width="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -85,42 +92,35 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
-        android:id="@+id/logExpense_bottom_sheet_fragment_description_tv"
+        android:id="@+id/logExpense_bottom_sheet_fragment_label_projected_amount_tv"
         android:layout_width="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="@string/logExpense_bottom_sheet_fragment_description"
+        android:text="@string/logExpense_bottom_sheet_fragment_transaction_date"
         />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/logExpense_bottom_sheet_fragment_description_til"
+    <TextView
+        android:id="@+id/logExpense_bottom_sheet_fragment_transaction_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:hintEnabled="false"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/logExpense_bottom_sheet_fragment_description_tiedt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/logExpense_bottom_sheet_fragment_description_hint"
-            android:inputType="text"
-            android:lines="1"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:padding="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:background="@drawable/budget_period_bg"
+        android:drawableEnd="@drawable/ic_pick_date"
+        android:hint="@string/logExpense_bottom_sheet_fragment_transaction_date_hint"
+        />
     <Button
         android:id="@+id/logExpense_bottom_sheet_fragment_save_button_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/logExpense_bottom_sheet_fragment_save_button"
