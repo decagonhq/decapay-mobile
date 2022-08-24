@@ -15,4 +15,7 @@
     <dimen name="option_modal_bottom_sheet_fragment_instruction_txsiz">18sp</dimen>
     <dimen name="option_modal_bottom_sheet_fragment_options_annual_txsiz">18sp</dimen>
     <dimen name="create_budget_category_callout">18sp</dimen>
+    <dimen name="edit_budget_line_item_bottom_sheet_fragment_label_category_txsiz">24sp</dimen>
+    <dimen name="editBudgetLineItem_category_txsiz">18sp</dimen>
+    <dimen name="editBudgetLineItem_selected_category__txsiz">24sp</dimen>
 </resources>
