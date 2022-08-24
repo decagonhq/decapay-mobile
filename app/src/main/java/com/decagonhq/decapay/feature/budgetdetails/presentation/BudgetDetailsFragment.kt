@@ -114,9 +114,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
     }
 
-
-
-
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -204,8 +201,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
-           budgetDetailsViewModel.deleteLineItem(list[position].budgetId,list[position].categoryId)
-           // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
+            budgetDetailsViewModel.deleteLineItem(list[position].budgetId, list[position].categoryId)
+            // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
             adapter.deleteItemAtIndex(position)
             dialog.dismiss()
         }

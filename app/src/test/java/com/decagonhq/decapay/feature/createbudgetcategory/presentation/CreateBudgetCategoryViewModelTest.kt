@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class CreateBudgetCategoryFragmentTest {
+class CreateBudgetCategoryViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockCreateBudgetCategoryUsecase: CreateBudgetCategoryUsecase
@@ -37,7 +37,7 @@ class CreateBudgetCategoryFragmentTest {
     }
 
     @Test
-    fun createBudgetCategoryFragmentTest_returnAnErrorResponse() = runTest {
+    fun createBudgetCategoryViewModelTest_returnAnErrorResponse() = runTest {
         val flow = CreateBudgetCategoryFakeFlow(Resource.Error("", mockCreateBudgetCategoryResponse))
         `when`(mockCreateBudgetCategoryUsecase(mockCreateBudgetCategoryRequestBody)).thenReturn(flow)
         val viewModel = CreateBudgetCategoryViewModel(mockCreateBudgetCategoryUsecase, null)
@@ -49,7 +49,7 @@ class CreateBudgetCategoryFragmentTest {
     }
 
     @Test
-    fun createBudgetCategoryFragmentTest_returnASuccessfulResponse() = runTest {
+    fun createBudgetCategoryViewModelTest_returnASuccessfulResponse() = runTest {
         val flow = CreateBudgetCategoryFakeFlow(Resource.Success(mockCreateBudgetCategoryResponse))
         `when`(mockCreateBudgetCategoryUsecase(mockCreateBudgetCategoryRequestBody)).thenReturn(flow)
         val viewModel = CreateBudgetCategoryViewModel(mockCreateBudgetCategoryUsecase, null)

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/expensesListFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
@@ -106,6 +106,5 @@
         android:name="com.decagonhq.decapay.feature.expenseslist.presentation.ExpensesListFragment"
         android:label="fragment_expenses_list"
         tools:layout="@layout/fragment_expenses_list" />
-
 
 </navigation>
