@@ -22,7 +22,7 @@ class BudgetListViewModel @Inject constructor(
     var isFetching = false
     var page = 0
 
-    fun getBudgetList() {
+     fun getBudgetList() {
         viewModelScope.launch {
 
             budgetListUseCase.invoke(page).collect {
