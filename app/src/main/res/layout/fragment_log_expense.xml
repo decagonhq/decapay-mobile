@@ -88,8 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/logExpense_bottom_sheet_fragment_description_hint"
-            android:inputType="text"
-            android:lines="1"
+            android:inputType="textMultiLine"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
