@@ -111,6 +111,11 @@
         android:name="com.decagonhq.decapay.feature.logexpense.presentation.LogExpenseBottomSheetFragment"
         android:label="fragment_log_expense"
         tools:layout="@layout/fragment_log_expense" />
+    <dialog
+        android:id="@+id/editLogExpenseBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.editlogexpense.presentation.EditLogExpenseBottomSheetFragment"
+        android:label="fragment_edit_log_expense_bottom_sheet"
+        tools:layout="@layout/fragment_edit_log_expense_bottom_sheet" />
 
 
 </navigation>
