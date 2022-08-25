@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private val TAG = "LOGEXPENSE"
     private var _binding: FragmentLogExpenseBinding? = null
     val binding: FragmentLogExpenseBinding get() = _binding!!
+    private val logExpenseViewModel: LogExpenseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

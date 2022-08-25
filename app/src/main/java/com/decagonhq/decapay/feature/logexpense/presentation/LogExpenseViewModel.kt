@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class LogExpenseViewModel @Inject constructor(
     private val addExpenseUsecase: AddExpenseUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel(){
 
     private val _addExpenseResponse = MutableSharedFlow<Resource<LogExpenseResponseDemo>>()
