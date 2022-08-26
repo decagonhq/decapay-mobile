@@ -146,9 +146,19 @@
     <string name="description">Description</string>
     <string name="time_logged">Time Logged</string>
     <string name="no_expenses_yet">No Expenses Yet</string>
+    <string name="logExpense_bottom_sheet_title">Transportation</string>
+    <string name="logExpense_bottom_sheet_fragment_transaction_date">Transaction Date</string>
+    <string name="logExpense_bottom_sheet_fragment_transaction_date_hint">Current Date</string>
+    <string name="logExpense_bottom_sheet_fragment_label_amount_spent">Amount Spent</string>
+    <string name="logExpense_bottom_sheet_fragment_description">Description</string>
+    <string name="logExpense_bottom_sheet_fragment_description_hint">Type description here..</string>
+    <string name="logExpense_bottom_sheet_fragment_save_button">Save</string>
+    <string name="logExpense_bottom_sheet_fragment_cancel_button">Cancel</string>
     <string name="edit_budget_line_item_bottom_sheet_title">Edit Budget Line Item</string>
     <string name="edit_budget_line_item_bottom_sheet_fragment_create_button">Update</string>
     <string name="editBudgetLineItem_category">Category</string>
+    <string name="logExpense_bottom_sheet_fragment_add_expense">Add Expense</string>
+    <string name="editlogexpense_bottom_sheet_fragment_edit_expense">Edit Expense</string>
 
 
 </resources>
