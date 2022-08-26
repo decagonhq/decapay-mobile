@@ -38,4 +38,20 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     override fun deleteToken() {
         preferences.edit().remove(PreferenceConstants.KEY_TOKEN).apply()
     }
+
+    override fun putBudgetStartDate(startDate: Long) {
+        preferences.edit().putLong(PreferenceConstants.BUDGET_START_DATE, startDate).apply()
+    }
+
+    override fun getBudgetStartDate(): Long {
+        return preferences.getLong(PreferenceConstants.BUDGET_START_DATE, 0)
+    }
+
+    override fun putBudgetEndDate(endDate: Long) {
+        preferences.edit().putLong(PreferenceConstants.BUDGET_END_DATE, endDate).apply()
+    }
+
+    override fun getBudgetEndDate(): Long {
+        return preferences.getLong(PreferenceConstants.BUDGET_END_DATE, 0)
+    }
 }

@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -149,6 +150,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
                             binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
+                            Log.d(TAG, "here is the endDate: ${endDate} and endFormatedDate is ${endFormattedDate}, here is enddate in milliseconds: ${endDateTimiMillis}")
+                            Log.d(TAG, "here is the startDate: ${startDate} and startFormatedDate is ${startFormattedDate}, here is enddate in milliseconds: ${startDateTimeMillis}")
 
                             setDataLoaded(it.data.data.lineItems.toMutableList())
                         }

@@ -15,4 +15,12 @@ interface Preferences {
     fun getUserPassword(): String
 
     fun deleteToken()
+
+    fun putBudgetStartDate(startDate: Long)
+
+    fun getBudgetStartDate(): Long
+
+    fun putBudgetEndDate(endDate: Long)
+
+    fun getBudgetEndDate(): Long
 }
