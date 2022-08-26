@@ -7,4 +7,6 @@ interface LineItemClicker {
 
     fun onClickItemEllipsis(currentLineItem: LineItem, position: Int, view: View)
     fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View)
+
+    fun onClickItem(currentLineItem: LineItem, position: Int, view: View)
 }

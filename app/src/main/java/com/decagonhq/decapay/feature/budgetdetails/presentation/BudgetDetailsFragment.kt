@@ -40,6 +40,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
 
+
     @Inject
     lateinit var preference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
@@ -89,7 +90,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
+
             }
+
         }
 
         initObserver()
@@ -102,6 +105,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             LinearLayoutManager(requireContext())
         // setDataLoaded(list);
     }
+
+
 
     private fun setDataLoaded(list: MutableList<LineItem>) {
         if (list.isEmpty()) {
@@ -120,11 +125,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                 budgetDetailsViewModel.budgetDetailsResponse.collect {
                     when (it) {
                         is Resource.Success -> {
-                            Snackbar.make(
-                                binding.root,
-                                it.data.message,
-                                Snackbar.LENGTH_LONG
-                            ).show()
+
                             val budgetDetails = it.data.data
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
@@ -201,7 +202,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
-            budgetDetailsViewModel.deleteLineItem(list[position].budgetId, list[position].categoryId)
+            budgetDetailsViewModel.deleteLineItem(
+                list[position].budgetId,
+                list[position].categoryId
+            )
             // Log.d("zzz","${list[position].budgetId}, ${list[position].categoryId} ")
             adapter.deleteItemAtIndex(position)
             dialog.dismiss()
@@ -217,8 +221,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                 when (item.title) {
                     "Edit" -> {
                         val bundle = Bundle()
-                        bundle.putSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM, currentLineItem)
-                        findNavController().navigate(R.id.editBudgetLineItemBottomSheetFragment, bundle)
+                        bundle.putSerializable(
+                            DataConstant.SELECTED_BUDGET_LINE_ITEM,
+                            currentLineItem
+                        )
+                        findNavController().navigate(
+                            R.id.editBudgetLineItemBottomSheetFragment,
+                            bundle
+                        )
                     }
                     "Delete" -> {
                         showDeleteDialog(position)
@@ -235,5 +245,15 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
         findNavController().navigate(R.id.logExpenseBottomSheetFragment)
+    }
+
+    override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
+        val bundle = Bundle()
+
+        budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+        bundle.putString(DataConstant.CATEGORY,currentLineItem.category)
+        bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
+
+        findNavController().navigate(R.id.expensesListFragment, bundle)
     }
 }

@@ -144,12 +144,15 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         } else {
             list.addAll(newList)
             adapter.setCategory()
+
+
+            binding.budgetCategoryListFragmentBudgetCategoryListRv.visibility = View.VISIBLE
+            binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
+            binding.budgetCategoryListFragmentEmptyListHeaderTv.visibility = View.GONE
+            binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
+            binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.GONE
         }
 
-        binding.budgetCategoryListFragmentBudgetCategoryListRv.visibility = View.VISIBLE
-        binding.budgetCategoryListFragmentEmptyListIv.visibility = View.GONE
-        binding.budgetCategoryListFragmentEmptyListHeaderTv.visibility = View.GONE
-        binding.budgetCategoryListFragmentEmptyListSubheaderTv.visibility = View.GONE
-        binding.budgetCategoryListFragmentPageLoadingPb.visibility = View.GONE
+
     }
 }

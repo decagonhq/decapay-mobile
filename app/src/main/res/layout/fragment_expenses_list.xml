@@ -16,13 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Transport Expenses"
+            android:text=""
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:id="@+id/toolbar_title" />
+            android:id="@+id/expense_list_fragment_toolbar_title" />
 
     </androidx.appcompat.widget.Toolbar>
 
