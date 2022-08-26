@@ -57,6 +57,10 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             logButton.setOnClickListener {
                 clicker.onClickItemEllipsis(currentLineItem, adapterPosition, itemView)
             }
+
+            itemView.setOnClickListener {
+                clicker.onClickItem(currentLineItem, adapterPosition, itemView)
+            }
         }
     }
 }

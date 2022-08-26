@@ -11,13 +11,21 @@ import android.view.Window
 import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
+import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentExpensesListBinding
 import com.decagonhq.decapay.feature.expenseslist.adapter.ExpenseClicker
 import com.decagonhq.decapay.feature.expenseslist.adapter.ExpenseListAdapter
+import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ExpensesListFragment : Fragment(), ExpenseClicker {
@@ -27,7 +35,11 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
     private val binding get() = _binding!!
     lateinit var adapter: ExpenseListAdapter
 
-    val list = mutableListOf<Int>()
+     var budgetId :Int? = null
+     var categoryId :Int? = null
+
+
+    val list = mutableListOf<ExpenseContent>()
 
 
     override fun onCreateView(
@@ -41,27 +53,40 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dummyList = mutableListOf<Int>(1, 2, 4, 5, 3, 3, 33, 3, 3, 3, 3, 3, 3, 3)
-        adapter = ExpenseListAdapter(dummyList, this)
-        binding.expenseListFragmentExpensesRv.adapter = adapter
-        binding.expenseListFragmentExpensesRv.layoutManager = LinearLayoutManager(requireContext())
+        budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
+        categoryId = arguments?.getInt(DataConstant.CATEGORY_ID)
+        val title = arguments?.getString(DataConstant.CATEGORY)
 
-        setDataLoaded(dummyList)
+        binding.expenseListFragmentToolbarTitle.text = "$title Expenses"
+
+
+
+        if(budgetId!=null && categoryId!=null){
+            expenseListViewModel.getBudgetList(budgetId!!, categoryId!!)
+        }
+
+        adapter = ExpenseListAdapter(list, this)
+        binding.expenseListFragmentExpensesRv.adapter = adapter
+        binding.expenseListFragmentExpensesRv.layoutManager =
+            LinearLayoutManager(requireContext())
+
 
         setUpScrollListener()
+        setUpFlowListener()
+        setUpDeleteFlowListener()
 
     }
 
-    override fun onClickItem(currentExpense: Int, position: Int) {
+    override fun onClickItem(currentExpense: ExpenseContent, position: Int) {
 
     }
 
-    override fun onClickItemEllipsis(currentExpense: Int, position: Int, view: View) {
+    override fun onClickItemEllipsis(currentExpense: ExpenseContent, position: Int, view: View) {
 
         showPopupMenu(position, view, currentExpense)
     }
 
-    private fun showPopupMenu(position: Int, view: View, currentExpense: Int) =
+    private fun showPopupMenu(position: Int, view: View, currentExpense: ExpenseContent) =
         PopupMenu(view.context, view).run {
             menuInflater.inflate(R.menu.category_item_menu, menu)
             setOnMenuItemClickListener { item ->
@@ -90,7 +115,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
-                        expenseListViewModel.getNextPage()
+                        expenseListViewModel.getNextPage(budgetId!!,categoryId!!)
                         Log.d("zzz","Called")
 
                         /**
@@ -100,6 +125,55 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                 }
             }
         })
+    }
+
+
+    private fun setUpFlowListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                expenseListViewModel.expenseListResponse.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            setIsLoadingScreen()
+                        }
+
+                        is Resource.Success -> {
+                            setDataLoaded(it.data.data.content as MutableList<ExpenseContent>)
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUpDeleteFlowListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                expenseListViewModel.deleteResponse.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            setIsLoadingScreen()
+                        }
+
+                        is Resource.Success -> {
+                            Snackbar.make(
+                                binding.root,
+                                "Expense deleted successfully",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        else -> {
+                            Snackbar.make(
+                                binding.root,
+                                "${it.messages}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun showDialog(position: Int) {
@@ -112,6 +186,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
             adapter.deleteItemAtIndex(position)
+            expenseListViewModel.deleteExpense(list[position].id)
             dialog.dismiss()
         }
         noBtn.setOnClickListener { dialog.dismiss() }
@@ -132,18 +207,20 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
 
     }
 
-    private fun setDataLoaded(newList: MutableList<Int>) {
+    private fun setDataLoaded(newList: MutableList<ExpenseContent>) {
 
         if (newList.isEmpty() && list.isEmpty()) {
             setEmptyListScreen()
         } else {
             list.addAll(newList)
             adapter.setBudget()
+
+            binding.expenseListFragmentExpensesRv.visibility = View.VISIBLE
+            binding.expenseListFragmentEmptyLl.visibility = View.GONE
+            binding.expenseListFragmentLoadingPb.visibility = View.GONE
         }
 
-        binding.expenseListFragmentExpensesRv.visibility = View.VISIBLE
-        binding.expenseListFragmentEmptyLl.visibility = View.GONE
-        binding.expenseListFragmentLoadingPb.visibility = View.GONE
+
     }
 
 

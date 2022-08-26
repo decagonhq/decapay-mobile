@@ -163,10 +163,12 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         } else {
             list.addAll(newList)
             adapter.setBudget()
+
+            binding.budgetListFragmentBudgetListRv.visibility = View.VISIBLE
+            binding.budgetListFragmentEmptyLl.visibility = View.GONE
+            binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
         }
 
-        binding.budgetListFragmentBudgetListRv.visibility = View.VISIBLE
-        binding.budgetListFragmentEmptyLl.visibility = View.GONE
-        binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
+
     }
 }
