@@ -234,6 +234,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
-        findNavController().navigate(R.id.logExpenseBottomSheetFragment)
+        val bundle = Bundle()
+        bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
+        findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 }
