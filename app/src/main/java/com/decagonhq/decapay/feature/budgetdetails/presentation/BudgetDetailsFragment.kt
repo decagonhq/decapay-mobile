@@ -18,6 +18,7 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.addOneDayToEndDate
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -40,9 +41,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
+    private lateinit var calendarSelectedDate: String
 
     @Inject
-    lateinit var preference: Preferences
+    lateinit var budgetDetailsPreference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +94,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
         }
+        // capture the selected date from the calendar view
+        binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            calendarSelectedDate = "$dayOfMonth/${month + 1}/$year"
+            budgetDetailsPreference.putSelectedDate(calendarSelectedDate)
+        }
 
         initObserver()
 
@@ -140,18 +147,28 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
+                            Log.d(TAG, "see the date from the server: ${budgetDetails.endDate}")
+                            val receivedEndDate = budgetDetails.endDate
+                            val addedOnedDay = addOneDayToEndDate(receivedEndDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
+                            val addedOneDayToEndDate = addedOnedDay.replace('/', '.')
+
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
+                            val addedOneDayToEndDateTime = "$addedOneDayToEndDate, 00:00"
                             val startFormattedDate: Date = formatter.parse(startTime) as Date
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
+                            val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
                             val startDateTimeMillis = startFormattedDate.time
                             val endDateTimiMillis = endFormattedDate.time
+                            val addedOneDayTimeMillis = addedOneDayFormattedDate.time
+
+                            // save date to sharedPreference
+                            budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
+                            budgetDetailsPreference.putBudgetEndDate(addedOneDayTimeMillis)
 
                             binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
                             binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
-                            Log.d(TAG, "here is the endDate: ${endDate} and endFormatedDate is ${endFormattedDate}, here is enddate in milliseconds: ${endDateTimiMillis}")
-                            Log.d(TAG, "here is the startDate: ${startDate} and startFormatedDate is ${startFormattedDate}, here is enddate in milliseconds: ${startDateTimeMillis}")
 
                             setDataLoaded(it.data.data.lineItems.toMutableList())
                         }

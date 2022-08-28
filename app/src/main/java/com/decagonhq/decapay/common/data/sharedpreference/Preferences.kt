@@ -23,4 +23,8 @@ interface Preferences {
     fun putBudgetEndDate(endDate: Long)
 
     fun getBudgetEndDate(): Long
+
+    fun putSelectedDate(date: String)
+
+    fun getSelectedDate(): String
 }
