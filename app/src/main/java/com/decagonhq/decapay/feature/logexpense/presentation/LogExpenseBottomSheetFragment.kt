@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,8 +50,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
-        Log.d(TAG, "my present value of startDate: ${logExpensePreference.getBudgetStartDate()}, catId: $selectedCategoryId")
-        Log.d(TAG, "my present value of endDate: ${logExpensePreference.getBudgetEndDate()}, budgetId: $selectedBudgetId")
     }
 
     override fun onCreateView(
@@ -113,6 +110,10 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.logExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
         }
+        // on click on cancel button
+        binding.logExpenseBottomSheetFragmentCancelButtonBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun showTheDateRange(startDate: Long, endDate: Long) {
@@ -131,7 +132,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         pickRange.addOnPositiveButtonClickListener { selectedDate ->
             transactionDate = "${convertLongToTime(selectedDate)}"
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = transactionDate
-            Log.d(TAG, "this is the logged date: $transactionDate")
         }
     }
 
@@ -141,18 +141,17 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 logExpenseViewModel.addExpenseResponse.collect {
                     when (it) {
                         is Resource.Success -> {
+                            binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.INVISIBLE
                             Toast.makeText(
                                 requireContext(),
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
+                            findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "${it.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
+                            binding.logExpenseBottomSheetFragmentErrorMessageTv.text = it.message
                         }
                         is Resource.Loading -> {
                         }
@@ -160,24 +159,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         }
-    }
-
-    private fun setupRangePickerDialog() {
-        val builderRange = MaterialDatePicker.Builder.dateRangePicker()
-        builderRange.setCalendarConstraints(limitRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate()).build())
-        val pickRange = builderRange.build()
-        pickRange.show(
-            parentFragmentManager,
-            pickRange.toString()
-        )
-    }
-
-    private fun limitRange(startDate: Long, endDate: Long): CalendarConstraints.Builder {
-        val constraintBuilderRange = CalendarConstraints.Builder()
-        constraintBuilderRange.setStart(startDate)
-        constraintBuilderRange.setEnd(endDate)
-        constraintBuilderRange.setValidator(RangeValidator(startDate, endDate))
-        return constraintBuilderRange
     }
 
     override fun onDestroy() {

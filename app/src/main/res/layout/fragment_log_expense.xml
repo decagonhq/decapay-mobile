@@ -151,6 +151,22 @@
         android:text="@string/logExpense_bottom_sheet_fragment_cancel_button"
         android:textAllCaps="false"
          />
+    <TextView
+        android:id="@+id/logExpense_bottom_sheet_fragment_error_message_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/display_error_bg"
+        android:textAlignment="center"
+        android:text="@string/createBudgetLineItem_fragment_error_message"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_medium"
+        android:lines="2"
+        android:padding="8dp"
+        android:visibility="invisible"
+        />
 
 
 
