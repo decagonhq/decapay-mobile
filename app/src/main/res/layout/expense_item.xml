@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textStyle="bold"
-                android:text="Amount"
+                android:text=""
                 tools:ignore="RtlHardcoded" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -84,8 +84,9 @@
                 android:id="@+id/expense_item_description_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="viewStart"
-                android:text="Lorem ipsum dolor  amet, rus consectetur adipiscing elit. "
+               android:layout_weight="1"
+                android:gravity="right"
+                android:text=""
                 tools:ignore="RtlHardcoded" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
              android:gravity="right"
-                android:text="01:45PM" />
+                android:text="" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
