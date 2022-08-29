@@ -18,7 +18,6 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.addOneDayToEndDate
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -28,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -42,7 +42,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
     private lateinit var calendarSelectedDate: String
-
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences
@@ -93,9 +92,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-
             }
-
         }
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
@@ -113,8 +110,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             LinearLayoutManager(requireContext())
         // setDataLoaded(list);
     }
-
-
 
     private fun setDataLoaded(list: MutableList<LineItem>) {
         if (list.isEmpty()) {
@@ -150,9 +145,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val startDate = budgetDetails.startDate.replace('-', '.')
                             Log.d(TAG, "see the date from the server: ${budgetDetails.endDate}")
                             val receivedEndDate = budgetDetails.endDate
-                            val addedOnedDay = addOneDayToEndDate(receivedEndDate)
+                            val addedOnedDay = LocalDate.parse(receivedEndDate).plusDays(1) // addOneDayToEndDate(receivedEndDate)
+                            Log.d(TAG, "inside addedOneDay: $addedOnedDay")
                             val endDate = budgetDetails.endDate.replace('-', '.')
-                            val addedOneDayToEndDate = addedOnedDay.replace('/', '.')
+                            val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
 
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
@@ -273,7 +269,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val bundle = Bundle()
 
         budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
-        bundle.putString(DataConstant.CATEGORY,currentLineItem.category)
+        bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
         bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
 
         findNavController().navigate(R.id.expensesListFragment, bundle)

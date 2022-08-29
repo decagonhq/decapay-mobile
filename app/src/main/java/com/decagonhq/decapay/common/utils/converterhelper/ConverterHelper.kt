@@ -118,3 +118,4 @@ fun Fragment.addOneDayToEndDate(date: String): String {
     }
     return result
 }
+
