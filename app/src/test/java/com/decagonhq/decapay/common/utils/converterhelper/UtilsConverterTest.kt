@@ -11,5 +11,4 @@ class UtilsConverterTest {
         val result = UtilsConverter.addOneDayFormat(input)
         assertEquals("", result)
     }
-
 }
