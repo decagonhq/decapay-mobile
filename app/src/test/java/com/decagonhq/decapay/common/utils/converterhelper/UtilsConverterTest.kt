@@ -1,6 +1,6 @@
 package com.decagonhq.decapay.common.utils.converterhelper
 
-import org.junit.Assert.*
+import org.junit.Assert.* // ktlint-disable no-wildcard-imports
 import org.junit.Test
 
 class UtilsConverterTest {
