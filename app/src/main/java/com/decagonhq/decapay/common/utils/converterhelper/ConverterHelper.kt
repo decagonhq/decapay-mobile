@@ -2,6 +2,8 @@ package com.decagonhq.decapay.common.utils.converterhelper
 
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import java.util.*
 
 fun Fragment.convertLongToTime(time: Long): String {
@@ -115,6 +117,16 @@ fun Fragment.addOneDayToEndDate(date: String): String {
         } else {
             result = "$firstItem/$secondItem/$concatenateThirdItem"
         }
+    }
+    return result
+}
+
+fun Fragment.addOneDay(receivedDate: String): String {
+    var result = ""
+    try {
+        result = LocalDate.parse(receivedDate).plusDays(1).toString()
+    } catch (e: DateTimeParseException) {
+        e.printStackTrace()
     }
     return result
 }
