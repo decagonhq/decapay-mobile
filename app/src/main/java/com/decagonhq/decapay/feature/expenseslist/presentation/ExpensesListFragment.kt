@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
@@ -92,6 +93,9 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
             setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Edit" -> {
+                        val bundle = Bundle()
+                        bundle.putSerializable(DataConstant.EXPENSE_DATA, currentExpense)
+                        findNavController().navigate(R.id.editLogExpenseBottomSheetFragment, bundle)
                     }
                     "Delete" -> {
                         showDialog(position)
