@@ -121,12 +121,3 @@ fun Fragment.addOneDayToEndDate(date: String): String {
     return result
 }
 
-fun Fragment.addOneDay(receivedDate: String): String {
-    var result = ""
-    try {
-        result = LocalDate.parse(receivedDate).plusDays(1).toString()
-    } catch (e: DateTimeParseException) {
-        e.printStackTrace()
-    }
-    return result
-}
