@@ -2,7 +2,6 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -143,10 +142,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
-                            Log.d(TAG, "see the date from the server: ${budgetDetails.endDate}")
                             val receivedEndDate = budgetDetails.endDate
-                            val addedOnedDay = LocalDate.parse(receivedEndDate).plusDays(1) // addOneDayToEndDate(receivedEndDate)
-                            Log.d(TAG, "inside addedOneDay: $addedOnedDay")
+                            val addedOnedDay = LocalDate.parse(receivedEndDate).plusDays(1)
                             val endDate = budgetDetails.endDate.replace('-', '.')
                             val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
 
@@ -156,6 +153,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val startFormattedDate: Date = formatter.parse(startTime) as Date
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
                             val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
+
                             val startDateTimeMillis = startFormattedDate.time
                             val endDateTimiMillis = endFormattedDate.time
                             val addedOneDayTimeMillis = addedOneDayFormattedDate.time

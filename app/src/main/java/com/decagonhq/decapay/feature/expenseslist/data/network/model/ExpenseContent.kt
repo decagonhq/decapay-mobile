@@ -1,6 +1,5 @@
 package com.decagonhq.decapay.feature.expenseslist.data.network.model
 
-
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -17,4 +16,4 @@ data class ExpenseContent(
     val id: Int,
     @SerializedName("transactionDate")
     val transactionDate: String
-): Serializable
+) : Serializable
