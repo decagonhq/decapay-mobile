@@ -18,6 +18,7 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.addOneDay
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -145,7 +146,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val startDate = budgetDetails.startDate.replace('-', '.')
                             Log.d(TAG, "see the date from the server: ${budgetDetails.endDate}")
                             val receivedEndDate = budgetDetails.endDate
-                            val addedOnedDay = LocalDate.parse(receivedEndDate).plusDays(1)
+                            val addedOnedDay = addOneDay(receivedEndDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
                             val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
 
