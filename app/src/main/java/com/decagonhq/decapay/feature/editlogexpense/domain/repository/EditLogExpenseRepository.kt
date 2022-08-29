@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.editlogexpense.domain
+package com.decagonhq.decapay.feature.editlogexpense.domain.repository
 
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseResponse

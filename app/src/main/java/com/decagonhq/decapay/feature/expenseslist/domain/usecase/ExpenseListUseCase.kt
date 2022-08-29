@@ -2,7 +2,6 @@ package com.decagonhq.decapay.feature.expenseslist.domain.usecase
 
 import com.decagonhq.decapay.common.utils.errorhelper.ExceptionHandler
 import com.decagonhq.decapay.common.utils.resource.Resource
-import com.decagonhq.decapay.feature.expenseslist.data.network.model.DeleteResponse
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseListResponse
 import com.decagonhq.decapay.feature.expenseslist.domain.repository.ExpenseListRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,12 +13,12 @@ import javax.inject.Inject
 class ExpenseListUseCase @Inject constructor(
     private val expenseListRepository: ExpenseListRepository,
     private val exceptionHandler: ExceptionHandler
-){
-    operator fun invoke(budgetId: Int,categoryId: Int,page: Int): Flow<Resource<ExpenseListResponse>> = flow {
+) {
+    operator fun invoke(budgetId: Int, categoryId: Int, page: Int): Flow<Resource<ExpenseListResponse>> = flow {
 
         try {
             emit(Resource.Loading())
-            val response = expenseListRepository.getExpenseList(budgetId,categoryId,page)
+            val response = expenseListRepository.getExpenseList(budgetId, categoryId, page)
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)
@@ -29,10 +28,9 @@ class ExpenseListUseCase @Inject constructor(
         }
     }
 
-
-    fun getNextPage(budgetId: Int,categoryId: Int,page: Int): Flow<Resource<ExpenseListResponse>> = flow {
+    fun getNextPage(budgetId: Int, categoryId: Int, page: Int): Flow<Resource<ExpenseListResponse>> = flow {
         try {
-            val response = expenseListRepository.getExpenseList(budgetId,categoryId,page)
+            val response = expenseListRepository.getExpenseList(budgetId, categoryId, page)
             emit(Resource.Success(response))
         } catch (e: HttpException) {
             val message = exceptionHandler.parse(e)
@@ -42,11 +40,10 @@ class ExpenseListUseCase @Inject constructor(
         }
     }
 
-
-    suspend fun deleteExpense(expenseId: Int) : Flow<Resource<Any>> =
+    suspend fun deleteExpense(expenseId: Int): Flow<Resource<Any>> =
         flow {
             try {
-             val response =   expenseListRepository.deleteExpense(expenseId)
+                val response = expenseListRepository.deleteExpense(expenseId)
                 emit(Resource.Success(""))
             } catch (e: HttpException) {
                 val message = exceptionHandler.parse(e)
@@ -55,6 +52,4 @@ class ExpenseListUseCase @Inject constructor(
                 emit(Resource.Error("Couldn't reach server check your internet connection"))
             }
         }
-
-
 }
