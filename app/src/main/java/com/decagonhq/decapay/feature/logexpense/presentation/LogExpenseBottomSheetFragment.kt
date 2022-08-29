@@ -51,8 +51,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
-        Log.d(TAG, "budgetId: ${selectedBudgetId}")
-        Log.d(TAG, "categoryId: ${selectedCategoryId}")
+
     }
 
     override fun onCreateView(

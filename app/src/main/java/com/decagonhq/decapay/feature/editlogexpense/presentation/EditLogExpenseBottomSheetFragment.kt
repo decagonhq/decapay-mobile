@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.decagonhq.decapay.R
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     /**
      * declare views and variables
