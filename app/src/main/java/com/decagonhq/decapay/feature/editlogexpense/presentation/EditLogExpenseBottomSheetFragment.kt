@@ -27,7 +27,8 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // receive the data from bundle
         val selectedExpenseItem = arguments?.getSerializable(DataConstant.EXPENSE_DATA) as ExpenseContent
         amountSpent = selectedExpenseItem.displayAmount
-
+        description = selectedExpenseItem.description
+        transactionDate = selectedExpenseItem.displayTransactionDate
     }
 
     override fun onCreateView(
@@ -43,6 +44,10 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // set the values to the editLogExpense view
+        binding.editLogExpenseBottomSheetFragmentAmountTiedt.setText(amountSpent)
+        binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
+        binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = transactionDate
     }
 
     override fun onDestroy() {
