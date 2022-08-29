@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,8 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
+        Log.d(TAG, "budgetId: ${selectedBudgetId}")
+        Log.d(TAG, "categoryId: ${selectedCategoryId}")
     }
 
     override fun onCreateView(
@@ -148,6 +151,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                             findNavController().popBackStack()
+                            Log.d(TAG, "here is the expense ID to use: ${it.data.data?.id}")
                         }
                         is Resource.Error -> {
                             binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
