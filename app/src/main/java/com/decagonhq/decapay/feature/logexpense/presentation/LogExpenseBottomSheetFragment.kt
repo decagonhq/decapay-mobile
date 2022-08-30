@@ -15,7 +15,6 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
-import com.decagonhq.decapay.common.utils.datavalidator.RangeValidator
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
@@ -75,7 +74,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
         }
-        Log.d(TAG,"see the format of the current date: ${getTodaysDate()}")
+        Log.d(TAG, "see the format of the current date: ${getTodaysDate()}")
 
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
@@ -110,10 +109,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // close bottomSheet
         binding.logExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        // on click on cancel button
-        binding.logExpenseBottomSheetFragmentCancelButtonBtn.setOnClickListener {
             findNavController().popBackStack()
         }
     }
