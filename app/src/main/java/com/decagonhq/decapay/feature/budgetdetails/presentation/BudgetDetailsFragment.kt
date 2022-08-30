@@ -19,6 +19,7 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
+import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -143,8 +144,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
-                            Log.d(TAG, "see the date from the server: ${budgetDetails.endDate}")
-                            val receivedEndDate = budgetDetails.endDate
+                            // the endate to log expense is the current date
+                            val receivedEndDate = UtilsConverter.formatCurrentDate(getTodaysDate())
                             val addedOnedDay = UtilsConverter.addOneDayFormat(receivedEndDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
                             val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')

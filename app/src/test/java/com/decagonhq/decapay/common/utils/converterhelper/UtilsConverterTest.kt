@@ -11,4 +11,12 @@ class UtilsConverterTest {
         val result = UtilsConverter.addOneDayFormat(input)
         assertEquals("", result)
     }
+
+    @Test
+    fun formatCurrentDate_whenCurentDateGiven() {
+        val currentDate ="30/08/2022"
+        val expected = "2022-08-30"
+        val output = UtilsConverter.formatCurrentDate(currentDate)
+        assertEquals(expected, output)
+    }
 }

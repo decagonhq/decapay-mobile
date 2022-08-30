@@ -14,4 +14,10 @@ object UtilsConverter {
         }
         return result
     }
+
+    fun formatCurrentDate(receivedDate: String): String {
+        val arrayDateItems = receivedDate.split("/")
+        val result = "${arrayDateItems[2]}-${arrayDateItems[1]}-${arrayDateItems[0]}"
+        return result
+    }
 }

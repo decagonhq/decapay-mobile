@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +75,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
         }
+        Log.d(TAG,"see the format of the current date: ${getTodaysDate()}")
 
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
