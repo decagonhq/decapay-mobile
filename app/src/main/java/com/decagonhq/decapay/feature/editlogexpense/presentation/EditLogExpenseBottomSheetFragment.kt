@@ -67,7 +67,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
-//            showTheDateRange(editLogExpensePreference.getBudgetStartDate(), )
+            showTheDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate())
         }
 
         // on click update button
