@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditLogExpenseViewModel @Inject constructor(
     private val updateLogExpenseUsecase: UpdateLogExpenseUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel() {
 
     private val _updateLogExpenseResponse = MutableSharedFlow<Resource<EditLogExpenseResponse>>()
