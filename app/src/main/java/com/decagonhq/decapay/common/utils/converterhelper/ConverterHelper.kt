@@ -12,3 +12,11 @@ fun Fragment.convertLongToTime(time: Long): String {
     )
     return format.format(date)
 }
+
+fun Fragment.getTodaysDate(): String {
+    val calenda = Calendar.getInstance()
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val date = dateFormat.format(calenda.time)
+    return date
+}
+
