@@ -15,7 +15,6 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
-import com.decagonhq.decapay.common.utils.datavalidator.RangeValidator
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
@@ -51,7 +50,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
-
     }
 
     override fun onCreateView(
