@@ -62,4 +62,12 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     override fun getSelectedDate(): String {
         return preferences.getString(PreferenceConstants.CALENDAR_SELECTED_DATE, "").orEmpty()
     }
+
+    override fun putExpenseCategoryTitle(categoryTitle: String) {
+        preferences.edit().putString(PreferenceConstants.EXPENSE_CATEGORY_TITLE, categoryTitle).apply()
+    }
+
+    override fun getExpenseCategoryTitle(): String {
+        return preferences.getString(PreferenceConstants.EXPENSE_CATEGORY_TITLE, "").orEmpty()
+    }
 }

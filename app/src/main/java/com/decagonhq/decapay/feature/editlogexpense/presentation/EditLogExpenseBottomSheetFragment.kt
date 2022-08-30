@@ -49,7 +49,8 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = transactionDate
 
-        // on click
+        // on click update button
+
     }
 
     override fun onDestroy() {
