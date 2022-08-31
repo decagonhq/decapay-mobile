@@ -5,22 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
+import com.decagonhq.decapay.common.utils.converterhelper.showDateRange
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.datepicker.* // ktlint-disable no-wildcard-imports
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,6 +41,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var transactionDate: String
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
+    private lateinit var presentTransactionDate: TextView
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -65,6 +67,9 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // initialize view
+        presentTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
+        val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
@@ -74,7 +79,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
         }
-        Log.d(TAG, "see the format of the current date: ${getTodaysDate()}")
 
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
@@ -102,7 +106,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTheDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate())
+            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), presentTransactionDate, viewId)
         }
 
         initObserver()
@@ -110,25 +114,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // close bottomSheet
         binding.logExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
-        }
-    }
-
-    private fun showTheDateRange(startDate: Long, endDate: Long) {
-        val builderRange = MaterialDatePicker.Builder.datePicker()
-        val constraintsBuilderRange = CalendarConstraints.Builder()
-        val dateValidatorStartDate = DateValidatorPointForward.from(startDate)
-        val dateValidatorEndDate = DateValidatorPointBackward.before(endDate)
-        val listValidators = ArrayList<CalendarConstraints.DateValidator>()
-        listValidators.add(dateValidatorStartDate)
-        listValidators.add(dateValidatorEndDate)
-        val validators = CompositeDateValidator.allOf(listValidators)
-        constraintsBuilderRange.setValidator(validators)
-        builderRange.setCalendarConstraints(constraintsBuilderRange.build())
-        val pickRange = builderRange.build()
-        pickRange.show(parentFragmentManager, pickRange.toString())
-        pickRange.addOnPositiveButtonClickListener { selectedDate ->
-            transactionDate = "${convertLongToTime(selectedDate)}"
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = transactionDate
         }
     }
 

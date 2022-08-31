@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
+import com.decagonhq.decapay.common.utils.converterhelper.showDateRange
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.datepicker.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -32,6 +33,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private var expenseId by Delegates.notNull<Int>()
     private val editLogExpenseViewModel: EditLogExpenseViewModel by viewModels()
     private lateinit var userSelectedTransactionDate: String
+    private lateinit var presentTransactionDate: TextView
 
     @Inject
     lateinit var editLogExpensePreference: Preferences
@@ -59,6 +61,10 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // initialize view
+        presentTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv
+        val viewId = R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv
+//        presentTransactionDate = view.findViewById(R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv)
         // set the values to the editLogExpense view
         binding.editLogExpenseBottomSheetFragmentAmountTiedt.setText(amountSpent)
         binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
@@ -67,7 +73,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTheDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate())
+            showDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), presentTransactionDate, viewId)
         }
 
         // on click update button
@@ -90,25 +96,6 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                     EditLogExpenseRequestBody(receivedAmount.toDouble(), receivedDescription, userSelectedTransactionDate)
                 )
             }
-        }
-    }
-
-    private fun showTheDateRange(startDate: Long, endDate: Long) {
-        val builderRange = MaterialDatePicker.Builder.datePicker()
-        val constraintsBuilderRange = CalendarConstraints.Builder()
-        val dateValidatorStartDate = DateValidatorPointForward.from(startDate)
-        val dateValidatorEndDate = DateValidatorPointBackward.before(endDate)
-        val listValidators = ArrayList<CalendarConstraints.DateValidator>()
-        listValidators.add(dateValidatorStartDate)
-        listValidators.add(dateValidatorEndDate)
-        val validators = CompositeDateValidator.allOf(listValidators)
-        constraintsBuilderRange.setValidator(validators)
-        builderRange.setCalendarConstraints(constraintsBuilderRange.build())
-        val pickRange = builderRange.build()
-        pickRange.show(parentFragmentManager, pickRange.toString())
-        pickRange.addOnPositiveButtonClickListener { selectedDate ->
-            userSelectedTransactionDate = "${convertLongToTime(selectedDate)}"
-            binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = userSelectedTransactionDate
         }
     }
 
