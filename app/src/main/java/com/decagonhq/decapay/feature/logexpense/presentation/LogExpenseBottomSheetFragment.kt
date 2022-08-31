@@ -83,6 +83,12 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
         }
 
+        // on click on the calender icon
+        binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
+            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
+            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+        }
+
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
             // capture all the inputs from the input fields
@@ -105,11 +111,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                     )
                 )
             }
-        }
-
-        // on click on the calender icon
-        binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
         }
 
         initObserver()
