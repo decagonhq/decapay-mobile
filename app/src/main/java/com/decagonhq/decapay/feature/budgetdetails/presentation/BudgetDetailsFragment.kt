@@ -2,7 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.*
+import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
@@ -28,7 +28,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -93,9 +92,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-
             }
-
         }
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
