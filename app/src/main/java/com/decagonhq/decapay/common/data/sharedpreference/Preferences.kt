@@ -27,4 +27,8 @@ interface Preferences {
     fun putSelectedDate(date: String)
 
     fun getSelectedDate(): String
+
+    fun putExpenseCategoryTitle(categoryTitle: String)
+
+    fun getExpenseCategoryTitle(): String
 }
