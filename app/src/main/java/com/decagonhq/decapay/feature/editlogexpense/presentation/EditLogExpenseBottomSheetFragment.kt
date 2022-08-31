@@ -97,6 +97,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 )
             }
         }
+
     }
 
     override fun onDestroy() {

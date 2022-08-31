@@ -22,7 +22,7 @@ fun Fragment.getTodaysDate(): String {
     val date = dateFormat.format(calenda.time)
     return date
 }
-
+/** to show the date range for the present budget in view */
 fun Fragment.showDateRange(startDate: Long, endDate: Long, view: View, viewId: Int) {
     val builderRange = MaterialDatePicker.Builder.datePicker()
     val constraintsBuilderRange = CalendarConstraints.Builder()

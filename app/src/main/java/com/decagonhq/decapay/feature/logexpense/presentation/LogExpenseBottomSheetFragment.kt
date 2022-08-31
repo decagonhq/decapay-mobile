@@ -104,6 +104,8 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
+        // add textChangeListener
+
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
             showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), presentTransactionDate, viewId)
