@@ -64,7 +64,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // initialize view
         presentTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv
         val viewId = R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv
-//        presentTransactionDate = view.findViewById(R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv)
+//
         // set the values to the editLogExpense view
         binding.editLogExpenseBottomSheetFragmentAmountTiedt.setText(amountSpent)
         binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
