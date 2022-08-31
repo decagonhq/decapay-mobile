@@ -85,7 +85,8 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 ).show()
             } else {
                 // make a network call
-                editLogExpenseViewModel.userUpdateLogedExpense(expenseId,
+                editLogExpenseViewModel.userUpdateLogedExpense(
+                    expenseId,
                     EditLogExpenseRequestBody(receivedAmount.toDouble(), receivedDescription, userSelectedTransactionDate)
                 )
             }
