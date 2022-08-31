@@ -41,7 +41,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
-    private lateinit var calendarSelectedDate: String
+    private var calendarSelectedDate: String? = null
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences

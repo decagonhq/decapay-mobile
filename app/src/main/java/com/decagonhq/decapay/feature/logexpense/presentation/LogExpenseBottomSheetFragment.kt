@@ -77,7 +77,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
         retrivedCalendarSelectedDate = selectedDateToLogExpense
-        if (retrivedCalendarSelectedDate.isNotBlank()) {
+        if (retrivedCalendarSelectedDate.isEmpty()) {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = retrivedCalendarSelectedDate
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
