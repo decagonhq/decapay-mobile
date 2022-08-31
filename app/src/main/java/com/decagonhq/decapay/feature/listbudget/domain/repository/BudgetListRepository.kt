@@ -4,6 +4,6 @@ import com.decagonhq.decapay.feature.listbudget.data.network.model.BudgetListRes
 
 interface BudgetListRepository {
 
-    suspend fun  getBudgetList(page:Int):BudgetListResponse
+    suspend fun  getBudgetList(page:Int,state: String):BudgetListResponse
 
 }

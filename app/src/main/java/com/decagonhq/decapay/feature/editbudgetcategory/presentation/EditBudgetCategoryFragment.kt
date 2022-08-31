@@ -19,6 +19,7 @@ import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.Create
 import com.decagonhq.decapay.databinding.FragmentEditBudgetCategoryBinding
 import com.decagonhq.decapay.feature.editbudgetcategory.data.network.model.EditBudgetCategoryRequestBody
 import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.Data
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,6 +53,8 @@ class EditBudgetCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).hideDrawer()
+
         _binding = FragmentEditBudgetCategoryBinding.bind(view)
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         // set the previous budget category to the text-filed
