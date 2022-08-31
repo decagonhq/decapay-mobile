@@ -76,6 +76,10 @@ class CreateBudgetCategoryFragment : Fragment() {
             }
         }
         initObserver()
+
+        binding.createBudgetCategoryFragmentBackNavigationIv.setOnClickListener {
+            findNavController().navigate(R.id.budgetCategoryList)
+        }
     }
 
     private fun initObserver() {
