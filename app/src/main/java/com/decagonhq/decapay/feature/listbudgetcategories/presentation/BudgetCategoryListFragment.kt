@@ -22,6 +22,7 @@ import com.decagonhq.decapay.databinding.FragmentBudgetCategoryListBinding
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryClicker
 import com.decagonhq.decapay.feature.listbudgetcategories.adaptor.CategoryListAdaptor
 import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.Data
+import com.decagonhq.decapay.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,6 +47,9 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).revealDrawer()
+
+
         adapter = CategoryListAdaptor(list, this)
         binding.budgetCategoryListFragmentBudgetCategoryListRv.adapter = adapter
         binding.budgetCategoryListFragmentBudgetCategoryListRv.layoutManager =
@@ -142,6 +146,7 @@ class BudgetCategoryListFragment : Fragment(), CategoryClicker {
         if (newList.isEmpty() && list.isEmpty()) {
             setEmptyListScreen()
         } else {
+            list.clear()
             list.addAll(newList)
             adapter.setCategory()
 

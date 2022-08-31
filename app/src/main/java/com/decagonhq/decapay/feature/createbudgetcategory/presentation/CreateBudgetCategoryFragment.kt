@@ -18,6 +18,7 @@ import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.CreateBudgetCategoryInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetCategoryBinding
 import com.decagonhq.decapay.feature.createbudgetcategory.data.network.model.CreateBudgetCategoryRequestBody
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -50,6 +51,8 @@ class CreateBudgetCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).hideDrawer()
+
         _binding = FragmentCreateBudgetCategoryBinding.bind(view)
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         // on click on the add button

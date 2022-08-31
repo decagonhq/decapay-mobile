@@ -1,5 +1,6 @@
 package com.decagonhq.decapay.feature.budgetdetails.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -23,6 +24,7 @@ class BudgetDetailsViewModel @Inject constructor(
     val budgetDeleteLineItemResponse: StateFlow<Resource<Any>> get() = _budgetDeleteLineItemResponse
 
     fun getBudgetDetails(budgetId: Int) {
+        
         viewModelScope.launch {
 
             budgetsDetailsUseCase(budgetId).collect {

@@ -30,6 +30,11 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
         notifyDataSetChanged()
     }
 
+    fun clearList(){
+        list.clear()
+        notifyDataSetChanged()
+    }
+
     fun deleteItemAtIndex(index: Int) {
         list.removeAt(index)
         notifyItemRemoved(index)

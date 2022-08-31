@@ -24,6 +24,7 @@ import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
 import com.decagonhq.decapay.feature.editbudget.data.network.model.editbudgetmodel.UpdateBudgetRequestBody
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,8 @@ class EditBudgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).hideDrawer()
+
         _binding = FragmentEditBudgetBinding.bind(view)
         // intialize views and variables
         pleaseWaitDialog = showPleaseWaitAlertDialog()

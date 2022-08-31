@@ -1,9 +1,12 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +27,7 @@ import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
 import com.decagonhq.decapay.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,7 +54,8 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        budgetListViewModel.getBudgetList()
+        (activity as MainActivity).revealDrawer()
+        budgetListViewModel.getBudgetList("current")
         adapter = BudgetListAdapter(list, this)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
@@ -62,6 +67,39 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         setUpScrollListener()
 
         setUpFlowListener()
+
+        setUpSpinner()
+    }
+
+
+    private fun  setUpSpinner(){
+        val states = resources.getStringArray(R.array.States)
+        val spinnerAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item,states)
+        binding.budgetListFragmentFilterSpinner.adapter = spinnerAdapter
+        binding.budgetListFragmentFilterSpinner.setSelection(2);
+        binding.budgetListFragmentFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val itemSelected = states[position]
+                list.clear()
+                adapter.clearList()
+
+                if(itemSelected =="All"){
+                    budgetListViewModel.getBudgetList("")
+                }else{
+                    budgetListViewModel.getBudgetList(itemSelected.lowercase(Locale.getDefault()))
+                }
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
     }
 
     private fun setUpFlowListener() {
@@ -109,7 +147,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                     }
                     "View details" -> {
                         val bundle = Bundle()
-                        bundle.putSerializable(DataConstant.BUDGET_ITEM, adapter.list[position])
+                        bundle.putSerializable(DataConstant.BUDGET_ID, adapter.list[position].id)
                         findNavController().navigate(R.id.budgetDetailsFragment, bundle)
                     }
                     "Delete" -> {

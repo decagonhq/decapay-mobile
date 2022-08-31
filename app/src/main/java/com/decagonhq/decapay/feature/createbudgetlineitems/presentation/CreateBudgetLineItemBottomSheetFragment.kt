@@ -19,6 +19,7 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.createbudgetlineitemmodel.CreateBudgetLineItemRequestBody
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +61,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // call the budgetcategory
+
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
         initObserver()
@@ -168,6 +169,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
+
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
@@ -181,6 +184,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
