@@ -159,6 +159,11 @@
     <string name="editBudgetLineItem_category">Category</string>
     <string name="logExpense_bottom_sheet_fragment_add_expense">Add Expense</string>
     <string name="editlogexpense_bottom_sheet_fragment_edit_expense">Edit Expense</string>
-
+    <string-array name="States">
+        <item>All</item>
+        <item>Past</item>
+        <item>Current</item>
+        <item>Upcoming</item>
+    </string-array>
 
 </resources>

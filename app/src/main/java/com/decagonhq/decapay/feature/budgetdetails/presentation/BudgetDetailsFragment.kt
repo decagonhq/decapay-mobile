@@ -22,6 +22,7 @@ import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
+import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -77,7 +78,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).hideDrawer()
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
         if (budgetId != null) {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
@@ -96,6 +99,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
 
         initObserver()
+        lineItemListener()
 
 //        val testList = mutableListOf<LineItem>()
 //        list.addAll(testList)
@@ -116,6 +120,16 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             this.list = list
             adapter.list = list
             adapter.setLineItems()
+        }
+    }
+
+    private fun lineItemListener(){
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            DataConstant.NEW_LINE_ITEM
+        )?.observe(viewLifecycleOwner) {
+            it?.let {
+                budgetId?.let { it1 -> budgetDetailsViewModel.getBudgetDetails(it1) }
+            }
         }
     }
 
