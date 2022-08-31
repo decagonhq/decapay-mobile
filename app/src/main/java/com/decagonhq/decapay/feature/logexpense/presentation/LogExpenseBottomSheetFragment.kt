@@ -41,7 +41,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var transactionDate: String
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
-    private lateinit var presentTransactionDate: TextView
+    private lateinit var userTransactionDate: TextView
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -68,7 +68,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-        presentTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
+        userTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
@@ -108,7 +108,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), presentTransactionDate, viewId)
+            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), userTransactionDate, viewId)
         }
 
         initObserver()
@@ -132,7 +132,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                             findNavController().popBackStack()
-                            Log.d(TAG, "here is the expense ID to use: ${it.data.data?.id}")
                         }
                         is Resource.Error -> {
                             binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
