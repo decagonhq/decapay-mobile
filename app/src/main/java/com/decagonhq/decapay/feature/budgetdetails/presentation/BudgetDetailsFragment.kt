@@ -97,7 +97,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
             calendarSelectedDate = "$dayOfMonth/${month + 1}/$year"
-            budgetDetailsPreference.putSelectedDate(calendarSelectedDate)
         }
 
         initObserver()
@@ -261,6 +260,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
         bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
+        bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 

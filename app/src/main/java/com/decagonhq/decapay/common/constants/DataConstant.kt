@@ -9,4 +9,5 @@ object DataConstant {
     const val CATEGORY_ID = "BUDGET_ID"
     const val CATEGORY = "CATEGORY"
     const val EXPENSE_DATA = "expense_data"
+    const val LOG_EXPENSE_SELECTED_DATE = "selected_log_expense_date"
 }

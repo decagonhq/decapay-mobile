@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.showDateRange
+import com.decagonhq.decapay.common.utils.converterhelper.showTransactionDatePicker
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
@@ -73,7 +73,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
+            showTransactionDatePicker(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
         }
 
         // on click update button

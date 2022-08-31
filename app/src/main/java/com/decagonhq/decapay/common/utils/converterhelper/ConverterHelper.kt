@@ -22,24 +22,40 @@ fun Fragment.getTodaysDate(): String {
     val date = dateFormat.format(calenda.time)
     return date
 }
-/** to show the date range for the present budget
- * using the budgetStartDate and the current date as the budgetEndDate
- * for date selection to log expense or edit expense
- **/
-fun Fragment.showDateRange(startDate: Long, endDate: Long, view: View, viewId: Int) {
-    val builderRange = MaterialDatePicker.Builder.datePicker()
-    val constraintsBuilderRange = CalendarConstraints.Builder()
-    val dateValidatorStartDate = DateValidatorPointForward.from(startDate)
-    val dateValidatorEndDate = DateValidatorPointBackward.before(endDate)
-    val listValidators = ArrayList<CalendarConstraints.DateValidator>()
-    listValidators.add(dateValidatorStartDate)
-    listValidators.add(dateValidatorEndDate)
-    val validators = CompositeDateValidator.allOf(listValidators)
-    constraintsBuilderRange.setValidator(validators)
-    builderRange.setCalendarConstraints(constraintsBuilderRange.build())
-    val pickRange = builderRange.build()
-    pickRange.show(parentFragmentManager, pickRange.toString())
-    pickRange.addOnPositiveButtonClickListener { selectedDate ->
+
+/**
+ * used to display a valid datepicker date range
+ * when the user selects the transactionDate dateppicker view
+ * on the edit and Log Expense screen.
+ * Validate date range is between budgetstartDate to currentDate
+ * @param startDate is budgetStartDate
+ * @param endDate is currentDate
+ * @param view is the transactionDate textView
+ * @param viewId is the id of the transactionDate view
+ */
+fun Fragment.showTransactionDatePicker(startDate: Long, endDate: Long, view: View, viewId: Int) {
+    val calendarConstraint = buildDateRangeConstraint(startDate, endDate)
+    val datePicker = buildDatePickerWithConstraint(calendarConstraint)
+    datePicker.show(parentFragmentManager, datePicker.toString())
+    datePicker.addOnPositiveButtonClickListener { selectedDate ->
         view.findViewById<TextView>(viewId).text = "${convertLongToTime(selectedDate)}"
     }
 }
+
+fun buildDatePickerWithConstraint(constraint: CalendarConstraints): MaterialDatePicker<Long> {
+    return MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraint).build()
+}
+
+fun buildDateRangeConstraint(startDate: Long, endDate: Long): CalendarConstraints {
+    val constraintsBuilderRange = CalendarConstraints.Builder()
+    val dateConstraintsFromDate = DateValidatorPointForward.from(startDate)
+    val dateConstraintsToDate = DateValidatorPointBackward.before(endDate)
+    val listValidators = ArrayList<CalendarConstraints.DateValidator>()
+    listValidators.add(dateConstraintsFromDate)
+    listValidators.add(dateConstraintsToDate)
+    val validators = CompositeDateValidator.allOf(listValidators)
+    constraintsBuilderRange.setValidator(validators)
+    return constraintsBuilderRange.build()
+}
+
+
