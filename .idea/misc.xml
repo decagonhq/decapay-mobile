@@ -26,18 +26,18 @@
         <entry key="app/src/main/res/layout/custom_login_wait_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/custom_toast.xml" value="0.55" />
         <entry key="app/src/main/res/layout/delete_modal_layout.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layout/expense_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_budget_category_list.xml" value="0.37617135207496655" />
-        <entry key="app/src/main/res/layout/fragment_budget_details.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_budget_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_budget_details.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_budget_list.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_budget_category.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_budget_line_item_bottom_sheet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.13496376811594202" />
         <entry key="app/src/main/res/layout/fragment_edit_budget_line_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_edit_log_expense_bottom_sheet.xml" value="0.23097826086956522" />
-        <entry key="app/src/main/res/layout/fragment_expenses_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_edit_log_expense_bottom_sheet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25833333333333336" />
-        <entry key="app/src/main/res/layout/fragment_log_expense.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_log_expense.xml" value="0.23934426229508196" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_option_modal_bottom_sheet.xml" value="0.16281433105468748" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1503623188405797" />

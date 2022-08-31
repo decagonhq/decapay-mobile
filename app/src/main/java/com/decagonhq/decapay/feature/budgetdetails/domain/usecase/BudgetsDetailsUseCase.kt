@@ -3,7 +3,6 @@ package com.decagonhq.decapay.feature.budgetdetails.domain.usecase
 import com.decagonhq.decapay.common.utils.errorhelper.ExceptionHandler
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.BudgetDetailsResponse
-import com.decagonhq.decapay.feature.budgetdetails.data.network.model.DeleteLineItemResponse
 import com.decagonhq.decapay.feature.budgetdetails.domain.repository.BudgetDetailsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +14,6 @@ class BudgetsDetailsUseCase @Inject constructor(
     private val budgetDetailsRepository: BudgetDetailsRepository,
     private val exceptionHandler: ExceptionHandler
 ) {
-
 
     operator fun invoke(budgetId: Int): Flow<Resource<BudgetDetailsResponse>> =
         flow {
@@ -31,17 +29,16 @@ class BudgetsDetailsUseCase @Inject constructor(
             }
         }
 
-
-    suspend fun deleteLineItem(budgetId: Int, categoryId: Int) : Flow<Resource<Any>> =
+    suspend fun deleteLineItem(budgetId: Int, categoryId: Int): Flow<Resource<Any>> =
         flow {
-        try {
-            budgetDetailsRepository.deleteLineItem(budgetId, categoryId)
-            emit(Resource.Success(""))
-        } catch (e: HttpException) {
-            val message = exceptionHandler.parse(e)
-            emit(Resource.Error(message))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server check your internet connection"))
+            try {
+                budgetDetailsRepository.deleteLineItem(budgetId, categoryId)
+                emit(Resource.Success(""))
+            } catch (e: HttpException) {
+                val message = exceptionHandler.parse(e)
+                emit(Resource.Error(message))
+            } catch (e: IOException) {
+                emit(Resource.Error("Couldn't reach server check your internet connection"))
+            }
         }
-    }
 }

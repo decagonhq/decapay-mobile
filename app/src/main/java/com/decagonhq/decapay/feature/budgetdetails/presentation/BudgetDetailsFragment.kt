@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -17,6 +18,8 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
+import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -40,10 +43,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
-
+    private lateinit var calendarSelectedDate: String
 
     @Inject
-    lateinit var preference: Preferences
+    lateinit var budgetDetailsPreference: Preferences
     private val budgetDetailsViewModel: BudgetDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,9 +96,12 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
-
             }
-
+        }
+        // capture the selected date from the calendar view
+        binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            calendarSelectedDate = "$dayOfMonth/${month + 1}/$year"
+            budgetDetailsPreference.putSelectedDate(calendarSelectedDate)
         }
 
         initObserver()
@@ -109,8 +115,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             LinearLayoutManager(requireContext())
         // setDataLoaded(list);
     }
-
-
 
     private fun setDataLoaded(list: MutableList<LineItem>) {
         if (list.isEmpty()) {
@@ -154,13 +158,25 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
+                            // the endate to log expense is the current date
+                            val receivedEndDate = UtilsConverter.formatCurrentDate(getTodaysDate())
+                            val addedOnedDay = UtilsConverter.addOneDayFormat(receivedEndDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
+                            val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
+
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
+                            val addedOneDayToEndDateTime = "$addedOneDayToEndDate, 00:00"
                             val startFormattedDate: Date = formatter.parse(startTime) as Date
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
+                            val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
                             val startDateTimeMillis = startFormattedDate.time
                             val endDateTimiMillis = endFormattedDate.time
+                            val addedOneDayTimeMillis = addedOneDayFormattedDate.time
+
+                            // save date to sharedPreference
+                            budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
+                            budgetDetailsPreference.putBudgetEndDate(addedOneDayTimeMillis)
 
                             binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
                             binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
@@ -258,14 +274,16 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
-        findNavController().navigate(R.id.logExpenseBottomSheetFragment)
+        val bundle = Bundle()
+        bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
+        findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 
     override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
 
         budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
-        bundle.putString(DataConstant.CATEGORY,currentLineItem.category)
+        bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
         bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
 
         findNavController().navigate(R.id.expensesListFragment, bundle)
