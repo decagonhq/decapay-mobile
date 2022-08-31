@@ -22,7 +22,7 @@ fun Fragment.getTodaysDate(): String {
     val date = dateFormat.format(calenda.time)
     return date
 }
-/** to show the date range for the present budget in view
+/** to show the date range for the present budget
  * using the budgetStartDate and the current date as the budgetEndDate
  * for date selection to log expense or edit expense
  **/
