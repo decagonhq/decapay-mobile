@@ -1,12 +1,14 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.converterhelper.showDateRange
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -23,6 +26,8 @@ import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -41,7 +46,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var transactionDate: String
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
-    private lateinit var userTransactionDate: TextView
+    private lateinit var selectedDateLogExpenseDate: TextView
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -68,7 +73,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-        userTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
+        selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
@@ -104,11 +109,9 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        // add textChangeListener
-
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), userTransactionDate, viewId)
+            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
         }
 
         initObserver()
