@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var transactionDate: String
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
-    private lateinit var userTransactionDate: TextView
+    private lateinit var selectedDateLogExpenseDate: TextView
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -68,7 +67,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-        userTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
+        selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
@@ -108,7 +107,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), userTransactionDate, viewId)
+            showDateRange(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
         }
 
         initObserver()

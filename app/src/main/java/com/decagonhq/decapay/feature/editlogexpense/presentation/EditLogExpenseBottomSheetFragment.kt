@@ -33,7 +33,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private var expenseId by Delegates.notNull<Int>()
     private val editLogExpenseViewModel: EditLogExpenseViewModel by viewModels()
     private lateinit var userSelectedTransactionDate: String
-    private lateinit var userTransactionDate: TextView
+    private lateinit var selectedEditExpenseDate: TextView
 
     @Inject
     lateinit var editLogExpensePreference: Preferences
@@ -62,7 +62,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-        userTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv
+        selectedEditExpenseDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv
         val viewId = R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv
 //
         // set the values to the editLogExpense view
@@ -73,7 +73,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), userTransactionDate, viewId)
+            showDateRange(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
         }
 
         // on click update button
