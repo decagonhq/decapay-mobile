@@ -55,7 +55,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
-        budgetListViewModel.getBudgetList("")
+        budgetListViewModel.getBudgetList("current")
         adapter = BudgetListAdapter(list, this)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
@@ -76,6 +76,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         val states = resources.getStringArray(R.array.States)
         val spinnerAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item,states)
         binding.budgetListFragmentFilterSpinner.adapter = spinnerAdapter
+        binding.budgetListFragmentFilterSpinner.setSelection(2);
         binding.budgetListFragmentFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
