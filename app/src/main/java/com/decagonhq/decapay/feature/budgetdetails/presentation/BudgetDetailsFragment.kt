@@ -17,6 +17,8 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
+import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
@@ -91,7 +93,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
+
             }
+
         }
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
@@ -142,8 +146,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
-                            val receivedEndDate = budgetDetails.endDate
-                            val addedOnedDay = LocalDate.parse(receivedEndDate).plusDays(1)
+                            // the endate to log expense is the current date
+                            val receivedEndDate = UtilsConverter.formatCurrentDate(getTodaysDate())
+                            val addedOnedDay = UtilsConverter.addOneDayFormat(receivedEndDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
                             val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
 
@@ -153,7 +158,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val startFormattedDate: Date = formatter.parse(startTime) as Date
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
                             val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
-
                             val startDateTimeMillis = startFormattedDate.time
                             val endDateTimiMillis = endFormattedDate.time
                             val addedOneDayTimeMillis = addedOneDayFormattedDate.time

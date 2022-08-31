@@ -74,6 +74,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
         }
+        Log.d(TAG, "see the format of the current date: ${getTodaysDate()}")
 
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
@@ -108,10 +109,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
         // close bottomSheet
         binding.logExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        // on click on cancel button
-        binding.logExpenseBottomSheetFragmentCancelButtonBtn.setOnClickListener {
             findNavController().popBackStack()
         }
     }
