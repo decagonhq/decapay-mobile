@@ -122,7 +122,7 @@
         android:hint="@string/logExpense_bottom_sheet_fragment_transaction_date_hint"
         />
     <Button
-        android:id="@+id/editLogExpensee_bottom_sheet_fragment_save_button_btn"
+        android:id="@+id/editLogExpensee_bottom_sheet_fragment_update_button_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -131,20 +131,24 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
-        android:text="@string/logExpense_bottom_sheet_fragment_save_button"
+        android:text="@string/editLogExpense_bottom_sheet_fragment_save_button"
         android:textAllCaps="false"
         android:textColor="@color/white" />
-    <Button
-        android:id="@+id/editLogExpensee_bottom_sheet_fragment_cancel_button_btn"
+    <TextView
+        android:id="@+id/editLogExpense_bottom_sheet_fragment_error_message_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/logexpense_button_bg"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/display_error_bg"
+        android:textAlignment="center"
+        android:text="@string/createBudgetLineItem_fragment_error_message"
+        android:textColor="@color/white"
         android:fontFamily="@font/roboto_medium"
-        android:text="@string/logExpense_bottom_sheet_fragment_cancel_button"
-        android:textAllCaps="false"
+        android:lines="2"
+        android:padding="8dp"
+        android:visibility="invisible"
         />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

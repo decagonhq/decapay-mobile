@@ -2,8 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
@@ -101,7 +100,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
             calendarSelectedDate = "$dayOfMonth/${month + 1}/$year"
-            budgetDetailsPreference.putSelectedDate(calendarSelectedDate)
         }
 
         initObserver()
@@ -276,6 +274,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
         bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
+        bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 
