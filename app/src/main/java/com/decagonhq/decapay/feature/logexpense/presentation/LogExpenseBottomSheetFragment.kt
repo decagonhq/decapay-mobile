@@ -112,7 +112,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 logExpenseViewModel.userAddExpense(
                     selectedBudgetId, selectedCategoryId,
                     LogExpenseRequestBody(
-                        amountSpent.toDouble(), description, transactionDate
+                        amountSpent, description, transactionDate
                     )
                 )
             }

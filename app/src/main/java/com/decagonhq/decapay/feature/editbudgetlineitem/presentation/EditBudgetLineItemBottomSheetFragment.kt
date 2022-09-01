@@ -66,9 +66,9 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         // on click on update button
         binding.editBudgetLineItemBottomSheetFragmentUpdateButtonBtn.setOnClickListener {
             // get all the inputs
-            val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.text?.trim().toString()
+            val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             // validate the amount field
-            if (actualProjectedAmount.isEmpty()) {
+            if (actualProjectedAmount.toString().isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Amount field cannot be empty",
@@ -78,7 +78,7 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                 // make a network call
                 editBudgetLineItemViewModel.updateBudgetLineItem(
                     selectedBudgetId, selectedCategoryId,
-                    EditBudgetLineItemRequestBody(actualProjectedAmount.toDouble())
+                    EditBudgetLineItemRequestBody(actualProjectedAmount)
                 )
             }
         }

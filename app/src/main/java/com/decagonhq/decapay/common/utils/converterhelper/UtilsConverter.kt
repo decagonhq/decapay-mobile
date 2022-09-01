@@ -1,6 +1,5 @@
 package com.decagonhq.decapay.common.utils.converterhelper
 
-import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -23,14 +22,9 @@ object UtilsConverter {
         return result
     }
 
-    fun currencyFormatter(number: String): String {
-        val countryCode = "NG"
-        val language = "en"
-        val locale = Locale(language, countryCode)
-        val currency = Currency.getInstance(locale)
-        val formStringAmount = number.replace("[${currency.symbol},.]".toRegex(), "")
-        val parsed = formStringAmount.toDouble()
-        val formatted = NumberFormat.getCurrencyInstance(locale).format(parsed/100)
-        return formatted
+    fun formatReceivedTransactionDate(receivedTransactionDate: String): String {
+        val dateCollection = receivedTransactionDate.split("-")
+        val output = "${dateCollection[2]}/${dateCollection[1]}/${dateCollection[0]}"
+        return output
     }
 }
