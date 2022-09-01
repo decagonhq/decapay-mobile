@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -275,6 +276,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val bundle = Bundle()
         bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
         bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
+        Log.d(TAG, "selected date on calendar: ${calendarSelectedDate}")
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 

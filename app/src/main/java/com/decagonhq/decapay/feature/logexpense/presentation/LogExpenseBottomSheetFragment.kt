@@ -24,7 +24,6 @@ import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseReq
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -43,7 +42,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
     private lateinit var selectedDateLogExpenseDate: TextView
-    private lateinit var selectedDateToLogExpense: String
+    private var calendarSelectedDateToLogExpense: String? = null
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -54,8 +53,8 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
-
-        selectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
+        calendarSelectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
+        Log.d(TAG, "inside calendar: $calendarSelectedDateToLogExpense")
     }
 
     override fun onCreateView(
@@ -71,6 +70,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "see todaay's date: ${getTodaysDate()}")
         // initialize view
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
@@ -78,13 +78,16 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
-        retrivedCalendarSelectedDate = selectedDateToLogExpense
-        if (retrivedCalendarSelectedDate.isEmpty()) {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = retrivedCalendarSelectedDate
-            transactionDate = retrivedCalendarSelectedDate
-        } else {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
+//        retrivedCalendarSelectedDate = calendarSelectedDateToLogExpense
+//        Log.d(TAG, "default selected date: $retrivedCalendarSelectedDate")
+        if (calendarSelectedDateToLogExpense == null) {
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "HELLO"
             transactionDate = getTodaysDate()
+            Log.d(TAG, "when date not selected from calendar : ${getTodaysDate()}")
+        } else {
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = calendarSelectedDateToLogExpense
+            transactionDate = calendarSelectedDateToLogExpense.toString()
+            Log.d(TAG, "when calendar is selected: $transactionDate")
         }
 
         // on click on the calender icon
