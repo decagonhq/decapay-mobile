@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface ExpenseListApi {
 
     @GET("api/v1/budgets/{budgetId}/lineItems/{categoryId}/expenses")
-    suspend fun getBudgetList(
+    suspend fun getExpenseList(
         @Path("budgetId") budgetId: Int,
         @Path("categoryId") categoryId : Int,
         @Query("page") address: Int,

@@ -283,10 +283,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
 
-        budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+
+      //  budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+        bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
         bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
         bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
-
         findNavController().navigate(R.id.expensesListFragment, bundle)
     }
 }
