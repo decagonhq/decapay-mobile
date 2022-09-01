@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,8 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
     private lateinit var selectedDateLogExpenseDate: TextView
-    private lateinit var selectedDateToLogExpense: String
+    private var calendarSelectedDateToLogExpense: String? = null
+    private lateinit var enteredTransactionDate: String
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -52,8 +54,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedBudgetId = selectedBudgetLineItems.budgetId
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
-
-        selectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
+        calendarSelectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
     }
 
     override fun onCreateView(
@@ -70,27 +71,36 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
+
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
-        retrivedCalendarSelectedDate = selectedDateToLogExpense
-        if (retrivedCalendarSelectedDate.isNotBlank()) {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = retrivedCalendarSelectedDate
+//        retrivedCalendarSelectedDate = calendarSelectedDateToLogExpense
+        if (calendarSelectedDateToLogExpense == null) {
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "HELLO"
+            transactionDate = getTodaysDate()
         } else {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = calendarSelectedDateToLogExpense
+//            transactionDate = calendarSelectedDateToLogExpense.toString()
+            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.toString()
+        }
+
+        // on click on the calender icon
+        binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
+            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
+            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
         }
 
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
             // capture all the inputs from the input fields
-            val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.text?.trim().toString()
+            val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val description = binding.logExpenseBottomSheetFragmentDescriptionTiedt.text?.trim().toString()
-            val enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+            enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
             // validate fields
-            if (amountSpent.isEmpty() || description.isEmpty() || enteredTransactionDate.isEmpty()) {
+            if (amountSpent.toString().isEmpty() || description.isEmpty() || enteredTransactionDate.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Input fields cannot be empty",
@@ -101,15 +111,10 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 logExpenseViewModel.userAddExpense(
                     selectedBudgetId, selectedCategoryId,
                     LogExpenseRequestBody(
-                        amountSpent.toDouble(), description, transactionDate
+                        amountSpent, description, transactionDate
                     )
                 )
             }
-        }
-
-        // on click on the calender icon
-        binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
         }
 
         initObserver()

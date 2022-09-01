@@ -1,21 +1,29 @@
 package com.decagonhq.decapay.feature.editlogexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
 import com.decagonhq.decapay.common.utils.converterhelper.showTransactionDatePicker
+import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -42,10 +50,11 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
         // receive the data from bundle
         val selectedExpenseItem = arguments?.getSerializable(DataConstant.EXPENSE_DATA) as ExpenseContent
-        amountSpent = selectedExpenseItem.displayAmount
+        amountSpent = selectedExpenseItem.amount.toString()
         description = selectedExpenseItem.description
-        transactionDate = selectedExpenseItem.displayTransactionDate
+        transactionDate = selectedExpenseItem.transactionDate
         expenseId = selectedExpenseItem.id
+        Log.d(TAG, "here is the transaction date: $transactionDate")
     }
 
     override fun onCreateView(
@@ -68,22 +77,24 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // set the values to the editLogExpense view
         binding.editLogExpenseBottomSheetFragmentAmountTiedt.setText(amountSpent)
         binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
-        binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = transactionDate
+        binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = UtilsConverter.formatReceivedTransactionDate(transactionDate)
+        userSelectedTransactionDate = UtilsConverter.formatReceivedTransactionDate(transactionDate)
         binding.editLogExpenseBottomSheetFragmentCategoryTitleTv.text = editLogExpensePreference.getExpenseCategoryTitle()
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
             showTransactionDatePicker(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
+            userSelectedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
         }
 
         // on click update button
         binding.editLogExpenseeBottomSheetFragmentUpdateButtonBtn.setOnClickListener {
             // capture all the input fields
-            val receivedAmount = binding.editLogExpenseBottomSheetFragmentAmountTiedt.text?.trim().toString()
+            val receivedAmount = binding.editLogExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val receivedDescription = binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.text.toString()
             val receivedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
             // validate input field
-            if (receivedAmount.isEmpty() || receivedDescription.isEmpty() || receivedTransactionDate.isEmpty()) {
+            if (receivedAmount.toString().isEmpty() || receivedDescription.isEmpty() || receivedTransactionDate.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Input fields cannot be empty",
@@ -93,8 +104,41 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 // make a network call
                 editLogExpenseViewModel.userUpdateLogedExpense(
                     expenseId,
-                    EditLogExpenseRequestBody(receivedAmount.toDouble(), receivedDescription, userSelectedTransactionDate)
+                    EditLogExpenseRequestBody(receivedAmount, receivedDescription, userSelectedTransactionDate)
                 )
+            }
+        }
+
+        initObserver()
+
+        // close the bottomSheet
+        binding.editLogExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    fun initObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                editLogExpenseViewModel.updateLogExpenseResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            binding.editLogExpenseBottomSheetFragmentErrorMessageTv.visibility = View.INVISIBLE
+                            Toast.makeText(
+                                requireContext(),
+                                "${it.data.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            findNavController().popBackStack()
+                        }
+                        is Resource.Error -> {
+                            binding.editLogExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
+                            binding.editLogExpenseBottomSheetFragmentErrorMessageTv.text = it.message
+                        }
+                        is Resource.Loading -> {
+                        }
+                    }
+                }
             }
         }
     }

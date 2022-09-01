@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.budgetdetails.presentation
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -42,7 +43,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
-    private lateinit var calendarSelectedDate: String
+    private var calendarSelectedDate: String? = null
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences
@@ -278,16 +279,18 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val bundle = Bundle()
         bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
         bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
+        Log.d(TAG, "selected date on calendar: ${calendarSelectedDate}")
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 
     override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
 
-        budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+
+      //  budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+        bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
         bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
         bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
-
         findNavController().navigate(R.id.expensesListFragment, bundle)
     }
 }

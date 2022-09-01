@@ -13,7 +13,7 @@ class ExceptionHandler @Inject constructor(context: Context) {
 
     private val context = context
     fun parse(exception: Exception): String {
-        return when(exception){
+        return when (exception) {
             is HttpException -> {
                 return try {
                     var errorMessage = ""
@@ -22,13 +22,13 @@ class ExceptionHandler @Inject constructor(context: Context) {
                         ErrorResponse::class.java
                     )
                     errorMessage += "${obj.message}\n"
-                    if (obj.errors != null){
-                        for (value in obj.errors.values){
-                            errorMessage += "${value}"
+                    if (obj.errors != null) {
+                        for (value in obj.errors.values) {
+                            errorMessage += "$value"
                         }
                     }
                     return errorMessage.trim()
-                } catch (exp: Exception){
+                } catch (exp: Exception) {
                     context.getString(R.string.error_exception_unknown_error)
                 }
             }

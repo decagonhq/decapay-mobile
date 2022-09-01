@@ -79,6 +79,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
+    // currency formatter
+    implementation 'com.cottacush:CurrencyEditText:0.0.10'
 
 
     //Room
