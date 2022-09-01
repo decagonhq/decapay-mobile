@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseReq
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -70,17 +72,19 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initialize view
-
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
+
         // set the category
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
         retrivedCalendarSelectedDate = selectedDateToLogExpense
         if (retrivedCalendarSelectedDate.isEmpty()) {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = retrivedCalendarSelectedDate
+            transactionDate = retrivedCalendarSelectedDate
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = getTodaysDate()
+            transactionDate = getTodaysDate()
         }
 
         // on click on the calender icon
@@ -92,11 +96,12 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
             // capture all the inputs from the input fields
-            val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.text?.trim().toString()
+            val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val description = binding.logExpenseBottomSheetFragmentDescriptionTiedt.text?.trim().toString()
             val enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+            Log.d(TAG, "here is the content in the amountSpent: $amountSpent")
             // validate fields
-            if (amountSpent.isEmpty() || description.isEmpty() || enteredTransactionDate.isEmpty()) {
+            if (amountSpent.toString().isEmpty() || description.isEmpty() || enteredTransactionDate.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Input fields cannot be empty",

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
@@ -74,6 +75,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
             showTransactionDatePicker(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
+            userSelectedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
         }
 
         // on click update button
@@ -96,6 +98,10 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                     EditLogExpenseRequestBody(receivedAmount.toDouble(), receivedDescription, userSelectedTransactionDate)
                 )
             }
+        }
+        // close the bottomSheet
+        binding.editLogExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
