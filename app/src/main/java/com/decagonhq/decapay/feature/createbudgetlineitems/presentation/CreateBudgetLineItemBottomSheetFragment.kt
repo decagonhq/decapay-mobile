@@ -69,8 +69,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
-            val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.text?.trim().toString()
-            if (receivedAmount.isEmpty()) {
+            val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
+            if (receivedAmount.toString().isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Amount field cannot be empty",
@@ -80,7 +80,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                 if (budgetId != null) {
                     createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount.toDouble(), budgetLineItemId)
+                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetLineItemId)
                     )
                 }
             }

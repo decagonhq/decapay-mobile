@@ -152,6 +152,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
     }
 
     private fun setUpDeleteFlowListener() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 expenseListViewModel.deleteResponse.collect {
@@ -189,8 +190,10 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         val yesBtn = dialog.findViewById(R.id.delete_modal_yes_btn) as Button
         val noBtn = dialog.findViewById(R.id.delete_modal_no_btn) as Button
         yesBtn.setOnClickListener {
+            expenseListViewModel.deleteExpense(adapter.list[position].id)
+
             adapter.deleteItemAtIndex(position)
-            expenseListViewModel.deleteExpense(list[position].id)
+
             dialog.dismiss()
         }
         noBtn.setOnClickListener { dialog.dismiss() }

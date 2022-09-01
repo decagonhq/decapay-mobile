@@ -19,4 +19,12 @@ class UtilsConverterTest {
         val output = UtilsConverter.formatCurrentDate(currentDate)
         assertEquals(expected, output)
     }
+
+    @Test
+    fun formatReceivedTransactionDate_whenTransactionDateForUpdateIsReceived() {
+        val transactionDate = "2022-09-01"
+        val expected = "01/09/2022"
+        val output = UtilsConverter.formatReceivedTransactionDate(transactionDate)
+        assertEquals(expected, output)
+    }
 }

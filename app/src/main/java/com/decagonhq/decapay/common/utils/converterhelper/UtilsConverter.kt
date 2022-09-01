@@ -2,6 +2,7 @@ package com.decagonhq.decapay.common.utils.converterhelper
 
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
+import java.util.*
 
 object UtilsConverter {
 
@@ -19,5 +20,11 @@ object UtilsConverter {
         val arrayDateItems = receivedDate.split("/")
         val result = "${arrayDateItems[2]}-${arrayDateItems[1]}-${arrayDateItems[0]}"
         return result
+    }
+
+    fun formatReceivedTransactionDate(receivedTransactionDate: String): String {
+        val dateCollection = receivedTransactionDate.split("-")
+        val output = "${dateCollection[2]}/${dateCollection[1]}/${dateCollection[0]}"
+        return output
     }
 }
