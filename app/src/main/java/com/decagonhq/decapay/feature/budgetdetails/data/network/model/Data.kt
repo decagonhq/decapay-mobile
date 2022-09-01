@@ -21,7 +21,7 @@ data class Data(
     @SerializedName("id")
     val id: Int,
     @SerializedName("lineItems")
-    val lineItems: List<Any>,
+    val lineItems: List<LineItem>,
     @SerializedName("percentageSpentSoFar")
     val percentageSpentSoFar: Double,
     @SerializedName("projectedAmount")

@@ -61,4 +61,61 @@
         android:name="com.decagonhq.decapay.feature.budgetdetails.presentation.BudgetDetailsFragment"
         android:label="fragment_budget_details"
         tools:layout="@layout/fragment_budget_details" />
+
+    <fragment
+        android:id="@+id/createBudgetFragment"
+        android:name="com.decagonhq.decapay.feature.createbudget.presentation.CreateBudgetFragment"
+        android:label="CreateBudgetFragment" >
+        <argument
+            android:name="year"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBudgetFragment"
+        android:name="com.decagonhq.decapay.feature.editbudget.presentation.EditBudgetFragment"
+        android:label="fragment_edit_budget"
+        tools:layout="@layout/fragment_edit_budget" />
+    <fragment
+        android:id="@+id/budgetCategoryList"
+        android:name="com.decagonhq.decapay.feature.listbudgetcategories.presentation.BudgetCategoryListFragment"
+        android:label="fragment_budget_category_list"
+        tools:layout="@layout/fragment_budget_category_list" />
+    <fragment
+        android:id="@+id/createBudgetCategoryFragment"
+        android:name="com.decagonhq.decapay.feature.createbudgetcategory.presentation.CreateBudgetCategoryFragment"
+        android:label="fragment_create_budget_category"
+        tools:layout="@layout/fragment_create_budget_category" />
+    <fragment
+        android:id="@+id/editBudgetCategoryFragment"
+        android:name="com.decagonhq.decapay.feature.editbudgetcategory.presentation.EditBudgetCategoryFragment"
+        android:label="fragment_edit_budget_category"
+        tools:layout="@layout/fragment_edit_budget_category" />
+    <dialog
+        android:id="@+id/createBudgetLineItemBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.createbudgetlineitems.presentation.CreateBudgetLineItemBottomSheetFragment"
+        android:label="fragment_create_budget_line_item_bottom_sheet"
+        tools:layout="@layout/fragment_create_budget_line_item_bottom_sheet" />
+    <dialog
+        android:id="@+id/editBudgetLineItemBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.editbudgetlineitem.presentation.EditBudgetLineItemBottomSheetFragment"
+        android:label="fragment_edit_budget_line_item"
+        tools:layout="@layout/fragment_edit_budget_line_item" />
+    <fragment
+        android:id="@+id/expensesListFragment"
+        android:name="com.decagonhq.decapay.feature.expenseslist.presentation.ExpensesListFragment"
+        android:label="fragment_expenses_list"
+        tools:layout="@layout/fragment_expenses_list" />
+    <dialog
+        android:id="@+id/logExpenseBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.logexpense.presentation.LogExpenseBottomSheetFragment"
+        android:label="fragment_log_expense"
+        tools:layout="@layout/fragment_log_expense" />
+    <dialog
+        android:id="@+id/editLogExpenseBottomSheetFragment"
+        android:name="com.decagonhq.decapay.feature.editlogexpense.presentation.EditLogExpenseBottomSheetFragment"
+        android:label="fragment_edit_log_expense_bottom_sheet"
+        tools:layout="@layout/fragment_edit_log_expense_bottom_sheet" />
+
+
 </navigation>

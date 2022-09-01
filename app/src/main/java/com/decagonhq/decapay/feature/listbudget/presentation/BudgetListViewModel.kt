@@ -5,57 +5,49 @@ import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.listbudget.data.network.model.BudgetListResponse
 import com.decagonhq.decapay.feature.listbudget.domain.usecase.BudgetListUseCase
-import com.decagonhq.decapay.feature.signup.domain.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class BudgetListViewModel @Inject constructor(
-   private val budgetListUseCase: BudgetListUseCase
-) :ViewModel(){
+    private val budgetListUseCase: BudgetListUseCase
+) : ViewModel() {
 
-   private val _budgetListResponse = MutableStateFlow<Resource<BudgetListResponse>>(Resource.Loading())
-   val budgetListResponse: StateFlow<Resource<BudgetListResponse>> get() = _budgetListResponse
+    private val _budgetListResponse = MutableStateFlow<Resource<BudgetListResponse>>(Resource.Loading())
+    val budgetListResponse: StateFlow<Resource<BudgetListResponse>> get() = _budgetListResponse
 
-   var isFetching = false
-   var page = 0
+    var isFetching = false
+    var page = 0
+    var state = ""
 
-
-
-   fun getBudgetList() {
-      viewModelScope.launch {
-
-       budgetListUseCase.invoke(page).collect{
-          if(it is Resource.Success){
-             page++
-          }
-          _budgetListResponse.value = it
-       }
-      }
-   }
-
-
-   fun getNextPage(){
-      if(!isFetching){
-         isFetching = true
-         viewModelScope.launch {
-            budgetListUseCase.getNextPage(page).collect{
-               if(it is Resource.Success){
-                  page++
-               }
-               isFetching = false
-               _budgetListResponse.value = it
+     fun getBudgetList(state:String) {
+         this.state = state
+         page =0
+        viewModelScope.launch {
+            budgetListUseCase.invoke(page,state).collect {
+                if (it is Resource.Success) {
+                    page++
+                }
+                _budgetListResponse.value = it
             }
-         }
-      }
+        }
+    }
 
-   }
-
-
-
-
+    fun getNextPage() {
+        if (!isFetching) {
+            isFetching = true
+            viewModelScope.launch {
+                budgetListUseCase.getNextPage(page,state).collect {
+                    if (it is Resource.Success) {
+                        page++
+                    }
+                    isFetching = false
+                    _budgetListResponse.value = it
+                }
+            }
+        }
+    }
 }

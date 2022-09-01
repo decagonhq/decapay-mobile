@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.decagonhq.decapay" >
 
+    <uses-sdk tools:overrideLibrary="by.dzmitry_lakisau.month_year_picker_dialog"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -29,11 +31,11 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <meta-data
             android:name="preloaded_fonts"

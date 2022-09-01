@@ -9,4 +9,14 @@
     <dimen name="forgot_password_fragment_title_reset_password_call_out_action_txsiz">16sp</dimen>
     <dimen name="create_new_password_fragment_title_txsiz">24sp</dimen>
     <dimen name="verify_password_reset_code_fragment_verify_button_txsiz">22sp</dimen>
+    <dimen name="create_budget_fragment_toolbar_title_txsiz">22sp</dimen>
+    <dimen name="create_budget_fragment_budget_period_txsiz">16sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_select_title_txsiz">20sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_instruction_txsiz">18sp</dimen>
+    <dimen name="option_modal_bottom_sheet_fragment_options_annual_txsiz">18sp</dimen>
+    <dimen name="create_budget_category_callout">18sp</dimen>
+    <dimen name="edit_budget_line_item_bottom_sheet_fragment_label_category_txsiz">24sp</dimen>
+    <dimen name="editBudgetLineItem_category_txsiz">18sp</dimen>
+    <dimen name="editBudgetLineItem_selected_category__txsiz">24sp</dimen>
+    <dimen name="logExpense_bottom_sheet_fragment_category_title_txsize">24sp</dimen>
 </resources>

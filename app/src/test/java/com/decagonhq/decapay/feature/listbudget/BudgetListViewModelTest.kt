@@ -18,7 +18,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
-
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class BudgetListViewModelTest {
@@ -39,22 +38,20 @@ class BudgetListViewModelTest {
         Dispatchers.resetMain()
     }
 
-
     @Test
     fun `view model goes into loading state`() {
-        val viewModel = BudgetListViewModel( mockUseCase,)
+        val viewModel = BudgetListViewModel(mockUseCase,)
         assert(viewModel.budgetListResponse.value::class.java == Resource.Loading::class.java)
     }
 
-
     @Test
-     fun `view model fetches first list`() = runTest{
+    fun `view model fetches first list`() = runTest {
 
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(0)).thenReturn(flow)
-        val viewModel = BudgetListViewModel( mockUseCase)
+        Mockito.`when`(mockUseCase.invoke(0,"")).thenReturn(flow)
+        val viewModel = BudgetListViewModel(mockUseCase)
 
-        viewModel.getBudgetList()
+        viewModel.getBudgetList("")
         viewModel.budgetListResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Loading::class.java)
@@ -63,18 +60,15 @@ class BudgetListViewModelTest {
         }
     }
 
-
     @Test
-    fun `view model fetches next list`() = runTest{
-        val token = "token"
+    fun `view model fetches next list`() = runTest {
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(0)).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(1)).thenReturn(flow2)
-        val viewModel = BudgetListViewModel( mockUseCase)
+        Mockito.`when`(mockUseCase.invoke(0,"")).thenReturn(flow)
+        Mockito.`when`(mockUseCase.getNextPage(1,"")).thenReturn(flow2)
+        val viewModel = BudgetListViewModel(mockUseCase)
 
-        viewModel.getBudgetList()
-
+        viewModel.getBudgetList("")
 
         viewModel.budgetListResponse.test {
             val emission = awaitItem()
@@ -86,9 +80,8 @@ class BudgetListViewModelTest {
         viewModel.getNextPage()
 
         viewModel.budgetListResponse.test {
-                        val thirdEmission = awaitItem()
+            val thirdEmission = awaitItem()
             assert(thirdEmission::class.java == Resource.Success::class.java)
         }
     }
-
 }

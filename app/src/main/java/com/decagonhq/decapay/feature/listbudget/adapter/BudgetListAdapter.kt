@@ -30,29 +30,29 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
         notifyDataSetChanged()
     }
 
+    fun clearList(){
+        list.clear()
+        notifyDataSetChanged()
+    }
+
     fun deleteItemAtIndex(index: Int) {
         list.removeAt(index)
         notifyItemRemoved(index)
         notifyItemRangeChanged(index, list.size)
     }
 
-
     class BudgetListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-       private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_list_item_elipsis_ib)
-        private  var titleTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_title_tv)
-        private var amountTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_amount_tv)
-        private  var spentTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_amount_spent_tv)
-        private  var percentageTextView:TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_percentage_spent_tv)
-
+        private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_list_item_elipsis_ib)
+        private var titleTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_title_tv)
+        private var amountTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_amount_tv)
+        private var spentTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_amount_spent_tv)
+        private var percentageTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_percentage_spent_tv)
 
         fun initialize(currentBudgetItem: Content, clicker: BudgetClicker) {
             amountTextView.text = currentBudgetItem.displayProjectedAmount
             percentageTextView.text = currentBudgetItem.displayPercentageSpentSoFar
             spentTextView.text = currentBudgetItem.displayTotalAmountSpentSoFar
             titleTextView.text = currentBudgetItem.title
-
-
-
 
             itemView.setOnClickListener {
                 clicker.onClickItem(currentBudgetItem, adapterPosition)

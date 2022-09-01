@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -149,14 +150,6 @@ class LoginFragment : Fragment() {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password cannot be empty"
         } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must have a minimum of 8 characters."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 number.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 number."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 upper case character.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 upper case character."
-        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must contain at least 1 lower case character.") {
-            binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = "Password must contain at least 1 lower case character."
         } else {
             binding.loginFragmentPasswordTextinputlayoutPasswordTil.error = ""
         }
@@ -179,6 +172,7 @@ class LoginFragment : Fragment() {
                             preference.putToken(token!!)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
+                            Log.d(TAG, "Here is the token: $token")
 
                             // on successfuly loggedin, navigate to your list of budgets
                         }
@@ -193,7 +187,6 @@ class LoginFragment : Fragment() {
                             binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
                         }
                         is Resource.Loading -> {
-                            pleaseWaitDialog!!.dismiss()
                         }
                     }
                 }

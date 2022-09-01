@@ -38,4 +38,36 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     override fun deleteToken() {
         preferences.edit().remove(PreferenceConstants.KEY_TOKEN).apply()
     }
+
+    override fun putBudgetStartDate(startDate: Long) {
+        preferences.edit().putLong(PreferenceConstants.BUDGET_START_DATE, startDate).apply()
+    }
+
+    override fun getBudgetStartDate(): Long {
+        return preferences.getLong(PreferenceConstants.BUDGET_START_DATE, 0)
+    }
+
+    override fun putBudgetEndDate(endDate: Long) {
+        preferences.edit().putLong(PreferenceConstants.BUDGET_END_DATE, endDate).apply()
+    }
+
+    override fun getBudgetEndDate(): Long {
+        return preferences.getLong(PreferenceConstants.BUDGET_END_DATE, 0)
+    }
+
+    override fun putSelectedDate(date: String) {
+        preferences.edit().putString(PreferenceConstants.CALENDAR_SELECTED_DATE, date).apply()
+    }
+
+    override fun getSelectedDate(): String {
+        return preferences.getString(PreferenceConstants.CALENDAR_SELECTED_DATE, "").orEmpty()
+    }
+
+    override fun putExpenseCategoryTitle(categoryTitle: String) {
+        preferences.edit().putString(PreferenceConstants.EXPENSE_CATEGORY_TITLE, categoryTitle).apply()
+    }
+
+    override fun getExpenseCategoryTitle(): String {
+        return preferences.getString(PreferenceConstants.EXPENSE_CATEGORY_TITLE, "").orEmpty()
+    }
 }

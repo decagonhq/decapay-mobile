@@ -13,4 +13,16 @@
     <color name="budget_list_grey">#F5F5F5</color>
     <color name="light_green_tint">#F8FCF7</color>
     <color name="light_blue_tint">#F7FCFF</color>
+    <color name="toolbar_stroke">#F5F5F5</color>
+    <color name="toolbar_background">#E5E5E5</color>
+    <color name="border_color">#D9D9D9</color>
+    <color name="border_color_text_input">#ADA9A9</color>
+    <color name="background_color_text">#FFE088</color>
+    <color name="light_green">#0D14A800</color>
+    <color name="light_yellow">#1AFFE088</color>
+    <color name="light_blue">#0D009CF4</color>
+    <color name="light_red">#0DF46CB4</color>
+    <color name="red">#E66565</color>
+
+
 </resources>

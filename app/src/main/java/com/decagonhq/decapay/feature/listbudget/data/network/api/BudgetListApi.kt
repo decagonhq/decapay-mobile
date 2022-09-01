@@ -10,5 +10,6 @@ interface BudgetListApi {
     suspend fun getBudgetList(
         @Query("page") address: Int,
         @Query("size") size: Int,
+        @Query("state") state: String,
     ): BudgetListResponse
 }

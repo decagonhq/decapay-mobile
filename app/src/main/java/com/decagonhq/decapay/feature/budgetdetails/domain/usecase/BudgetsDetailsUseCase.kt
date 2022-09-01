@@ -15,13 +15,25 @@ class BudgetsDetailsUseCase @Inject constructor(
     private val exceptionHandler: ExceptionHandler
 ) {
 
-
-    operator fun invoke(budgetId:Int): Flow<Resource<BudgetDetailsResponse>> =
+    operator fun invoke(budgetId: Int): Flow<Resource<BudgetDetailsResponse>> =
         flow {
             try {
                 emit(Resource.Loading())
                 val response = budgetDetailsRepository.getBudgetDetails(budgetId)
                 emit(Resource.Success(response))
+            } catch (e: HttpException) {
+                val message = exceptionHandler.parse(e)
+                emit(Resource.Error(message))
+            } catch (e: IOException) {
+                emit(Resource.Error("Couldn't reach server check your internet connection"))
+            }
+        }
+
+    suspend fun deleteLineItem(budgetId: Int, categoryId: Int): Flow<Resource<Any>> =
+        flow {
+            try {
+                budgetDetailsRepository.deleteLineItem(budgetId, categoryId)
+                emit(Resource.Success(""))
             } catch (e: HttpException) {
                 val message = exceptionHandler.parse(e)
                 emit(Resource.Error(message))

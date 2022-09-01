@@ -64,5 +64,108 @@
     <string name="log">Log</string>
     <string name="percentage">Percentage</string>
     <string name="total_amount_spent">Total Amount spent</string>
+    <string name="create_budget_fragment_title_tv">Create Budget</string>
+    <string name="create_budget_fragment_label_title">Title</string>
+    <string name="create_budget_fragment_hint_title">Enter title</string>
+    <string name="create_budget_fragment_label_amount">Projected Amount</string>
+    <string name="create_budget_fragment_hint_amount">Enter amount</string>
+    <string name="create_budget_fragment_label_buget_period">Budget period</string>
+    <string name="create_budget_fragment_hint_select">Select</string>
+    <string name="create_budget_fragment_label_description">Description</string>
+    <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
+    <string name="create_budget_fragment_done_button">Done</string>
+    <string name="option_modal_bottom_sheet_fragment_instruction">You can select <b>custom</b> to choose your perfect\ndate</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_annual">Annual</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_monthly">Monthly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_weeklyly">Weekly</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_daily">Daily</string>
+    <string name="option_modal_bottom_sheet_fragment_periodic_option_custom">Custom</string>
+    <string name="create_budget_fragment_buget_period_autocomplete_view">Please select a period</string>
+    <string-array name="budget_periods">
+        <item>Annual</item>
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Daily</item>
+        <item>Custom</item>
+    </string-array>
+    <string name="reate_budget_fragment_buget_period_annual_year">Enter year</string>
+    <string-array name="budget_period_month">
+        <item>January</item>
+        <item>Feburary</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+    </string-array>
+    <string-array name="budget_period_weekly">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+    </string-array>
+    <string name="create_budget_fragment_budget_period_daily_select_date">Select Date</string>
+    <string name="create_budget_fragment_budget_period_custom_selection">Start date, End date</string>
+    <string-array name="choose_year">
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+    </string-array>
+    <string name="create_budget_fragment_budget_period_weekly_start_date">Start date</string>
+    <string name="create_budget_fragment_budget_period_weekly_duration">Enter duration</string>
+    <string name="edit_budget_fragment_title">Edit Budget</string>
+    <string name="no_budget_yet">No Budget yet</string>
+    <string name="plan_ahead_header">Plan ahead your expenses and \ntake total control</string>
+    <string name="take_control_subheader">Take control of your money by tracking expenses</string>
+    <string name="create_budget_category_fragment_title">Create Category</string>
+    <string name="create_budget_category_fragment_callout">What do you usually spend on\?</string>
+    <string name="create_budget_category_fragment_name_category">Name of Category</string>
+    <string name="create_budget_category_fragment_name_category_hint">Enter name of item</string>
+    <string name="create_budget_category_fragment_name_category_add">Add</string>
+    <string name="edit_budget_category_fragment_title">Edit Category</string>
+    <string name="edit_budget_category_fragment_name_category_save">Save</string>
+    <string name="create_budget_line_item_bottom_sheet_title">Create Budget Line Item</string>
+    <string name="create_budget_line_item_bottom_sheet_label_category">Category</string>
+    <string name="create_budget_line_item_bottom_sheet_label_projected_amount">Projected Amount</string>
+    <string name="create_budget_line_item_bottom_sheet_label_projected_amount_hint">N0.00</string>
+    <string name="create_budget_line_item_bottom_sheet_fragment_create_button">Create</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="custom_toast_tst">My feedback</string>
+    <string name="view_expenses">view_expenses</string>
+    <string name="projected_amount">Projected amount -</string>
+    <string name="amount_so_far">Amount so far -</string>
+    <string name="createBudgetLineItem_fragment_error_message">The BudgetLine Item Already Exist</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description</string>
+    <string name="time_logged">Time Logged</string>
+    <string name="no_expenses_yet">No Expenses Yet</string>
+    <string name="logExpense_bottom_sheet_title">Transportation</string>
+    <string name="logExpense_bottom_sheet_fragment_transaction_date">Transaction Date</string>
+    <string name="logExpense_bottom_sheet_fragment_transaction_date_hint">Current Date</string>
+    <string name="logExpense_bottom_sheet_fragment_label_amount_spent">Amount Spent</string>
+    <string name="logExpense_bottom_sheet_fragment_description">Description</string>
+    <string name="logExpense_bottom_sheet_fragment_description_hint">Type description here..</string>
+    <string name="logExpense_bottom_sheet_fragment_save_button">Save</string>
+    <string name="logExpense_bottom_sheet_fragment_cancel_button">Cancel</string>
+    <string name="edit_budget_line_item_bottom_sheet_title">Edit Budget Line Item</string>
+    <string name="edit_budget_line_item_bottom_sheet_fragment_create_button">Update</string>
+    <string name="editBudgetLineItem_category">Category</string>
+    <string name="logExpense_bottom_sheet_fragment_add_expense">Add Expense</string>
+    <string name="editlogexpense_bottom_sheet_fragment_edit_expense">Edit Expense</string>
+    <string name="editLogExpense_bottom_sheet_fragment_save_button">Update</string>
+
+    <string-array name="States">
+        <item>All</item>
+        <item>Past</item>
+        <item>Current</item>
+        <item>Upcoming</item>
+    </string-array>
 
 </resources>

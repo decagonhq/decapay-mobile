@@ -24,9 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(
-
-) {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preference: Preferences
@@ -43,12 +41,10 @@ class MainActivity : AppCompatActivity(
 
         setUpViewModelListener()
 
-
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        }else{
-
+        } else {
         }
 
         /** INITIALISE DRAWER MENU LISTENER */
@@ -64,7 +60,7 @@ class MainActivity : AppCompatActivity(
         selectNavigationItem(navigationView)
     }
 
-    private fun setUpViewModelListener(){
+    private fun setUpViewModelListener() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 activityViewModel.signOutResponse.collect {
@@ -93,8 +89,6 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-
-
     private fun selectNavigationItem(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener {
             navController =
@@ -102,14 +96,13 @@ class MainActivity : AppCompatActivity(
             when (it.itemId) {
                 R.id.menu_dashboard -> {
 
-
-                    // navController.navigate(R.id.loginFragment)
+                    navController.navigate(R.id.budgetListFragment)
                 }
                 R.id.menu_budget -> {
                     // navController.navigate(R.id.testFragment)
                 }
                 R.id.menu_budget_category -> {
-                    // navController.navigate(R.id.loginFragment)
+                    navController.navigate(R.id.budgetCategoryList)
                 }
                 R.id.menu_logout -> {
                     activityViewModel.signOutUser(SignOutRequestBody(preference.getToken()))
@@ -124,8 +117,7 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-
-    private fun hideDrawer() {
+     fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
@@ -134,9 +126,4 @@ class MainActivity : AppCompatActivity(
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
-
-
-
-
-
 }
