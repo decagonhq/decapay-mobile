@@ -126,7 +126,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
     }
 
-    private fun lineItemListener(){
+    private fun lineItemListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
             DataConstant.NEW_LINE_ITEM
         )?.observe(viewLifecycleOwner) {
@@ -276,15 +276,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         val bundle = Bundle()
         bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
         bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
-        Log.d(TAG, "selected date on calendar: ${calendarSelectedDate}")
+        Log.d(TAG, "selected date on calendar: $calendarSelectedDate")
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
     }
 
     override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
         val bundle = Bundle()
 
-
-      //  budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
+        //  budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
         bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
         bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
         bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
