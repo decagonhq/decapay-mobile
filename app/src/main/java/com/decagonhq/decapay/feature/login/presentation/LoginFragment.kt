@@ -172,9 +172,6 @@ class LoginFragment : Fragment() {
                             preference.putToken(token!!)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
-                            Log.d(TAG, "Here is the token: $token")
-
-                            // on successfuly loggedin, navigate to your list of budgets
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
@@ -183,8 +180,6 @@ class LoginFragment : Fragment() {
                                 "${it.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            binding.loginFragmentEmailTextinputedittextEmailTiedt.text?.clear()
-                            binding.loginFragmentPasswordTextinputlayoutPasswordTiedt.text?.clear()
                         }
                         is Resource.Loading -> {
                         }

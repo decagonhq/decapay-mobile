@@ -51,26 +51,19 @@
         android:fontFamily="@font/roboto_medium"
         android:text="@string/logExpense_bottom_sheet_fragment_label_amount_spent"
         />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editLogExpense_bottom_sheet_fragment_amount_til"
+    <com.cottacush.android.currencyedittext.CurrencyEditText
+        android:id="@+id/editLogExpense_bottom_sheet_fragment_amount_tiedt"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:hintEnabled="false"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editLogExpense_bottom_sheet_fragment_amount_tiedt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/create_budget_line_item_bottom_sheet_label_projected_amount_hint"
-            android:inputType="numberDecimal"
-            android:lines="1"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:currencySymbol="₦"
+        app:maxNumberOfDecimalDigits="2"
+        android:paddingStart="8dp"
+        app:useCurrencySymbolAsHint="true"
+        android:background="@drawable/budget_period_bg"
+        />
     <TextView
         android:id="@+id/editLogExpense_bottom_sheet_fragment_description_tv"
         android:layout_width="wrap_content"

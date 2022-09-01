@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class CreateBudgetFragment : Fragment() {
@@ -48,7 +48,7 @@ class CreateBudgetFragment : Fragment() {
     lateinit var dailyStartDateSelected: String
     lateinit var customSelectedDate: String
     lateinit var budgetTitle: String
-    lateinit var budgetAmount: String
+    var budgetAmount by Delegates.notNull<Double>()
     lateinit var budgetPeriodType: String
     lateinit var customeBudgetStartDate: String
     lateinit var customBudgetEndDate: String
@@ -164,13 +164,13 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetFragmentDoneButtonBtn.setOnClickListener {
             // capture the input
             budgetTitle = binding.createBudgetFragmentTitleTiedt.text?.trim().toString()
-            budgetAmount = binding.createBudgetFragmentAmountTiedt.text?.trim().toString()
+            budgetAmount = binding.createBudgetFragmentAmountTiedt.getNumericValue()
             // budgetPeriodType
             budgetDescription = binding.createBudgetFragmentDescriptionTiedt.text?.trim().toString()
             weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
-            if (budgetTitle.isEmpty() || budgetAmount.isEmpty() || budgetPeriodType.isEmpty() || budgetDescription.isEmpty()) {
+            if (budgetTitle.isEmpty() || budgetAmount.toString().isEmpty() || budgetPeriodType.isEmpty() || budgetDescription.isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Please enter appropriate details to create a budget",
@@ -184,7 +184,7 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), null, null,
+                                budgetAmount, null, null,
                                 budgetDescription, null, null, BudgetPeriodConstant.ANNUAL,
                                 budgetTitle, annualPeriodYear.toInt()
                             )
@@ -196,7 +196,7 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), null, null,
+                                budgetAmount, null, null,
                                 budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
                                 budgetTitle, monthlyPeriodYear.toInt()
                             )
@@ -208,7 +208,7 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), null, weeklyStartDate,
+                                budgetAmount, null, weeklyStartDate,
                                 budgetDescription, weeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
                                 budgetTitle, null
                             )
@@ -221,7 +221,7 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), dailyStartDateSelected, dailyStartDateSelected,
+                                budgetAmount, dailyStartDateSelected, dailyStartDateSelected,
                                 budgetDescription, null, null, BudgetPeriodConstant.DAILY,
                                 budgetTitle, null
                             )
@@ -233,7 +233,7 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount.toDouble(), customBudgetEndDate, customeBudgetStartDate,
+                                budgetAmount, customBudgetEndDate, customeBudgetStartDate,
                                 budgetDescription, null, null, BudgetPeriodConstant.CUSTOM,
                                 budgetTitle, null
                             )
