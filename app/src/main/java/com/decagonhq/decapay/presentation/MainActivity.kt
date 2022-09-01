@@ -2,6 +2,7 @@ package com.decagonhq.decapay.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -40,10 +41,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setUpViewModelListener()
+       val email = preference.getUserEmail()
+        val name = preference.getUserName()
+
 
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+
         } else {
         }
 
@@ -56,6 +62,12 @@ class MainActivity : AppCompatActivity() {
         binding.mainActivityHamburgerIb.setOnClickListener {
             drawerLayout.openDrawer(binding.mainActivityNavViewNv)
         }
+        val header: View = navigationView.getHeaderView(0)
+        val emailView = header.findViewById<TextView>(R.id.menu_header_email_tv)
+        val nameView = header.findViewById<TextView>(R.id.menu_header_name_tv)
+
+        emailView.text = "zzzz"
+        nameView.text = "sljfshlfsbjs"
 
         selectNavigationItem(navigationView)
     }

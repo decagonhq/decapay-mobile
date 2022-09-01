@@ -88,10 +88,11 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                 list.clear()
                 adapter.clearList()
 
-                if(itemSelected =="All"){
-                    budgetListViewModel.getBudgetList("")
-                }else{
-                    budgetListViewModel.getBudgetList(itemSelected.lowercase(Locale.getDefault()))
+                when(position){
+                    0 -> budgetListViewModel.getBudgetList("")
+                    1 -> budgetListViewModel.getBudgetList("past")
+                    2 -> budgetListViewModel.getBudgetList("current")
+                    3 -> budgetListViewModel.getBudgetList("upcoming")
                 }
 
             }

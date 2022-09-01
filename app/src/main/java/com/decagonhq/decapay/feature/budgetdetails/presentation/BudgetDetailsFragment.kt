@@ -88,6 +88,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
 
+        binding.budgetDetailsBackIv.setOnClickListener {
+            findNavController().navigate(R.id.budgetListFragment)
+        }
         // to add budgetlineItems
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId

@@ -170,6 +170,7 @@ class LoginFragment : Fragment() {
                             // capture the token here
                             val token = it.data.data?.token
                             preference.putToken(token!!)
+                           // preference.putUserName(it.data.data.)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
                             Log.d(TAG, "Here is the token: $token")
