@@ -43,6 +43,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var retrivedCalendarSelectedDate: String
     private lateinit var selectedDateLogExpenseDate: TextView
     private var calendarSelectedDateToLogExpense: String? = null
+    private lateinit var enteredTransactionDate: String
 
     @Inject
     lateinit var logExpensePreference: Preferences
@@ -54,7 +55,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         selectedCategoryId = selectedBudgetLineItems.categoryId
         budgetCategory = selectedBudgetLineItems.category
         calendarSelectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
-        Log.d(TAG, "inside calendar: $calendarSelectedDateToLogExpense")
     }
 
     override fun onCreateView(
@@ -70,7 +70,6 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "see todaay's date: ${getTodaysDate()}")
         // initialize view
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
@@ -79,15 +78,13 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
 //        retrivedCalendarSelectedDate = calendarSelectedDateToLogExpense
-//        Log.d(TAG, "default selected date: $retrivedCalendarSelectedDate")
         if (calendarSelectedDateToLogExpense == null) {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "HELLO"
             transactionDate = getTodaysDate()
-            Log.d(TAG, "when date not selected from calendar : ${getTodaysDate()}")
         } else {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = calendarSelectedDateToLogExpense
-            transactionDate = calendarSelectedDateToLogExpense.toString()
-            Log.d(TAG, "when calendar is selected: $transactionDate")
+//            transactionDate = calendarSelectedDateToLogExpense.toString()
+            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.toString()
         }
 
         // on click on the calender icon
@@ -101,8 +98,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             // capture all the inputs from the input fields
             val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val description = binding.logExpenseBottomSheetFragmentDescriptionTiedt.text?.trim().toString()
-            val enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
-            Log.d(TAG, "here is the content in the amountSpent: $amountSpent")
+            enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
             // validate fields
             if (amountSpent.toString().isEmpty() || description.isEmpty() || enteredTransactionDate.isEmpty()) {
                 Toast.makeText(

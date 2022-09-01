@@ -121,7 +121,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 editLogExpenseViewModel.updateLogExpenseResponse.collect {
-                    when(it) {
+                    when (it) {
                         is Resource.Success -> {
                             binding.editLogExpenseBottomSheetFragmentErrorMessageTv.visibility = View.INVISIBLE
                             Toast.makeText(
@@ -136,7 +136,6 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                             binding.editLogExpenseBottomSheetFragmentErrorMessageTv.text = it.message
                         }
                         is Resource.Loading -> {
-
                         }
                     }
                 }
