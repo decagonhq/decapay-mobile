@@ -8,7 +8,13 @@ interface Preferences {
 
     fun putUserEmail(email: String)
 
+
+
     fun getUserEmail(): String
+
+    fun putUserName(name: String)
+
+    fun getUserName():String
 
     fun putUserPassword(password: String)
 

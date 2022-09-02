@@ -55,8 +55,9 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
-        budgetListViewModel.getBudgetList("current")
-        adapter = BudgetListAdapter(list, this)
+//        list.clear()
+//        budgetListViewModel.getBudgetList("current")
+        adapter = BudgetListAdapter(list, this,requireContext())
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -87,11 +88,11 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                 val itemSelected = states[position]
                 list.clear()
                 adapter.clearList()
-
-                if(itemSelected =="All"){
-                    budgetListViewModel.getBudgetList("")
-                }else{
-                    budgetListViewModel.getBudgetList(itemSelected.lowercase(Locale.getDefault()))
+                when(position){
+                    0 -> budgetListViewModel.getBudgetList("")
+                    1 -> budgetListViewModel.getBudgetList("past")
+                    2 -> budgetListViewModel.getBudgetList("current")
+                    3 -> budgetListViewModel.getBudgetList("upcoming")
                 }
 
             }

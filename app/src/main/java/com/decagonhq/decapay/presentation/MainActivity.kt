@@ -2,6 +2,7 @@ package com.decagonhq.decapay.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -40,10 +41,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setUpViewModelListener()
+       val email = preference.getUserEmail()
+        val name = preference.getUserName()
+
 
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+
         } else {
         }
 
@@ -56,6 +62,12 @@ class MainActivity : AppCompatActivity() {
         binding.mainActivityHamburgerIb.setOnClickListener {
             drawerLayout.openDrawer(binding.mainActivityNavViewNv)
         }
+        val header: View = navigationView.getHeaderView(0)
+        val emailView = header.findViewById<TextView>(R.id.menu_header_email_tv)
+        val nameView = header.findViewById<TextView>(R.id.menu_header_name_tv)
+
+        emailView.text = ""
+        nameView.text = ""
 
         selectNavigationItem(navigationView)
     }
@@ -94,12 +106,12 @@ class MainActivity : AppCompatActivity() {
             navController =
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
             when (it.itemId) {
-                R.id.menu_dashboard -> {
-
-                    navController.navigate(R.id.budgetListFragment)
-                }
+//                R.id.menu_dashboard -> {
+//
+//                    navController.navigate(R.id.budgetListFragment)
+//                }
                 R.id.menu_budget -> {
-                    // navController.navigate(R.id.testFragment)
+                    navController.navigate(R.id.budgetListFragment)
                 }
                 R.id.menu_budget_category -> {
                     navController.navigate(R.id.budgetCategoryList)
@@ -125,5 +137,10 @@ class MainActivity : AppCompatActivity() {
     fun revealDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    fun navigateToLogIn(){
+        navController.navigate(R.id.loginFragment)
+
     }
 }

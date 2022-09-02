@@ -23,16 +23,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/menu_header_email_vv"
+            android:id="@+id/menu_header_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="@string/name_place_holder"
+            android:text=""
             />
         <TextView
+            android:id="@+id/menu_header_email_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email_place_holder"
+            android:text=""
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

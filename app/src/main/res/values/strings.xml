@@ -166,12 +166,12 @@
     <string name="createBudgetLineItem_alert_dialog_createCategory_negative_button">No</string>
     <string name="createBudgetLineItem_alert_dialog_createCategory_positive_button">Yes</string>
     <string name="defualt_category_name">Please select a category</string>
-
+    <string name="budget_details">Budget Details</string>
     <string-array name="States">
-        <item>All</item>
-        <item>Past</item>
-        <item>Current</item>
-        <item>Upcoming</item>
+        <item>All Budgets</item>
+        <item>My Past Budgets</item>
+        <item>My Active Budgets</item>
+        <item>My Upcoming Budgets</item>
     </string-array>
 
 </resources>
