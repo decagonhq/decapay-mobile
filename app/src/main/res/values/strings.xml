@@ -165,6 +165,7 @@
     <string name="createBudgetLineItem_alert_dialog_createCategory_neutral_button">Later</string>
     <string name="createBudgetLineItem_alert_dialog_createCategory_negative_button">No</string>
     <string name="createBudgetLineItem_alert_dialog_createCategory_positive_button">Yes</string>
+    <string name="defualt_category_name">Please select a category</string>
 
     <string-array name="States">
         <item>All</item>

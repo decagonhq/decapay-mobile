@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.logexpense.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
+import com.decagonhq.decapay.common.utils.converterhelper.buildDatePickerWithConstraint
+import com.decagonhq.decapay.common.utils.converterhelper.buildDateRangeConstraint
+import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.showTransactionDatePicker
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
@@ -77,6 +80,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
         // set currant date to transaction date
 //        retrivedCalendarSelectedDate = calendarSelectedDateToLogExpense
+        /*
         if (calendarSelectedDateToLogExpense == null) {
             binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "HELLO"
             transactionDate = getTodaysDate()
@@ -86,10 +90,15 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.toString()
         }
 
+         */
+
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
+//            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
+//            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+            showTransactionDatePickerOne(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate())
             transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+            Log.d(TAG, "this is the selected transaction date: $transactionDate")
         }
 
         // on click on save button
@@ -153,5 +162,14 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    fun showTransactionDatePickerOne(startDate: Long, endDate: Long) {
+        val calendarConstraint = buildDateRangeConstraint(startDate, endDate)
+        val datePicker = buildDatePickerWithConstraint(calendarConstraint)
+        datePicker.show(parentFragmentManager, datePicker.toString())
+        datePicker.addOnPositiveButtonClickListener { selectedDate ->
+           binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "${convertLongToTime(selectedDate)}"
+        }
     }
 }

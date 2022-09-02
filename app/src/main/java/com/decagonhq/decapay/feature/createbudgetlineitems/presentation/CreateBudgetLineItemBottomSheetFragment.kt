@@ -120,6 +120,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                         is Resource.Success -> {
                             budgetCategoryListObject = ArrayList<CategoryItem>()
                             val budgetCategoryList = ArrayList<String>()
+                            // add the default category name to the budgetCategoryList
+                            budgetCategoryList.add(getString(R.string.defualt_category_name))
                             val categories = it.data.data
                             if (categories != null) {
                                 for (item in categories) {
@@ -129,36 +131,38 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                     }
                                 }
                             }
-                            val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
-                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
-                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    selectedCategory = parent?.getItemAtPosition(position).toString()
-                                    Log.d(TAG, "$selectedCategory, the id is: $id, here is the position: $position")
-                                    for (categoryItem in budgetCategoryListObject) {
-                                        if (selectedCategory != null) {
-                                            if (categoryItem.title == selectedCategory) {
-                                                budgetLineItemId = categoryItem.id
-                                            }
-                                        }
-                                    }
-                                }
 
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
-                                    //
-                                }
-                            }
-                            // show create category alert dialog when category list is empty
+                            // for a first time user, showCreateBudgetCategoryAlertDialog
                             if (categories != null) {
-                                if (categories.isEmpty()) {
+                                if (categories.size <= 1) {
                                     // display the create category dialog
                                     val destinationId = R.id.budgetCategoryList
                                     showCreateCategoryAlertDialog(destinationId)
+                                } else {
+                                    val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
+                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
+                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                        override fun onItemSelected(
+                                            parent: AdapterView<*>?,
+                                            view: View?,
+                                            position: Int,
+                                            id: Long
+                                        ) {
+                                            selectedCategory = parent?.getItemAtPosition(position).toString()
+                                            Log.d(TAG, "$selectedCategory, the id is: $id, here is the position: $position")
+                                            for (categoryItem in budgetCategoryListObject) {
+                                                if (selectedCategory != null) {
+                                                    if (categoryItem.title == selectedCategory) {
+                                                        budgetLineItemId = categoryItem.id
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        override fun onNothingSelected(p0: AdapterView<*>?) {
+                                            //
+                                        }
+                                    }
                                 }
                             }
                         }
