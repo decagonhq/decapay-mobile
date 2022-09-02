@@ -112,7 +112,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
 //        val testList = mutableListOf<LineItem>()
 //        list.addAll(testList)
-        adapter = LineItemAdaptor(list, this,context!!)
+        adapter = LineItemAdaptor(list, this,requireContext())
         binding.budgetDetailsLineItemsRv.adapter = adapter
         binding.budgetDetailsLineItemsRv.layoutManager =
             LinearLayoutManager(requireContext())
@@ -163,7 +163,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             if(budgetDetails.percentageSpentSoFar>100){
                                 binding.budgetDetailsPercentageAmountTv.setTextColor(
                                     AppCompatResources.getColorStateList(requireContext(), R.color.red))
-                                binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(context!!, R.color.red))
+                                binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.red))
 
                             }
 
