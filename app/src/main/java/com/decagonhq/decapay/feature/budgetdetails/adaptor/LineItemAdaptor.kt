@@ -1,20 +1,23 @@
 package com.decagonhq.decapay.feature.budgetdetails.adaptor
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 
-class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
+class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker,val context: Context) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.budget_line_item, parent, false)
-        return LineItemViewHolder(view)
+        return LineItemViewHolder(view,context)
     }
 
     override fun onBindViewHolder(holder: LineItemViewHolder, position: Int) {
@@ -36,7 +39,7 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
         notifyItemRangeChanged(index, list.size)
     }
 
-    class LineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class LineItemViewHolder(itemView: View,val context: Context) : RecyclerView.ViewHolder(itemView) {
         private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
         private var logButton: Button = itemView.findViewById<Button>(R.id.budget_line_item_log_btn)
         private var title: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
@@ -50,6 +53,11 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             projectedAmount.text = currentLineItem.displayProjectedAmount
             amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
             percentage.text = currentLineItem.displayPercentageSpentSoFar
+
+            if (currentLineItem.percentageSpentSoFar> DataConstant.MAX_PERCENT){
+                amountSoFar.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
+                percentage.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
+            }
 
             ellipsisButton.setOnClickListener {
                 clicker.onClickItemEllipsis(currentLineItem, adapterPosition, ellipsisButton)

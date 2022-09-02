@@ -70,6 +70,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).hideDrawer()
         _binding = FragmentLoginBinding.bind(view)
         // when the view is visible
         pleaseWaitDialog = showPleaseWaitAlertDialog()
@@ -170,6 +172,7 @@ class LoginFragment : Fragment() {
                             // capture the token here
                             val token = it.data.data?.token
                             preference.putToken(token!!)
+                           // preference.putUserName(it.data.data.)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
                         }
