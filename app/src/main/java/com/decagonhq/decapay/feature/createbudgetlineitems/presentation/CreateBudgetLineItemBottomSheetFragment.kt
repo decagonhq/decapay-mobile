@@ -19,8 +19,8 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.createbudgetlineitemmodel.CreateBudgetLineItemRequestBody
-import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -95,6 +95,23 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun showCreateCategoryAlertDialog(destinationId: Int) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_title))
+            .setMessage(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_message))
+            .setNeutralButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_neutral_button)) { dialog, which ->
+                // close the dialog
+            }
+            .setNegativeButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_negative_button)) { dialog, which ->
+                // close the dialog
+            }
+            .setPositiveButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_positive_button)) { dialog, which ->
+                // navigate to category list screen
+                findNavController().navigate(destinationId)
+            }
+            .show()
+    }
+
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -136,11 +153,14 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                     //
                                 }
                             }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.data.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // show create category alert dialog when category list is empty
+                            if (categories != null) {
+                                if (categories.isEmpty()) {
+                                    // display the create category dialog
+                                    val destinationId = R.id.budgetCategoryList
+                                    showCreateCategoryAlertDialog(destinationId)
+                                }
+                            }
                         }
                         is Resource.Error -> {
                             Snackbar.make(
@@ -184,8 +204,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

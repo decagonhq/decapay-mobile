@@ -30,5 +30,4 @@ class CreateBudgetLineItemViewModel @Inject constructor(
             }
         }
     }
-
 }
