@@ -9,4 +9,5 @@ object PreferenceConstants {
     const val BUDGET_END_DATE = "budgetEndDate"
     const val CALENDAR_SELECTED_DATE = "calendarSelectedDate"
     const val EXPENSE_CATEGORY_TITLE = "expense_category_title"
+    const val USER_NAME = "userName"
 }

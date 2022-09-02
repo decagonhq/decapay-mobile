@@ -129,6 +129,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {

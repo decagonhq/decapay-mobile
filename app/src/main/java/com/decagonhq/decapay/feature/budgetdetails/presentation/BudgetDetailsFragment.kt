@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.* // ktlint-disable no-wildcard-imports
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -89,6 +90,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
         }
 
+        binding.budgetDetailsBackIv.setOnClickListener {
+            findNavController().navigate(R.id.budgetListFragment)
+        }
         // to add budgetlineItems
         binding.budgetDetailsFragmentCreateLineItemFab.setOnClickListener {
             // check budgetId
@@ -108,7 +112,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
 //        val testList = mutableListOf<LineItem>()
 //        list.addAll(testList)
-        adapter = LineItemAdaptor(list, this)
+        adapter = LineItemAdaptor(list, this,requireContext())
         binding.budgetDetailsLineItemsRv.adapter = adapter
         binding.budgetDetailsLineItemsRv.layoutManager =
             LinearLayoutManager(requireContext())
@@ -145,6 +149,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             val budgetDetails = it.data.data
 
+                            binding.budgetDetailsHeaderPeriodTv.text = budgetDetails.budgetPeriod
+                            binding.budgetDetailsHeaderDateTv.text =" ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"
+
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
                             binding.budgetDetailsHeaderAmountTv.text =
                                 budgetDetails.displayProjectedAmount
@@ -153,7 +160,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             binding.budgetDetailsPercentageAmountTv.text =
                                 budgetDetails.displayPercentageSpentSoFar
 
-                            val formatter = SimpleDateFormat("yyyy.MM.dd, HH:mm")
+                            if(budgetDetails.percentageSpentSoFar>DataConstant.MAX_PERCENT){
+                                binding.budgetDetailsPercentageAmountTv.setTextColor(
+                                    AppCompatResources.getColorStateList(requireContext(), R.color.red))
+                                binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.red))
+
+                            }
+
+                            val formatter = SimpleDateFormat(DataConstant.DATE_FORMAT)
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
@@ -163,6 +177,12 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val endDate = budgetDetails.endDate.replace('-', '.')
                             val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
 
+
+
+//                            val currentDate = formatter.format(Date())
+//
+//                            System.out.println(" C DATE is  "+currentDate)
+
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
                             val addedOneDayToEndDateTime = "$addedOneDayToEndDate, 00:00"
@@ -170,12 +190,16 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
                             val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
                             val startDateTimeMillis = startFormattedDate.time
-                            val endDateTimiMillis = endFormattedDate.time
+                            var endDateTimiMillis = endFormattedDate.time
                             val addedOneDayTimeMillis = addedOneDayFormattedDate.time
 
                             // save date to sharedPreference
                             budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
                             budgetDetailsPreference.putBudgetEndDate(addedOneDayTimeMillis)
+
+                            if(Date().before(endFormattedDate)){
+                                endDateTimiMillis = Date().time
+                            }
 
                             binding.budgetDetailsCalendarCv.maxDate = endDateTimiMillis
                             binding.budgetDetailsCalendarCv.minDate = startDateTimeMillis
