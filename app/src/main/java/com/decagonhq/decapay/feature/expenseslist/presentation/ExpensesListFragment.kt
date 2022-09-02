@@ -76,6 +76,10 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         binding.expenseListFragmentExpensesRv.layoutManager =
             LinearLayoutManager(requireContext())
 
+        binding.expenseListFragmentToolbarIv.setOnClickListener {
+           findNavController().popBackStack()
+        }
+
         setUpScrollListener()
         setUpFlowListener()
         setUpDeleteFlowListener()

@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
-import dagger.hilt.android.qualifiers.ActivityContext
 
 class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker,val context: Context) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
 
@@ -54,7 +54,7 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
             percentage.text = currentLineItem.displayPercentageSpentSoFar
 
-            if (currentLineItem.percentageSpentSoFar>100){
+            if (currentLineItem.percentageSpentSoFar> DataConstant.MAX_PERCENT){
                 amountSoFar.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
                 percentage.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
             }

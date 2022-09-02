@@ -150,7 +150,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val budgetDetails = it.data.data
 
                             binding.budgetDetailsHeaderPeriodTv.text = budgetDetails.budgetPeriod
-                            binding.budgetDetailsHeaderDateTv.text =" ${budgetDetails.startDate} - ${budgetDetails.endDate}"
+                            binding.budgetDetailsHeaderDateTv.text =" ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
                             binding.budgetDetailsHeaderAmountTv.text =
@@ -160,14 +160,14 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             binding.budgetDetailsPercentageAmountTv.text =
                                 budgetDetails.displayPercentageSpentSoFar
 
-                            if(budgetDetails.percentageSpentSoFar>100){
+                            if(budgetDetails.percentageSpentSoFar>DataConstant.MAX_PERCENT){
                                 binding.budgetDetailsPercentageAmountTv.setTextColor(
                                     AppCompatResources.getColorStateList(requireContext(), R.color.red))
                                 binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.red))
 
                             }
 
-                            val formatter = SimpleDateFormat("yyyy.MM.dd, HH:mm")
+                            val formatter = SimpleDateFormat(DataConstant.DATE_FORMAT)
 
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')

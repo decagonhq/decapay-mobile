@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 
 class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClicker, val context: Context) :
@@ -56,7 +57,7 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
             spentTextView.text = currentBudgetItem.displayTotalAmountSpentSoFar
             titleTextView.text = currentBudgetItem.title
 
-            if(currentBudgetItem.projectedAmount>100){
+            if(currentBudgetItem.projectedAmount> DataConstant.MAX_PERCENT){
                 percentageTextView.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
                 spentTextView.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
             }
