@@ -55,8 +55,9 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
+        list.clear()
         budgetListViewModel.getBudgetList("current")
-        adapter = BudgetListAdapter(list, this)
+        adapter = BudgetListAdapter(list, this,context!!)
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
 

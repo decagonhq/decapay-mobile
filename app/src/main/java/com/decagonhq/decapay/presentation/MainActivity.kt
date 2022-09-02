@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity() {
         val emailView = header.findViewById<TextView>(R.id.menu_header_email_tv)
         val nameView = header.findViewById<TextView>(R.id.menu_header_name_tv)
 
-        emailView.text = "zzzz"
-        nameView.text = "sljfshlfsbjs"
+        emailView.text = ""
+        nameView.text = ""
 
         selectNavigationItem(navigationView)
     }
@@ -106,12 +106,12 @@ class MainActivity : AppCompatActivity() {
             navController =
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
             when (it.itemId) {
-                R.id.menu_dashboard -> {
-
-                    navController.navigate(R.id.budgetListFragment)
-                }
+//                R.id.menu_dashboard -> {
+//
+//                    navController.navigate(R.id.budgetListFragment)
+//                }
                 R.id.menu_budget -> {
-                    // navController.navigate(R.id.testFragment)
+                    navController.navigate(R.id.budgetListFragment)
                 }
                 R.id.menu_budget_category -> {
                     navController.navigate(R.id.budgetCategoryList)
@@ -137,5 +137,10 @@ class MainActivity : AppCompatActivity() {
     fun revealDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    fun navigateToLogIn(){
+        navController.navigate(R.id.loginFragment)
+
     }
 }
