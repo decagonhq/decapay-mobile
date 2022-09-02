@@ -149,7 +149,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             id: Long
                                         ) {
                                             selectedCategory = parent?.getItemAtPosition(position).toString()
-                                            Log.d(TAG, "$selectedCategory, the id is: $id, here is the position: $position")
                                             for (categoryItem in budgetCategoryListObject) {
                                                 if (selectedCategory != null) {
                                                     if (categoryItem.title == selectedCategory) {
@@ -167,10 +166,10 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             }
                         }
                         is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
+                            Toast.makeText(
+                                requireContext(),
                                 "${it.message}",
-                                Snackbar.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                         is Resource.Loading -> {
