@@ -57,7 +57,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         (activity as MainActivity).revealDrawer()
         list.clear()
         budgetListViewModel.getBudgetList("current")
-        adapter = BudgetListAdapter(list, this,context!!)
+        adapter = BudgetListAdapter(list, this,requireContext())
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
 

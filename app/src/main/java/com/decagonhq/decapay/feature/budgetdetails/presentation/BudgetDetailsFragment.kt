@@ -162,7 +162,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
                             if(budgetDetails.percentageSpentSoFar>100){
                                 binding.budgetDetailsPercentageAmountTv.setTextColor(
-                                    AppCompatResources.getColorStateList(context!!, R.color.red))
+                                    AppCompatResources.getColorStateList(requireContext(), R.color.red))
                                 binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(context!!, R.color.red))
 
                             }
