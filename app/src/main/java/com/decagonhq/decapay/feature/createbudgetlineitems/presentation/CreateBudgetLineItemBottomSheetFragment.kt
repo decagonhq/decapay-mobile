@@ -38,7 +38,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private var budgetId: Int? = null
     private var receivedDetailBudgetId: Int? = null
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
-    private var budgetLineItemId: Int? = null
+    private var budgetCategoryId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +79,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                 if (budgetId != null) {
                     createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetLineItemId)
+                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId)
                     )
                 }
             }
@@ -118,14 +118,12 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                     when (it) {
                         is Resource.Success -> {
                             budgetCategoryListObject = ArrayList<CategoryItem>()
-                            val budgetCategoryList = ArrayList<String>()
-                            // add the default category name to the budgetCategoryList
-                            budgetCategoryList.add(getString(R.string.defualt_category_name))
+                            // add the default category name to the budgetCategoryListObject
+                            budgetCategoryListObject.add(CategoryItem(0, getString(R.string.defualt_category_name)))
                             val categories = it.data.data
                             if (categories != null) {
                                 for (item in categories) {
                                     if (item != null) {
-                                        item.title?.let { category -> budgetCategoryList.add(category) }
                                         budgetCategoryListObject.add(item)
                                     }
                                 }
@@ -138,7 +136,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                     val destinationId = R.id.budgetCategoryList
                                     showCreateCategoryAlertDialog(destinationId)
                                 } else {
-                                    val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
+                                    val budgetCategoryAdapter = ArrayAdapter<CategoryItem>(requireContext(), R.layout.list_item, budgetCategoryListObject)
                                     binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
                                     binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                         override fun onItemSelected(
@@ -147,14 +145,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             position: Int,
                                             id: Long
                                         ) {
-                                            selectedCategory = parent?.getItemAtPosition(position).toString()
-                                            for (categoryItem in budgetCategoryListObject) {
-                                                if (selectedCategory != null) {
-                                                    if (categoryItem.title == selectedCategory) {
-                                                        budgetLineItemId = categoryItem.id
-                                                    }
-                                                }
-                                            }
+                                            val categoryItemSelected: CategoryItem = parent?.selectedItem as CategoryItem
+                                            budgetCategoryId = categoryItemSelected.id
                                         }
 
                                         override fun onNothingSelected(p0: AdapterView<*>?) {
