@@ -167,6 +167,7 @@
     <string name="createBudgetLineItem_alert_dialog_createCategory_positive_button">Yes</string>
     <string name="defualt_category_name">Please select a category</string>
     <string name="budget_details">Budget Details</string>
+    <string name="createditlineitem_custom_spinner">Category</string>
     <string-array name="States">
         <item>All Budgets</item>
         <item>My Past Budgets</item>

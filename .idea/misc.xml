@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/budget_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/budget_line_item.xml" value="0.2405548095703125" />
         <entry key="app/src/main/res/layout/category_item.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/create_editline_item_custom_spinner.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/custom_login_wait_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/custom_toast.xml" value="0.55" />
         <entry key="app/src/main/res/layout/delete_modal_layout.xml" value="0.30885416666666665" />

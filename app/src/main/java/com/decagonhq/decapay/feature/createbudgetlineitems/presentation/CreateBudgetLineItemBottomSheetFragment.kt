@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,6 +17,7 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.createbudgetlineitemmodel.CreateBudgetLineItemRequestBody
+import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.adapter.CategoryItemSpinnerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +39,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private var receivedDetailBudgetId: Int? = null
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
     private var budgetCategoryId: Int? = null
+    private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,8 +137,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                     val destinationId = R.id.budgetCategoryList
                                     showCreateCategoryAlertDialog(destinationId)
                                 } else {
-                                    val budgetCategoryAdapter = ArrayAdapter<CategoryItem>(requireContext(), R.layout.list_item, budgetCategoryListObject)
-                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
+                                    val customCategoryAdapter = CategoryItemSpinnerAdapter(requireContext(), budgetCategoryListObject)
+                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = customCategoryAdapter
                                     binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                         override fun onItemSelected(
                                             parent: AdapterView<*>?,
@@ -145,7 +146,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             position: Int,
                                             id: Long
                                         ) {
-                                            val categoryItemSelected: CategoryItem = parent?.selectedItem as CategoryItem
+                                            val categoryItemSelected = parent?.selectedItem as CategoryItem
                                             budgetCategoryId = categoryItemSelected.id
                                         }
 
