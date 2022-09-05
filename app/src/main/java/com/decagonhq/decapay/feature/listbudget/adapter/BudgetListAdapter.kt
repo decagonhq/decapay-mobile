@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 
 class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClicker, val context: Context) :
@@ -17,7 +16,7 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.budget_item, parent, false)
-        return BudgetListViewHolder(view,context)
+        return BudgetListViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: BudgetListViewHolder, position: Int) {
@@ -33,7 +32,7 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
         notifyDataSetChanged()
     }
 
-    fun clearList(){
+    fun clearList() {
         list.clear()
         notifyDataSetChanged()
     }
@@ -44,7 +43,7 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
         notifyItemRangeChanged(index, list.size)
     }
 
-    class BudgetListViewHolder(itemView: View,val context: Context) : RecyclerView.ViewHolder(itemView) {
+    class BudgetListViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         private var button: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_list_item_elipsis_ib)
         private var titleTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_title_tv)
         private var amountTextView: TextView = itemView.findViewById<TextView>(R.id.budget_list_item_budget_amount_tv)
@@ -57,9 +56,9 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
             spentTextView.text = currentBudgetItem.displayTotalAmountSpentSoFar
             titleTextView.text = currentBudgetItem.title
 
-            if(currentBudgetItem.projectedAmount> DataConstant.MAX_PERCENT){
-                percentageTextView.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
-                spentTextView.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
+            if (currentBudgetItem.totalAmountSpentSoFar > currentBudgetItem.projectedAmount.toDouble()) {
+                percentageTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
+                spentTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
             }
 
             itemView.setOnClickListener {

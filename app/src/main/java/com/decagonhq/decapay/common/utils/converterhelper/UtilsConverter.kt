@@ -27,4 +27,16 @@ object UtilsConverter {
         val output = "${dateCollection[2]}/${dateCollection[1]}/${dateCollection[0]}"
         return output
     }
+
+    fun extractMonthFromCurrentDate(currentDate: String): String {
+        val dateItems = currentDate.split("/")
+        val setDateToFirstItsMonth = "${dateItems[2]}-${dateItems[1]}-01"
+        return setDateToFirstItsMonth
+    }
+
+    fun formatCalendarSelectedDate(calendarSelectedDate: String): String {
+        val selectedDateItem = calendarSelectedDate.split("/")
+        val requiredFormat = ""
+        return requiredFormat
+    }
 }

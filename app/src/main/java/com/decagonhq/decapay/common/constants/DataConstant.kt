@@ -13,4 +13,7 @@ object DataConstant {
     const val NEW_LINE_ITEM = "NEW_LINE_ITEM"
     const val DATE_FORMAT ="yyyy.MM.dd, HH:mm"
     const val MAX_PERCENT = 100
+    const val LOG_EXPENSE_DATA = "log_expense_data"
+    const val START_DATE = "start_date"
+    const val END_DATE = "end_date"
 }
