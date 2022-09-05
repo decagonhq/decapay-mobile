@@ -33,10 +33,4 @@ object UtilsConverter {
         val setDateToFirstItsMonth = "${dateItems[2]}-${dateItems[1]}-01"
         return setDateToFirstItsMonth
     }
-
-    fun formatCalendarSelectedDate(calendarSelectedDate: String): String {
-        val selectedDateItem = calendarSelectedDate.split("/")
-        val requiredFormat = ""
-        return requiredFormat
-    }
 }
