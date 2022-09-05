@@ -30,6 +30,7 @@ class BudgetListViewModel @Inject constructor(
     var state = ""
 
     fun getBudgetList(state: String) {
+        list.clear()
         this.state = state
         page = 1
         viewModelScope.launch {
