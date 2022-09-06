@@ -196,9 +196,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val addedOneDayToEndDateFromRemoteDate = addOneDayToEndDateFromRemote.replace('-', '.')
                             val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDate = extractedMonthFromCurrentDateToSetStartDateForFutureBudget.replace('-', '.')
 
-//                            val currentDate = formatter.format(Date())
-//
-//                            System.out.println(" C DATE is  "+currentDate)
 
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
@@ -217,29 +214,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetTimeMillis = extractedMonthFromCurrentDateToSetStartDateForFutureBudgetFormattedDate.time
                             logExpenseData.startDateCaptured = startDateTimeMillis
                             logExpenseData.endDateCaptured = addedOneDayToTodaysTimeMillis
-//                            startDateCaptured = startDateTimeMillis
-//                            endDateCaptured = addedOneDayToTodaysTimeMillis
-
-                            // save date to sharedPreference
-//                            budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
-                            // compare the budgetEndDate to currentDate
-                            /*
-                            if ((addedOneDayToEndDateFromRemoteTimeMillis < addedOneDayToTodaysTimeMillis) && (startDateTimeMillis < addedOneDayToTodaysTimeMillis)) {
-                                // past budget
-                                budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
-                                budgetDetailsPreference.putBudgetEndDate(addedOneDayToEndDateFromRemoteTimeMillis)
-                            } else if ((addedOneDayToTodaysTimeMillis < startDateTimeMillis) && (addedOneDayToTodaysTimeMillis < addedOneDayToEndDateFromRemoteTimeMillis)) {
-                                // future or upcoming budget
-                                // how do I know the startDate
-                                // I think I can extract the month from the addedOneDayToTodaysTimeMillis, then use the month to set the startDate.
-                                budgetDetailsPreference.putBudgetStartDate(extractedMonthFromCurrentDateToSetStartDateForFutureBudgetTimeMillis)
-                                budgetDetailsPreference.putBudgetEndDate(addedOneDayToTodaysTimeMillis)
-                            } else {
-                                budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
-                                budgetDetailsPreference.putBudgetEndDate(addedOneDayToTodaysTimeMillis)
-                            }
-
-                             */
 
                             if (Date().before(endFormattedDate)) {
                                 endDateTimiMillis = Date().time
