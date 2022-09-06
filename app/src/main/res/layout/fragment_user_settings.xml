@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.usersettings.presentation.UserSettingsFragment"
+    >
+    <TextView
+        android:id="@+id/userSettings_fragment_header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/userSettings_fragment_header"
+        android:textSize="@dimen/login_fragment_header_login_txsiz" />
+    <TextView
+        android:id="@+id/userSettings_fragment_label_location_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/userSettings_fragment_label_location"
+        />
+    <Spinner
+        android:id="@+id/userSettings_fragment_location_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_bg"
+        />
+    <TextView
+        android:id="@+id/userSettings_fragment_label_preferred_language_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/userSettings_fragment_label_preferred_language"
+        />
+    <Spinner
+        android:id="@+id/userSettings_fragment_lprefered_language_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_bg"
+        />
+    <TextView
+        android:id="@+id/userSettings_fragment_label_preferred_currency_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/userSettings_fragment_label_preferred_currency"
+        />
+    <Spinner
+        android:id="@+id/userSettings_fragment_lprefered_currency_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_bg"
+        />
+    <Button
+        android:id="@+id/userSettings_fragment_submit_button_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/login_button_bg"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/userSettings_fragment_submit_button"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

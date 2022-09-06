@@ -174,5 +174,10 @@
         <item>My Active Budgets</item>
         <item>My Upcoming Budgets</item>
     </string-array>
+    <string name="userSettings_fragment_header">User Settings</string>
+    <string name="userSettings_fragment_label_location">Location</string>
+    <string name="userSettings_fragment_label_preferred_language">Preferred Language</string>
+    <string name="userSettings_fragment_label_preferred_currency">Preferred Currency</string>
+    <string name="userSettings_fragment_submit_button">Submit</string>
 
 </resources>

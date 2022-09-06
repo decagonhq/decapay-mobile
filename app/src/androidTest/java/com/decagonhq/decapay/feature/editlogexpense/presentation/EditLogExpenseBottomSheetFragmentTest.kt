@@ -10,7 +10,7 @@ import com.decagonhq.decapay.fragmenttestutils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.*
+import org.junit.Assert.* // ktlint-disable no-wildcard-imports
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,8 +40,6 @@ class EditLogExpenseBottomSheetFragmentTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.editLogExpense_bottom_sheet_fragment_label_amount_spent_tv))
             .check(matches(isDisplayed()))
-        onView(withId(R.id.editLogExpense_bottom_sheet_fragment_amount_til))
-            .check(matches(isDisplayed()))
         onView(withId(R.id.editLogExpense_bottom_sheet_fragment_amount_tiedt))
             .check(matches(isDisplayed()))
         onView(withId(R.id.editLogExpense_bottom_sheet_fragment_description_tv))
@@ -54,9 +52,7 @@ class EditLogExpenseBottomSheetFragmentTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv))
             .check(matches(isDisplayed()))
-        onView(withId(R.id.editLogExpensee_bottom_sheet_fragment_save_button_btn))
-            .check(matches(isDisplayed()))
-        onView(withId(R.id.editLogExpensee_bottom_sheet_fragment_cancel_button_btn))
+        onView(withId(R.id.editLogExpensee_bottom_sheet_fragment_update_button_btn))
             .check(matches(isDisplayed()))
     }
 }
