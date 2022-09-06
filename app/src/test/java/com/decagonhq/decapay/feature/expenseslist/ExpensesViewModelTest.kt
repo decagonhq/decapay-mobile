@@ -25,7 +25,7 @@ class ExpensesViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockUseCase: ExpenseListUseCase
-    lateinit var mockResponse: ExpenseListResponse
+    private lateinit var mockResponse: ExpenseListResponse
     lateinit var mockData: Data
 
 
@@ -74,7 +74,7 @@ class ExpensesViewModelTest {
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
         Mockito.`when`(mockUseCase.invoke(1,1,1)).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(1,1,1)).thenReturn(flow2)
+        Mockito.`when`(mockUseCase.getNextPage(1,1,2)).thenReturn(flow2)
         val viewModel = ExpenseListViewModel(mockUseCase)
 
         viewModel.getExpensesList(1,1)
