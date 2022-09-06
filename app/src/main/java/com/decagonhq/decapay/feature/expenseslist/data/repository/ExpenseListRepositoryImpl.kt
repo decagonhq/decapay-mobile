@@ -9,7 +9,7 @@ class ExpenseListRepositoryImpl @Inject constructor(
     private  val expenseListApi: ExpenseListApi
 ) : ExpenseListRepository {
     override suspend fun getExpenseList(budgetId: Int,categoryId: Int,page: Int): ExpenseListResponse {
-        return  expenseListApi.getExpenseList(budgetId,categoryId,page,10)
+        return  expenseListApi.getExpenseList(budgetId,categoryId,page,20)
     }
 
     override suspend fun deleteExpense(expenseId: Int) {
