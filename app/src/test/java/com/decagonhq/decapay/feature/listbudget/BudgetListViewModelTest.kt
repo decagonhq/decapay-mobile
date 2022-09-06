@@ -1,8 +1,10 @@
 package com.decagonhq.decapay.feature.listbudget
 
 import app.cash.turbine.test
+import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.listbudget.data.network.model.BudgetListResponse
+import com.decagonhq.decapay.feature.listbudget.data.network.model.Data
 import com.decagonhq.decapay.feature.listbudget.domain.usecase.BudgetListUseCase
 import com.decagonhq.decapay.feature.listbudget.presentation.BudgetListViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +27,14 @@ class BudgetListViewModelTest {
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockUseCase: BudgetListUseCase
     lateinit var mockResponse: BudgetListResponse
+    lateinit var mockData: Data
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         mockUseCase = Mockito.mock(BudgetListUseCase::class.java)
         mockResponse = Mockito.mock(BudgetListResponse::class.java)
+        mockData = Mockito.mock(Data::class.java)
     }
 
     @After
@@ -46,9 +50,14 @@ class BudgetListViewModelTest {
 
     @Test
     fun `view model fetches first list`() = runTest {
-
+        Mockito.`when`(mockData.last).thenReturn(true)
+        Mockito.`when`(mockResponse.data).thenReturn(mockData)
+        Mockito.`when`(mockResponse.data.content).thenReturn(mutableListOf<Content>())
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(0,"")).thenReturn(flow)
+
+        Mockito.`when`(mockUseCase.invoke(1,"")).thenReturn(flow)
+
+
         val viewModel = BudgetListViewModel(mockUseCase)
 
         viewModel.getBudgetList("")
@@ -62,10 +71,12 @@ class BudgetListViewModelTest {
 
     @Test
     fun `view model fetches next list`() = runTest {
+        Mockito.`when`(mockData.last).thenReturn(false)
+        Mockito.`when`(mockResponse.data).thenReturn(mockData)
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(0,"")).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(1,"")).thenReturn(flow2)
+        Mockito.`when`(mockUseCase.invoke(1,"")).thenReturn(flow)
+        Mockito.`when`(mockUseCase.getNextPage(2,"")).thenReturn(flow2)
         val viewModel = BudgetListViewModel(mockUseCase)
 
         viewModel.getBudgetList("")

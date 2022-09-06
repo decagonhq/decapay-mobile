@@ -18,11 +18,9 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.*
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
-import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.datepicker.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -137,7 +135,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
-                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.UPDATE_UI, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {

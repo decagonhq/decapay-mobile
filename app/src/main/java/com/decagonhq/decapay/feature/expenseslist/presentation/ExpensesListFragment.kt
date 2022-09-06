@@ -72,7 +72,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         expenseListPreferences.putExpenseCategoryTitle(title.toString())
 
         if (budgetId != null && categoryId != null) {
-            expenseListViewModel.getBudgetList(budgetId!!, categoryId!!)
+            expenseListViewModel.getExpensesList(budgetId!!, categoryId!!)
         }
 
         adapter = ExpenseListAdapter(list, this)
@@ -86,6 +86,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
 
         setUpScrollListener()
         setUpFlowListener()
+        updateListener()
         setUpDeleteFlowListener()
     }
 
@@ -144,7 +145,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
 
     private fun setUpFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 expenseListViewModel.expenseListResponse.collect {
                     when (it) {
                         is Resource.Loading -> {
@@ -152,7 +153,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                         }
 
                         is Resource.Success -> {
-                            setDataLoaded(it.data.data.content as MutableList<ExpenseContent>)
+                            setDataLoaded(it.data as MutableList<ExpenseContent>)
                         }
                         else -> {}
                     }
@@ -227,12 +228,23 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         if (newList.isEmpty() && list.isEmpty()) {
             setEmptyListScreen()
         } else {
+            list.clear()
             list.addAll(newList)
             adapter.setBudget()
 
             binding.expenseListFragmentExpensesRv.visibility = View.VISIBLE
             binding.expenseListFragmentEmptyLl.visibility = View.GONE
             binding.expenseListFragmentLoadingPb.visibility = View.GONE
+        }
+    }
+
+    private fun updateListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            DataConstant.UPDATE_UI
+        )?.observe(viewLifecycleOwner) {
+            it?.let {
+                budgetId?.let { it1 -> expenseListViewModel.getExpensesList(budgetId!!,categoryId!!); }
+            }
         }
     }
 }

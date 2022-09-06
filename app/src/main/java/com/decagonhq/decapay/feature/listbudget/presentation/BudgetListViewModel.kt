@@ -34,8 +34,11 @@ class BudgetListViewModel @Inject constructor(
         this.state = state
         page = 1
         viewModelScope.launch {
+
+
             budgetListUseCase.invoke(page, state).collect {
                 when (it) {
+
                     is Resource.Success -> {
                         isLastPage = it.data.data.last
                         page++
@@ -63,7 +66,6 @@ class BudgetListViewModel @Inject constructor(
             isFetching = true
             viewModelScope.launch {
                 budgetListUseCase.getNextPage(page, state).collect {
-
                     when (it) {
 
                         is Resource.Success -> {

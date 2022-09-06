@@ -10,7 +10,7 @@ object DataConstant {
     const val CATEGORY = "CATEGORY"
     const val EXPENSE_DATA = "expense_data"
     const val LOG_EXPENSE_SELECTED_DATE = "selected_log_expense_date"
-    const val NEW_LINE_ITEM = "NEW_LINE_ITEM"
+    const val UPDATE_UI = "UPDATE_UI"
     const val DATE_FORMAT ="yyyy.MM.dd, HH:mm"
     const val MAX_PERCENT = 100
     const val LOG_EXPENSE_DATA = "log_expense_data"

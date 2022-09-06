@@ -141,7 +141,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     private fun lineItemListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-            DataConstant.NEW_LINE_ITEM
+            DataConstant.UPDATE_UI
         )?.observe(viewLifecycleOwner) {
             it?.let {
                 budgetId?.let { it1 -> budgetDetailsViewModel.getBudgetDetails(it1) }

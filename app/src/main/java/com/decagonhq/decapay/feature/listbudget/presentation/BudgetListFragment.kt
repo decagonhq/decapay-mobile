@@ -53,18 +53,12 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         return binding.root
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        //outState.pu("LIST",list )
-    }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
-
-//        list.clear()
-//        budgetListViewModel.getBudgetList("current")
 
         adapter = BudgetListAdapter(list, this, requireContext())
         binding.budgetListFragmentBudgetListRv.adapter = adapter
@@ -123,9 +117,8 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     private fun setUpFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 list.clear()
-                budgetListViewModel.page = 1
                 budgetListViewModel.budgetListResponse.collect {
                     when (it) {
                         is Resource.Loading -> {
@@ -133,7 +126,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                         }
 
                         is Resource.Success -> {
-                            Log.d("zzz", "This is emitted ${it.data.size}")
                             setDataLoaded(it.data as MutableList<Content>)
                         }
                         else -> {}
@@ -195,9 +187,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                     if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
                         budgetListViewModel.getNextPage()
 
-                        /**
-                        Make network call
-                         **/
                     }
                 }
             }
