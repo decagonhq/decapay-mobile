@@ -141,16 +141,16 @@
             />
         <Spinner
             android:id="@+id/create_budget_fragment_budget_period_monthly_year_spinner"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:entries="@array/choose_year"
             android:visibility="gone"
             android:background="@drawable/spinner_bg"
             />
         <Spinner
             android:id="@+id/create_budget_fragment_budget_period_monthly_month_spinner"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:entries="@array/budget_period_month"

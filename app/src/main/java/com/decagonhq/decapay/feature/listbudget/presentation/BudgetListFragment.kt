@@ -120,7 +120,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 list.clear()
-                budgetListViewModel.page = 1
                 budgetListViewModel.budgetListResponse.collect {
                     when (it) {
                         is Resource.Loading -> {
