@@ -41,7 +41,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     private val binding get() = _binding!!
     private val TAG = "BUDGETLISTFRAGMENT"
 
-
     private val list = mutableListOf<Content>()
 
     override fun onCreateView(
@@ -49,15 +48,23 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentBudgetListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // outState.pu("LIST",list )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
+
 //        list.clear()
 //        budgetListViewModel.getBudgetList("current")
+
         adapter = BudgetListAdapter(list, this, requireContext())
         binding.budgetListFragmentBudgetListRv.adapter = adapter
         binding.budgetListFragmentBudgetListRv.layoutManager = LinearLayoutManager(requireContext())
@@ -78,50 +85,50 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         val spinnerAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, states)
         binding.budgetListFragmentFilterSpinner.adapter = spinnerAdapter
         binding.budgetListFragmentFilterSpinner.setSelection(2)
-        binding.budgetListFragmentFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-
-                if (budgetListViewModel.budgetTypePosition != position) {
-                    Log.d("spinner", "call-me, budgetTypePosition: ${budgetListViewModel.budgetTypePosition}, position: ${position}")
-                    budgetListViewModel.budgetTypePosition = position
-                    val itemSelected = states[position]
-                    list.clear()
-                    adapter.clearList()
-                    when (position) {
-                        0 -> budgetListViewModel.getBudgetList("")
-                        1 -> budgetListViewModel.getBudgetList("past")
-                        2 -> budgetListViewModel.getBudgetList("current")
-                        3 -> budgetListViewModel.getBudgetList("upcoming")
+        binding.budgetListFragmentFilterSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (budgetListViewModel.budgetTypePosition != position) {
+                        Log.d(
+                            "spinner",
+                            "call-me, budgetTypePosition: ${budgetListViewModel.budgetTypePosition}, position: $position"
+                        )
+                        budgetListViewModel.budgetTypePosition = position
+                        budgetListViewModel.isLastPage = true
+                        list.clear()
+                        adapter.clearList()
+                        when (position) {
+                            0 -> budgetListViewModel.getBudgetList("")
+                            1 -> budgetListViewModel.getBudgetList("past")
+                            2 -> budgetListViewModel.getBudgetList("current")
+                            3 -> budgetListViewModel.getBudgetList("upcoming")
+                        }
                     }
                 }
 
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
     }
 
     private fun setUpFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 list.clear()
-                Log.d("isCleared?", "watch-0")
+                budgetListViewModel.page = 1
                 budgetListViewModel.budgetListResponse.collect {
-                    Log.d("isCleared?", "watch-1")
                     when (it) {
                         is Resource.Loading -> {
                             setIsLoadingScreen()
                         }
 
                         is Resource.Success -> {
-                            Log.d("isCleared?", "watch-2")
-                            setDataLoaded(it.data.data.content as MutableList<Content>)
+                            setDataLoaded(it.data as MutableList<Content>)
                         }
                         else -> {}
                     }
@@ -179,7 +186,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                         val pastVisibleItems =
                             (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
                             budgetListViewModel.getNextPage()
 
                             /**
@@ -204,11 +211,10 @@ class BudgetListFragment : Fragment(), BudgetClicker {
     }
 
     private fun setDataLoaded(newList: MutableList<Content>) {
-
-        if (newList.isEmpty() && list.isEmpty()) {
+        if (newList.isEmpty()) {
             setEmptyListScreen()
         } else {
-            Log.d("isCleared?", "watch-3 in list.addAll")
+            list.clear()
             list.addAll(newList)
             adapter.setBudget()
 
