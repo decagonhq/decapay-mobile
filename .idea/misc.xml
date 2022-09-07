@@ -41,7 +41,7 @@
         <entry key="app/src/main/res/layout/fragment_log_expense.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/fragment_option_modal_bottom_sheet.xml" value="0.16281433105468748" />
-        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_user_settings.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_verify_password_reset_code.xml" value="0.1" />

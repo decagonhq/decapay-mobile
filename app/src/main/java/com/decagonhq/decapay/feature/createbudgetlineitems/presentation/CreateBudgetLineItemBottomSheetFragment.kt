@@ -132,7 +132,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                             // for a first time user, showCreateBudgetCategoryAlertDialog
                             if (categories != null) {
-                                if (categories.size <= 1) {
+                                if (categories.size == 0) {
                                     // display the create category dialog
                                     val destinationId = R.id.budgetCategoryList
                                     showCreateCategoryAlertDialog(destinationId)

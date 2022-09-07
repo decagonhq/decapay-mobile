@@ -66,11 +66,13 @@ class UserSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pleaseWaitDialog = showPleaseWaitAlertDialog()
+        pleaseWaitDialog?.let { it.show() }
         // call the locationReferenceApi
         getLocalizationReferenceViewModel.getUserLocalizationReference()
 
         // on click submit button, complete registration
         binding.userSettingsFragmentSubmitButtonBtn.setOnClickListener {
+            pleaseWaitDialog?.let { it.show() }
             // on click submit button, make a call
             registerViewModel.registerUser(
                 RegisterRequestBody(
@@ -90,6 +92,7 @@ class UserSettingsFragment : Fragment() {
                 getLocalizationReferenceViewModel.getLocalizationReferenceResponse.collect {
                     when (it) {
                         is Resource.Success -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
                             // on receive of response, populate the spinners
                             val location = ArrayList<Country>()
                             val countries = it.data.data?.countries
@@ -182,6 +185,12 @@ class UserSettingsFragment : Fragment() {
                             }
                         }
                         is Resource.Error -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Loading -> {
                             Log.d(TAG, "inside resourece-Loading: ${it.data}")
@@ -204,10 +213,15 @@ class UserSettingsFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.budgetListFragment)
+                            findNavController().navigate(R.id.loginFragment)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                "${it.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         is Resource.Loading -> {
                         }
