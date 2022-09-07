@@ -16,42 +16,6 @@ object UserSettingsNetworkModule {
 
     @Provides
     @Singleton
-    fun provideGetLocationListApi(retrofit: Retrofit): GetLocationListApi {
-        return retrofit.create(GetLocationListApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetLocationListRepository(getLocationListApi: GetLocationListApi): GetLocationRepository {
-        return GetLocationRepositoryImpl(getLocationListApi)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetPreferredLaguageApi(retrofit: Retrofit): GetPreferedLanguageApi {
-        return retrofit.create(GetPreferedLanguageApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetPreferredLanguageRepository(getPreferedLanguageApi: GetPreferedLanguageApi): GetPreferredLanguageRepository {
-        return GetPreferredLanguageRepositoryImpl(getPreferedLanguageApi)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetPreferredCurrencyApi(retrofit: Retrofit): GetPreferredCurrencyApi {
-        return retrofit.create(GetPreferredCurrencyApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetPreferredCurrencyRepository(getPreferredCurrencyApi: GetPreferredCurrencyApi): GetPreferredCurrencyRepository {
-        return GetPreferredCurrencyRepositoryImpl(getPreferredCurrencyApi)
-    }
-
-    @Provides
-    @Singleton
     fun provideGetLocalizationReferenceApi(retrofit: Retrofit): GetLocalizationReferenceApi {
         return retrofit.create(GetLocalizationReferenceApi::class.java)
     }

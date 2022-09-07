@@ -179,5 +179,8 @@
     <string name="userSettings_fragment_label_preferred_language">Preferred Language</string>
     <string name="userSettings_fragment_label_preferred_currency">Preferred Currency</string>
     <string name="userSettings_fragment_submit_button">Submit</string>
+    <string name="userSettings_country_custom_spinner">Country</string>
+    <string name="userSettings_language_custom_spinner">Language</string>
+    <string name="userSettings_currency_custom_spinner">Currency</string>
 
 </resources>
