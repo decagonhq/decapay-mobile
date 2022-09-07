@@ -92,7 +92,7 @@ class SignUpFragment : Fragment() {
                 bundle.putSerializable(DataConstant.SIGNUP_DETAILS, signUpAccountDetailsData)
                 findNavController().navigate(R.id.userSettingsFragment, bundle)
 
-                pleaseWaitDialog?.show()
+//                pleaseWaitDialog?.show()
                 // when user account is successfully created, navigate to the login
 //                findNavController().navigate(R.id.loginFragment)
             } else {
