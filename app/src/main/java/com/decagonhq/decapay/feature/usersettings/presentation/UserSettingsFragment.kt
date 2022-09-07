@@ -33,9 +33,9 @@ class UserSettingsFragment : Fragment() {
     private val binding: FragmentUserSettingsBinding get() = _binding!!
     private lateinit var signUpAccountDetailsData: SignUpAccountDetailsData
     private val getLocalizationReferenceViewModel: GetLocalizationReferenceViewModel by viewModels()
-    private var countrySelected: String? = null
-    private var currencySelected: String? = null
-    private var languageSelected: String? = null
+    private var countryCode: String? = null
+    private var currencyCode: String? = null
+    private var languageCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +93,8 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val countryItemSelected = parent?.selectedItem as Country
-                                    countrySelected = countryItemSelected.name
-                                    Log.d(TAG, "content is :${countrySelected}")
+                                    countryCode = countryItemSelected.code
+                                    Log.d(TAG, "content is :${countryCode}")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -123,8 +123,8 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val languageItemSelected = parent?.selectedItem as Language
-                                    languageSelected = languageItemSelected.name
-                                    Log.d(TAG, "content is :${languageSelected}")
+                                    languageCode = languageItemSelected.code
+                                    Log.d(TAG, "content is :${languageCode}")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -153,8 +153,8 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val currencyItemSelected = parent?.selectedItem as Currency
-                                    currencySelected = currencyItemSelected.name
-                                    Log.d(TAG, "content is :${currencySelected}")
+                                    currencyCode = currencyItemSelected.code
+                                    Log.d(TAG, "content is :${currencyCode}")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
