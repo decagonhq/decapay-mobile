@@ -13,12 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentSignUpBinding
-import com.decagonhq.decapay.feature.signup.data.network.model.SignUpRequestBody
+import com.decagonhq.decapay.feature.signup.data.network.model.signupaccountdetails.SignUpAccountDetailsData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ class SignUpFragment : Fragment() {
     private lateinit var receivedConfirmPassword: String
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
+    private lateinit var signUpAccountDetailsData: SignUpAccountDetailsData
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +45,7 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        signUpAccountDetailsData = SignUpAccountDetailsData(null, null, null, null, null)
         return binding.root
     }
 
@@ -60,6 +63,8 @@ class SignUpFragment : Fragment() {
 
             val formValidated = validateAndSendRequest()
             if (formValidated) {
+                // on click of submit button, pass the account details to userSettings
+                /*
                 signUpViewModel.signUp(
                     SignUpRequestBody(
                         firstName = binding.signUpFragmentFirstNameEt.text.toString().trim(),
@@ -70,6 +75,22 @@ class SignUpFragment : Fragment() {
                     )
 
                 )
+
+                 */
+                val firstName = binding.signUpFragmentFirstNameEt.text.toString().trim()
+                val lastName = binding.signUpFragmentLastNameEt.text.toString().trim()
+                val email = binding.signUpFragmentEmailEt.text.toString().trim()
+                val password = binding.signUpFragmentPasswordEt.text.toString().trim()
+                val phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString().trim()
+                signUpAccountDetailsData.firstName = firstName
+                signUpAccountDetailsData.lastName = lastName
+                signUpAccountDetailsData.email = email
+                signUpAccountDetailsData.password = password
+                signUpAccountDetailsData.phoneNumber = phoneNumber
+                // pass it to bundle
+                val bundle = Bundle()
+                bundle.putSerializable(DataConstant.SIGNUP_DETAILS, signUpAccountDetailsData)
+                findNavController().navigate(R.id.userSettingsFragment, bundle)
 
                 pleaseWaitDialog?.show()
                 // when user account is successfully created, navigate to the login

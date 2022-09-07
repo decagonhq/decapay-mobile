@@ -16,4 +16,5 @@ object DataConstant {
     const val LOG_EXPENSE_DATA = "log_expense_data"
     const val START_DATE = "start_date"
     const val END_DATE = "end_date"
+    const val SIGNUP_DETAILS = "signup_details"
 }
