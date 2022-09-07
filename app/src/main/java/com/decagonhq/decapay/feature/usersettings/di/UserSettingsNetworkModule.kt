@@ -1,17 +1,8 @@
 package com.decagonhq.decapay.feature.usersettings.di
 
 import com.decagonhq.decapay.feature.usersettings.data.network.api.GetLocalizationReferenceApi
-import com.decagonhq.decapay.feature.usersettings.data.network.api.GetLocationListApi
-import com.decagonhq.decapay.feature.usersettings.data.network.api.GetPreferedLanguageApi
-import com.decagonhq.decapay.feature.usersettings.data.network.api.GetPreferredCurrencyApi
 import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetLocalizationReferenceRepositoryImpl
-import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetLocationRepositoryImpl
-import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetPreferredCurrencyRepositoryImpl
-import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetPreferredLanguageRepositoryImpl
 import com.decagonhq.decapay.feature.usersettings.domain.repository.GetLocalizationReferenceRepository
-import com.decagonhq.decapay.feature.usersettings.domain.repository.GetLocationRepository
-import com.decagonhq.decapay.feature.usersettings.domain.repository.GetPreferredCurrencyRepository
-import com.decagonhq.decapay.feature.usersettings.domain.repository.GetPreferredLanguageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
