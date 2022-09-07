@@ -55,23 +55,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        val selectedBudgetLineItems = arguments?.getSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED) as LineItem
-        selectedBudgetId = selectedBudgetLineItems.budgetId
-        selectedCategoryId = selectedBudgetLineItems.categoryId
-        budgetCategory = selectedBudgetLineItems.category
-        calendarSelectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
-
-         */
-
         logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
-        /*
-        selectedBudgetId = selectedBudgetLineItems.budgetId
-        selectedCategoryId = selectedBudgetLineItems.categoryId
-        budgetCategory = selectedBudgetLineItems.category
-        calendarSelectedDateToLogExpense = selectedBudgetLineItems.calendarSelectedDate
-
-         */
     }
 
     override fun onCreateView(
