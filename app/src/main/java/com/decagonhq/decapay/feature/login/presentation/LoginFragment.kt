@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -172,7 +171,7 @@ class LoginFragment : Fragment() {
                             // capture the token here
                             val token = it.data.data?.token
                             preference.putToken(token!!)
-                           // preference.putUserName(it.data.data.)
+                            // preference.putUserName(it.data.data.)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
                         }
