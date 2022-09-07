@@ -22,6 +22,7 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentExpensesListBinding
+import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.feature.expenseslist.adapter.ExpenseClicker
 import com.decagonhq.decapay.feature.expenseslist.adapter.ExpenseListAdapter
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
@@ -37,6 +38,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
     private var _binding: FragmentExpensesListBinding? = null
     private val binding get() = _binding!!
     lateinit var adapter: ExpenseListAdapter
+    private lateinit var logExpenseData: LogExpenseData
 
     @Inject
     lateinit var expenseListPreferences: Preferences
@@ -58,9 +60,11 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
-        categoryId = arguments?.getInt(DataConstant.CATEGORY_ID)
-        val title = arguments?.getString(DataConstant.CATEGORY)
+        logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
+
+        budgetId = logExpenseData.budgetId
+        categoryId = logExpenseData.categoryId
+        val title = logExpenseData.category
 
         binding.expenseListFragmentToolbarTitle.text = "$title Expenses"
 
@@ -68,7 +72,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         expenseListPreferences.putExpenseCategoryTitle(title.toString())
 
         if (budgetId != null && categoryId != null) {
-            expenseListViewModel.getBudgetList(budgetId!!, categoryId!!)
+            expenseListViewModel.getExpensesList(budgetId!!, categoryId!!)
         }
 
         adapter = ExpenseListAdapter(list, this)
@@ -77,11 +81,12 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
             LinearLayoutManager(requireContext())
 
         binding.expenseListFragmentToolbarIv.setOnClickListener {
-           findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         setUpScrollListener()
         setUpFlowListener()
+        updateListener()
         setUpDeleteFlowListener()
     }
 
@@ -100,6 +105,8 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                 when (item.title) {
                     "Edit" -> {
                         val bundle = Bundle()
+                        bundle.putLong(DataConstant.START_DATE, logExpenseData.startDateCaptured!!)
+                        bundle.putLong(DataConstant.END_DATE, logExpenseData.endDateCaptured!!)
                         bundle.putSerializable(DataConstant.EXPENSE_DATA, currentExpense)
                         findNavController().navigate(R.id.editLogExpenseBottomSheetFragment, bundle)
                     }
@@ -138,7 +145,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
 
     private fun setUpFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 expenseListViewModel.expenseListResponse.collect {
                     when (it) {
                         is Resource.Loading -> {
@@ -146,7 +153,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                         }
 
                         is Resource.Success -> {
-                            setDataLoaded(it.data.data.content as MutableList<ExpenseContent>)
+                            setDataLoaded(it.data as MutableList<ExpenseContent>)
                         }
                         else -> {}
                     }
@@ -221,12 +228,23 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
         if (newList.isEmpty() && list.isEmpty()) {
             setEmptyListScreen()
         } else {
+            list.clear()
             list.addAll(newList)
             adapter.setBudget()
 
             binding.expenseListFragmentExpensesRv.visibility = View.VISIBLE
             binding.expenseListFragmentEmptyLl.visibility = View.GONE
             binding.expenseListFragmentLoadingPb.visibility = View.GONE
+        }
+    }
+
+    private fun updateListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            DataConstant.UPDATE_UI
+        )?.observe(viewLifecycleOwner) {
+            it?.let {
+                budgetId?.let { it1 -> expenseListViewModel.getExpensesList(budgetId!!,categoryId!!); }
+            }
         }
     }
 }

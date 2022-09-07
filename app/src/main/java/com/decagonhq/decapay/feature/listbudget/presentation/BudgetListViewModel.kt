@@ -1,7 +1,9 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.listbudget.data.network.model.BudgetListResponse
 import com.decagonhq.decapay.feature.listbudget.domain.usecase.BudgetListUseCase
@@ -15,39 +17,92 @@ import javax.inject.Inject
 class BudgetListViewModel @Inject constructor(
     private val budgetListUseCase: BudgetListUseCase
 ) : ViewModel() {
+    var budgetTypePosition: Int? = null
+    var isLastPage = true
 
-    private val _budgetListResponse = MutableStateFlow<Resource<BudgetListResponse>>(Resource.Loading())
-    val budgetListResponse: StateFlow<Resource<BudgetListResponse>> get() = _budgetListResponse
+    private val _budgetListResponse = MutableStateFlow<Resource<List<Content>>>(Resource.Loading())
+    val budgetListResponse: StateFlow<Resource<List<Content>>> get() = _budgetListResponse
+
+    private var list = mutableListOf<Content>()
 
     var isFetching = false
-    var page = 0
+    var page = 1
     var state = ""
 
-     fun getBudgetList(state:String) {
-         this.state = state
-         page =0
+    fun getBudgetList(state: String) {
+        list.clear()
+        this.state = state
+        page = 1
         viewModelScope.launch {
-            budgetListUseCase.invoke(page,state).collect {
-                if (it is Resource.Success) {
-                    page++
+
+
+            budgetListUseCase.invoke(page, state).collect {
+                when (it) {
+
+                    is Resource.Success -> {
+                        isLastPage = it.data.data.last
+                        page++
+                        it.datas?.data?.content?.let { it1 ->
+                            list.addAll(it1)
+                            _budgetListResponse.value = Resource.Success(list)
+                        }
+
+//
+
+                    }
+                    is Resource.Error -> {
+                        _budgetListResponse.value = Resource.Error(it.message)
+                    }
+                    is Resource.Loading -> {
+                        _budgetListResponse.value = Resource.Loading()
+                    }
                 }
-                _budgetListResponse.value = it
             }
         }
     }
 
     fun getNextPage() {
-        if (!isFetching) {
+        if (!isFetching && !isLastPage) {
             isFetching = true
             viewModelScope.launch {
-                budgetListUseCase.getNextPage(page,state).collect {
-                    if (it is Resource.Success) {
-                        page++
+                budgetListUseCase.getNextPage(page, state).collect {
+                    when (it) {
+
+                        is Resource.Success -> {
+                            isFetching = false
+                            isLastPage = it.data.data.last
+                            page++
+                            it.datas?.data?.content?.let { dataList ->
+
+                                updateAndEmitNewList(dataList)
+
+                            }
+                        }
+                        is Resource.Error -> {
+                            isFetching = false
+                            _budgetListResponse.value = Resource.Error(it.message)
+                        }
+                        is Resource.Loading -> {
+                            _budgetListResponse.value = Resource.Loading()
+                        }
                     }
-                    isFetching = false
-                    _budgetListResponse.value = it
+
                 }
             }
         }
+    }
+
+    /** Create a new list by combining previous pages with current page **/
+    private fun updateAndEmitNewList(newPage: List<Content>) {
+        val newList = mutableListOf<Content>()
+
+        newList.addAll(list)
+
+
+        newList.addAll(newPage)
+
+        list = newList
+
+        _budgetListResponse.value = Resource.Success(newList)
     }
 }

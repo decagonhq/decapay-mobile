@@ -19,4 +19,5 @@
     <dimen name="editBudgetLineItem_category_txsiz">18sp</dimen>
     <dimen name="editBudgetLineItem_selected_category__txsiz">24sp</dimen>
     <dimen name="logExpense_bottom_sheet_fragment_category_title_txsize">24sp</dimen>
+    <dimen name="createditlineitem_custom_spinner_txsize">18sp</dimen>
 </resources>

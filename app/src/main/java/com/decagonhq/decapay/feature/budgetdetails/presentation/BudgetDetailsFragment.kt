@@ -26,6 +26,7 @@ import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
+import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class BudgetDetailsFragment : Fragment(), LineItemClicker {
@@ -45,6 +47,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
     private var calendarSelectedDate: String? = null
+    private var startDateCaptured by Delegates.notNull<Long>()
+    private var endDateCaptured by Delegates.notNull<Long>()
+    private lateinit var logExpenseData: LogExpenseData
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences
@@ -52,6 +57,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        logExpenseData = LogExpenseData(null, null, null, null, null, null)
         // this handles the backPress; all navigation moves to list budget
         activity?.onBackPressedDispatcher?.addCallback(
             this,
@@ -104,7 +110,10 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
         // capture the selected date from the calendar view
         binding.budgetDetailsCalendarCv.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            calendarSelectedDate = "$dayOfMonth/${month + 1}/$year"
+            val selectedDayOfMonth = if ("$dayOfMonth".length == 1) "0$dayOfMonth" else "$dayOfMonth"
+            val selectedMonth = if ("${month + 1}".length == 1) "0${month + 1}" else "${month + 1}"
+            calendarSelectedDate = "$selectedDayOfMonth/$selectedMonth/$year"
+            Log.d("calendar", "here it is $calendarSelectedDate")
         }
 
         initObserver()
@@ -112,7 +121,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
 
 //        val testList = mutableListOf<LineItem>()
 //        list.addAll(testList)
-        adapter = LineItemAdaptor(list, this,requireContext())
+        adapter = LineItemAdaptor(list, this, requireContext())
         binding.budgetDetailsLineItemsRv.adapter = adapter
         binding.budgetDetailsLineItemsRv.layoutManager =
             LinearLayoutManager(requireContext())
@@ -130,9 +139,9 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
         }
     }
 
-    private fun lineItemListener(){
+    private fun lineItemListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-            DataConstant.NEW_LINE_ITEM
+            DataConstant.UPDATE_UI
         )?.observe(viewLifecycleOwner) {
             it?.let {
                 budgetId?.let { it1 -> budgetDetailsViewModel.getBudgetDetails(it1) }
@@ -150,7 +159,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val budgetDetails = it.data.data
 
                             binding.budgetDetailsHeaderPeriodTv.text = budgetDetails.budgetPeriod
-                            binding.budgetDetailsHeaderDateTv.text =" ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"
+                            binding.budgetDetailsHeaderDateTv.text = " ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"
 
                             binding.budgetDetailsHeaderTitleTv.text = budgetDetails.title
                             binding.budgetDetailsHeaderAmountTv.text =
@@ -160,11 +169,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             binding.budgetDetailsPercentageAmountTv.text =
                                 budgetDetails.displayPercentageSpentSoFar
 
-                            if(budgetDetails.percentageSpentSoFar>DataConstant.MAX_PERCENT){
+                            if (budgetDetails.percentageSpentSoFar > DataConstant.MAX_PERCENT) {
                                 binding.budgetDetailsPercentageAmountTv.setTextColor(
-                                    AppCompatResources.getColorStateList(requireContext(), R.color.red))
+                                    AppCompatResources.getColorStateList(requireContext(), R.color.red)
+                                )
                                 binding.budgetDetailsTasAmountTv.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.red))
-
                             }
 
                             val formatter = SimpleDateFormat(DataConstant.DATE_FORMAT)
@@ -172,32 +181,41 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             formatter.isLenient = false
                             val startDate = budgetDetails.startDate.replace('-', '.')
                             // the endate to log expense is the current date
-                            val receivedEndDate = UtilsConverter.formatCurrentDate(getTodaysDate())
-                            val addedOnedDay = UtilsConverter.addOneDayFormat(receivedEndDate)
+                            val currentDate = UtilsConverter.formatCurrentDate(getTodaysDate())
+                            var validEndate: String? = null
+                            if (currentDate > budgetDetails.endDate) {
+                                validEndate = budgetDetails.endDate
+                            } else {
+                                validEndate = currentDate
+                            }
+                            val extractedMonthFromCurrentDateToSetStartDateForFutureBudget = UtilsConverter.extractMonthFromCurrentDate(getTodaysDate())
+                            val addedOneDayToCurrentDate = UtilsConverter.addOneDayFormat(validEndate)
+                            val addOneDayToEndDateFromRemote = UtilsConverter.addOneDayFormat(budgetDetails.endDate)
                             val endDate = budgetDetails.endDate.replace('-', '.')
-                            val addedOneDayToEndDate = addedOnedDay.toString().replace('-', '.')
+                            val addedOneDayTodaysDate = addedOneDayToCurrentDate.toString().replace('-', '.')
+                            val addedOneDayToEndDateFromRemoteDate = addOneDayToEndDateFromRemote.replace('-', '.')
+                            val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDate = extractedMonthFromCurrentDateToSetStartDateForFutureBudget.replace('-', '.')
 
-
-
-//                            val currentDate = formatter.format(Date())
-//
-//                            System.out.println(" C DATE is  "+currentDate)
 
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
-                            val addedOneDayToEndDateTime = "$addedOneDayToEndDate, 00:00"
+                            val addedOneDayTodaysDateTime = "$addedOneDayTodaysDate, 00:00"
+                            val addedOneDayToEndDateFromRemoteTime = "$addedOneDayToEndDateFromRemoteDate, 00:00"
+                            val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDateTime = "$extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDate, 00:00"
                             val startFormattedDate: Date = formatter.parse(startTime) as Date
                             val endFormattedDate: Date = formatter.parse(endTime) as Date
-                            val addedOneDayFormattedDate: Date = formatter.parse(addedOneDayToEndDateTime) as Date
+                            val addedOneDayToTodaysFormattedDate: Date = formatter.parse(addedOneDayTodaysDateTime) as Date
+                            val addedOneDayToEndDateFromRemoteFormattedDate = formatter.parse(addedOneDayToEndDateFromRemoteTime) as Date
+                            val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetFormattedDate: Date = formatter.parse(extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDateTime) as Date
                             val startDateTimeMillis = startFormattedDate.time
                             var endDateTimiMillis = endFormattedDate.time
-                            val addedOneDayTimeMillis = addedOneDayFormattedDate.time
+                            val addedOneDayToTodaysTimeMillis = addedOneDayToTodaysFormattedDate.time
+                            val addedOneDayToEndDateFromRemoteTimeMillis = addedOneDayToEndDateFromRemoteFormattedDate.time
+                            val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetTimeMillis = extractedMonthFromCurrentDateToSetStartDateForFutureBudgetFormattedDate.time
+                            logExpenseData.startDateCaptured = startDateTimeMillis
+                            logExpenseData.endDateCaptured = addedOneDayToTodaysTimeMillis
 
-                            // save date to sharedPreference
-                            budgetDetailsPreference.putBudgetStartDate(startDateTimeMillis)
-                            budgetDetailsPreference.putBudgetEndDate(addedOneDayTimeMillis)
-
-                            if(Date().before(endFormattedDate)){
+                            if (Date().before(endFormattedDate)) {
                                 endDateTimiMillis = Date().time
                             }
 
@@ -297,21 +315,30 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     }
 
     override fun onClickItemLog(currentLineItem: LineItem, position: Int, view: View) {
-        val bundle = Bundle()
-        bundle.putSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED, currentLineItem)
-        bundle.putString(DataConstant.LOG_EXPENSE_SELECTED_DATE, calendarSelectedDate)
-        Log.d(TAG, "selected date on calendar: ${calendarSelectedDate}")
+        val bundle = buildBundle(currentLineItem)
         findNavController().navigate(R.id.logExpenseBottomSheetFragment, bundle)
+        Log.d("inspect", "inside loExpenseData: $logExpenseData")
     }
 
+    /**
+     * TODO remember to add commnets to this method
+     */
     override fun onClickItem(currentLineItem: LineItem, position: Int, view: View) {
-        val bundle = Bundle()
-
-
-      //  budgetId?.let { bundle.putInt(DataConstant.BUDGET_ID, it) }
-        bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
-        bundle.putString(DataConstant.CATEGORY, currentLineItem.category)
-        bundle.putInt(DataConstant.CATEGORY_ID, currentLineItem.categoryId)
+        val bundle = buildBundle(currentLineItem)
         findNavController().navigate(R.id.expensesListFragment, bundle)
+    }
+
+    private fun populateLogExpenseData(currentLineItem: LineItem) {
+        logExpenseData.budgetId = currentLineItem.budgetId
+        logExpenseData.categoryId = currentLineItem.categoryId
+        logExpenseData.category = currentLineItem.category
+        logExpenseData.calendarSelectedDate = calendarSelectedDate
+    }
+
+    private fun buildBundle(currentLineItem: LineItem): Bundle {
+        val bundle = Bundle()
+        populateLogExpenseData(currentLineItem)
+        bundle.putSerializable(DataConstant.LOG_EXPENSE_DATA, logExpenseData)
+        return bundle
     }
 }

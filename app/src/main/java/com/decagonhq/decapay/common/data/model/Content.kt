@@ -1,5 +1,6 @@
 package com.decagonhq.decapay.common.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -22,4 +23,4 @@ data class Content(
     val title: String,
     @SerializedName("totalAmountSpentSoFar")
     val totalAmountSpentSoFar: Double
-) : Serializable
+)

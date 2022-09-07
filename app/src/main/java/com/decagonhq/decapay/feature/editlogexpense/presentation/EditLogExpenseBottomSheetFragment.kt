@@ -15,8 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
-import com.decagonhq.decapay.common.utils.converterhelper.showTransactionDatePicker
+import com.decagonhq.decapay.common.utils.converterhelper.*
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
@@ -42,6 +41,8 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private val editLogExpenseViewModel: EditLogExpenseViewModel by viewModels()
     private lateinit var userSelectedTransactionDate: String
     private lateinit var selectedEditExpenseDate: TextView
+    private var budgetStartDate by Delegates.notNull<Long>()
+    private var budgetEndDate by Delegates.notNull<Long>()
 
     @Inject
     lateinit var editLogExpensePreference: Preferences
@@ -49,12 +50,16 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // receive the data from bundle
+
+        budgetStartDate = arguments?.getLong(DataConstant.START_DATE)!!
+
         val selectedExpenseItem = arguments?.getSerializable(DataConstant.EXPENSE_DATA) as ExpenseContent
         amountSpent = selectedExpenseItem.amount.toString()
         description = selectedExpenseItem.description
         transactionDate = selectedExpenseItem.transactionDate
         expenseId = selectedExpenseItem.id
         Log.d(TAG, "here is the transaction date: $transactionDate")
+        budgetEndDate = arguments?.getLong(DataConstant.END_DATE)!!
     }
 
     override fun onCreateView(
@@ -79,11 +84,12 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.setText(description)
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = UtilsConverter.formatReceivedTransactionDate(transactionDate)
         userSelectedTransactionDate = UtilsConverter.formatReceivedTransactionDate(transactionDate)
+        transactionDate = userSelectedTransactionDate
         binding.editLogExpenseBottomSheetFragmentCategoryTitleTv.text = editLogExpensePreference.getExpenseCategoryTitle()
 
         // on click on calendar view for user to select date
         binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTransactionDatePicker(editLogExpensePreference.getBudgetStartDate(), editLogExpensePreference.getBudgetEndDate(), selectedEditExpenseDate, viewId)
+            showTransactionDatePicker(budgetStartDate, budgetEndDate)
             userSelectedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
         }
 
@@ -104,7 +110,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                 // make a network call
                 editLogExpenseViewModel.userUpdateLogedExpense(
                     expenseId,
-                    EditLogExpenseRequestBody(receivedAmount, receivedDescription, userSelectedTransactionDate)
+                    EditLogExpenseRequestBody(receivedAmount, receivedDescription, transactionDate)
                 )
             }
         }
@@ -129,7 +135,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
-                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.UPDATE_UI, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
@@ -141,6 +147,17 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                     }
                 }
             }
+        }
+    }
+
+    fun showTransactionDatePicker(startDate: Long, endDate: Long) {
+        val calendarConstraint = buildDateRangeConstraint(startDate, endDate)
+        val datePicker = buildDatePickerWithConstraint(calendarConstraint)
+        datePicker.show(parentFragmentManager, datePicker.toString())
+        datePicker.addOnPositiveButtonClickListener { selectedDate ->
+            transactionDate = "${convertLongToTime(selectedDate)}"
+            Log.d("transaction", "see date in method: ${transactionDate}")
+            binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text = "${convertLongToTime(selectedDate)}"
         }
     }
 

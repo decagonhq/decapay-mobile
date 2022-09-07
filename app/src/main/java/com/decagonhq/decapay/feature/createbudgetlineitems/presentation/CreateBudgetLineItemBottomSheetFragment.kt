@@ -1,12 +1,10 @@
 package com.decagonhq.decapay.feature.createbudgetlineitems.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,8 +17,9 @@ import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.createbudgetlineitemmodel.CreateBudgetLineItemRequestBody
-import com.decagonhq.decapay.presentation.MainActivity
+import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.adapter.CategoryItemSpinnerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,7 +38,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private var budgetId: Int? = null
     private var receivedDetailBudgetId: Int? = null
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
-    private var budgetLineItemId: Int? = null
+    private var budgetCategoryId: Int? = null
+    private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +80,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                 if (budgetId != null) {
                     createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetLineItemId)
+                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId)
                     )
                 }
             }
@@ -95,6 +95,23 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun showCreateCategoryAlertDialog(destinationId: Int) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_title))
+            .setMessage(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_message))
+            .setNeutralButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_neutral_button)) { dialog, which ->
+                // close the dialog
+            }
+            .setNegativeButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_negative_button)) { dialog, which ->
+                // close the dialog
+            }
+            .setPositiveButton(getString(R.string.createBudgetLineItem_alert_dialog_createCategory_positive_button)) { dialog, which ->
+                // navigate to category list screen
+                findNavController().navigate(destinationId)
+            }
+            .show()
+    }
+
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -102,51 +119,49 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                     when (it) {
                         is Resource.Success -> {
                             budgetCategoryListObject = ArrayList<CategoryItem>()
-                            val budgetCategoryList = ArrayList<String>()
+                            // add the default category name to the budgetCategoryListObject
+                            budgetCategoryListObject.add(CategoryItem(0, getString(R.string.defualt_category_name)))
                             val categories = it.data.data
                             if (categories != null) {
                                 for (item in categories) {
                                     if (item != null) {
-                                        item.title?.let { category -> budgetCategoryList.add(category) }
                                         budgetCategoryListObject.add(item)
                                     }
                                 }
                             }
-                            val budgetCategoryAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, budgetCategoryList)
-                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = budgetCategoryAdapter
-                            binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    selectedCategory = parent?.getItemAtPosition(position).toString()
-                                    Log.d(TAG, "$selectedCategory, the id is: $id, here is the position: $position")
-                                    for (categoryItem in budgetCategoryListObject) {
-                                        if (selectedCategory != null) {
-                                            if (categoryItem.title == selectedCategory) {
-                                                budgetLineItemId = categoryItem.id
-                                            }
+
+                            // for a first time user, showCreateBudgetCategoryAlertDialog
+                            if (categories != null) {
+                                if (categories.size <= 1) {
+                                    // display the create category dialog
+                                    val destinationId = R.id.budgetCategoryList
+                                    showCreateCategoryAlertDialog(destinationId)
+                                } else {
+                                    val customCategoryAdapter = CategoryItemSpinnerAdapter(requireContext(), budgetCategoryListObject)
+                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.adapter = customCategoryAdapter
+                                    binding.createBudgetLineItemBottomSheetFragmentCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                        override fun onItemSelected(
+                                            parent: AdapterView<*>?,
+                                            view: View?,
+                                            position: Int,
+                                            id: Long
+                                        ) {
+                                            val categoryItemSelected = parent?.selectedItem as CategoryItem
+                                            budgetCategoryId = categoryItemSelected.id
+                                        }
+
+                                        override fun onNothingSelected(p0: AdapterView<*>?) {
+                                            //
                                         }
                                     }
                                 }
-
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
-                                    //
-                                }
                             }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.data.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
                         }
                         is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
+                            Toast.makeText(
+                                requireContext(),
                                 "${it.message}",
-                                Snackbar.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                         is Resource.Loading -> {
@@ -170,7 +185,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
 
-                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.UPDATE_UI, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
@@ -184,8 +199,6 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

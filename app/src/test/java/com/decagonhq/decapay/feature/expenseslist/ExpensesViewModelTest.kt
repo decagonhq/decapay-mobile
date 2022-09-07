@@ -2,6 +2,7 @@ package com.decagonhq.decapay.feature.expenseslist
 
 import app.cash.turbine.test
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.feature.expenseslist.data.network.model.Data
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseListResponse
 import com.decagonhq.decapay.feature.expenseslist.domain.usecase.ExpenseListUseCase
 import com.decagonhq.decapay.feature.expenseslist.presentation.ExpenseListViewModel
@@ -24,7 +25,9 @@ class ExpensesViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockUseCase: ExpenseListUseCase
-    lateinit var mockResponse: ExpenseListResponse
+    private lateinit var mockResponse: ExpenseListResponse
+    lateinit var mockData: Data
+
 
 
     @Before
@@ -32,6 +35,8 @@ class ExpensesViewModelTest {
         Dispatchers.setMain(dispatcher)
         mockUseCase = Mockito.mock(ExpenseListUseCase::class.java)
         mockResponse = Mockito.mock(ExpenseListResponse::class.java)
+        mockData = Mockito.mock(Data::class.java)
+
     }
 
     @After
@@ -47,12 +52,13 @@ class ExpensesViewModelTest {
 
     @Test
     fun `view model fetches first list`() = runTest {
-
+        Mockito.`when`(mockData.last).thenReturn(true)
+        Mockito.`when`(mockResponse.data).thenReturn(mockData)
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(1,1,0)).thenReturn(flow)
+        Mockito.`when`(mockUseCase.invoke(1,1,1)).thenReturn(flow)
         val viewModel = ExpenseListViewModel(mockUseCase)
 
-        viewModel.getBudgetList(1,1,)
+        viewModel.getExpensesList(1,1,)
         viewModel.expenseListResponse.test {
             val emission = awaitItem()
             assert(emission::class.java == Resource.Loading::class.java)
@@ -63,13 +69,15 @@ class ExpensesViewModelTest {
 
     @Test
     fun `view model fetches next list`() = runTest {
+        Mockito.`when`(mockData.last).thenReturn(false)
+        Mockito.`when`(mockResponse.data).thenReturn(mockData)
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(1,1,0)).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(1,1,1)).thenReturn(flow2)
+        Mockito.`when`(mockUseCase.invoke(1,1,1)).thenReturn(flow)
+        Mockito.`when`(mockUseCase.getNextPage(1,1,2)).thenReturn(flow2)
         val viewModel = ExpenseListViewModel(mockUseCase)
 
-        viewModel.getBudgetList(1,1)
+        viewModel.getExpensesList(1,1)
 
         viewModel.expenseListResponse.test {
             val emission = awaitItem()

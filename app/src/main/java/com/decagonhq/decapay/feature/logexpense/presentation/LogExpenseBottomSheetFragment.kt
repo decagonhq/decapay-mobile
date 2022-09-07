@@ -15,13 +15,15 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
-import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
-import com.decagonhq.decapay.common.utils.converterhelper.showTransactionDatePicker
+import com.decagonhq.decapay.common.utils.converterhelper.buildDatePickerWithConstraint
+import com.decagonhq.decapay.common.utils.converterhelper.buildDateRangeConstraint
+import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
-import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
+import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.datepicker.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,23 +40,23 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     private var selectedBudgetId by Delegates.notNull<Int>()
     private var selectedCategoryId by Delegates.notNull<Int>()
     private lateinit var budgetCategory: String
-    private lateinit var transactionDate: String
+    private var transactionDate: String? = null
     private val logExpenseViewModel: LogExpenseViewModel by viewModels()
     private lateinit var retrivedCalendarSelectedDate: String
     private lateinit var selectedDateLogExpenseDate: TextView
     private var calendarSelectedDateToLogExpense: String? = null
     private lateinit var enteredTransactionDate: String
+    private var startCapturedDate: Long? = null
+    private var endCapturedDate: Long? = null
+    private lateinit var logExpenseData: LogExpenseData
 
     @Inject
     lateinit var logExpensePreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val selectedBudgetLineItems = arguments?.getSerializable(DataConstant.LOG_EXPENSE_BUDGET_LINE_ITEM_SELECTED) as LineItem
-        selectedBudgetId = selectedBudgetLineItems.budgetId
-        selectedCategoryId = selectedBudgetLineItems.categoryId
-        budgetCategory = selectedBudgetLineItems.category
-        calendarSelectedDateToLogExpense = arguments?.getString(DataConstant.LOG_EXPENSE_SELECTED_DATE).toString()
+
+        logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
     }
 
     override fun onCreateView(
@@ -75,22 +77,18 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv
 
         // set the category
-        binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = budgetCategory
-        // set currant date to transaction date
-//        retrivedCalendarSelectedDate = calendarSelectedDateToLogExpense
-        if (calendarSelectedDateToLogExpense == null) {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "HELLO"
-            transactionDate = getTodaysDate()
-        } else {
-            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = calendarSelectedDateToLogExpense
-//            transactionDate = calendarSelectedDateToLogExpense.toString()
-            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.toString()
+        binding.logExpenseBottomSheetFragmentCategoryTitleTv.text = logExpenseData.category
+
+        // set the calendarSelctedDate
+        if (logExpenseData.calendarSelectedDate != null) {
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = logExpenseData.calendarSelectedDate
+            Log.d("addExpense", "calendarSelection content: ${logExpenseData.calendarSelectedDate}")
         }
 
         // on click on the calender icon
         binding.logExpenseBottomSheetFragmentTransactionDateTv.setOnClickListener {
-            showTransactionDatePicker(logExpensePreference.getBudgetStartDate(), logExpensePreference.getBudgetEndDate(), selectedDateLogExpenseDate, viewId)
-            transactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
+            showTransactionDatePicker(logExpenseData.startDateCaptured!!, logExpenseData.endDateCaptured!!)
+            Log.d(TAG, "this is the selected transaction date: $transactionDate")
         }
 
         // on click on save button
@@ -109,9 +107,9 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             } else {
                 // make a network call
                 logExpenseViewModel.userAddExpense(
-                    selectedBudgetId, selectedCategoryId,
+                    logExpenseData.budgetId!!, logExpenseData.categoryId!!,
                     LogExpenseRequestBody(
-                        amountSpent, description, transactionDate
+                        amountSpent, description, enteredTransactionDate
                     )
                 )
             }
@@ -137,7 +135,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
-                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.UPDATE_UI, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
@@ -155,5 +153,25 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    /**
+     * used to display a valid datepicker date range
+     * when the user selects the transactionDate dateppicker view
+     * on the edit and Log Expense screen.
+     * Validate date range is between budgetstartDate to currentDate
+     * @param startDate is budgetStartDate
+     * @param endDate is currentDate
+     * @param view is the transactionDate textView
+     * @param viewId is the id of the transactionDate view
+     */
+    fun showTransactionDatePicker(startDate: Long, endDate: Long) {
+        val calendarConstraint = buildDateRangeConstraint(startDate, endDate)
+        val datePicker = buildDatePickerWithConstraint(calendarConstraint)
+        datePicker.show(parentFragmentManager, datePicker.toString())
+        datePicker.addOnPositiveButtonClickListener { selectedDate ->
+            transactionDate = "${convertLongToTime(selectedDate)}"
+            binding.logExpenseBottomSheetFragmentTransactionDateTv.text = "${convertLongToTime(selectedDate)}"
+        }
     }
 }
