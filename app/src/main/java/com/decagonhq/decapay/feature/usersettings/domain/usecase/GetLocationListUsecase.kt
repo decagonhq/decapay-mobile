@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.usersettings.domain
+package com.decagonhq.decapay.feature.usersettings.domain.usecase
 
 import com.decagonhq.decapay.common.utils.errorhelper.ExceptionHandler
 import com.decagonhq.decapay.common.utils.resource.Resource

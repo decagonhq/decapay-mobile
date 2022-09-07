@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.feature.usersettings.data.network.model.GetLocationResponseDemo
-import com.decagonhq.decapay.feature.usersettings.domain.GetLocationListUsecase
+import com.decagonhq.decapay.feature.usersettings.domain.usecase.GetLocationListUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
