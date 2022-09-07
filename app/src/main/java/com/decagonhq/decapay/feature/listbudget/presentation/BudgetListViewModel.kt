@@ -103,7 +103,6 @@ class BudgetListViewModel @Inject constructor(
 
         list = newList
 
-
         _budgetListResponse.value = Resource.Success(newList)
     }
 }
