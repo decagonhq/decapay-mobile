@@ -1,10 +1,16 @@
 package com.decagonhq.decapay.feature.usersettings.di
 
+import com.decagonhq.decapay.feature.usersettings.data.network.api.GetLocalizationReferenceApi
 import com.decagonhq.decapay.feature.usersettings.data.network.api.GetLocationListApi
 import com.decagonhq.decapay.feature.usersettings.data.network.api.GetPreferedLanguageApi
+import com.decagonhq.decapay.feature.usersettings.data.network.api.GetPreferredCurrencyApi
+import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetLocalizationReferenceRepositoryImpl
 import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetLocationRepositoryImpl
+import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetPreferredCurrencyRepositoryImpl
 import com.decagonhq.decapay.feature.usersettings.data.network.repository.GetPreferredLanguageRepositoryImpl
+import com.decagonhq.decapay.feature.usersettings.domain.repository.GetLocalizationReferenceRepository
 import com.decagonhq.decapay.feature.usersettings.domain.repository.GetLocationRepository
+import com.decagonhq.decapay.feature.usersettings.domain.repository.GetPreferredCurrencyRepository
 import com.decagonhq.decapay.feature.usersettings.domain.repository.GetPreferredLanguageRepository
 import dagger.Module
 import dagger.Provides
@@ -39,5 +45,29 @@ object UserSettingsNetworkModule {
     @Singleton
     fun provideGetPreferredLanguageRepository(getPreferedLanguageApi: GetPreferedLanguageApi): GetPreferredLanguageRepository {
         return GetPreferredLanguageRepositoryImpl(getPreferedLanguageApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPreferredCurrencyApi(retrofit: Retrofit): GetPreferredCurrencyApi {
+        return retrofit.create(GetPreferredCurrencyApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPreferredCurrencyRepository(getPreferredCurrencyApi: GetPreferredCurrencyApi): GetPreferredCurrencyRepository {
+        return GetPreferredCurrencyRepositoryImpl(getPreferredCurrencyApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetLocalizationReferenceApi(retrofit: Retrofit): GetLocalizationReferenceApi {
+        return retrofit.create(GetLocalizationReferenceApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetLocalizationReferenceRepository(getLocalizationReferenceApi: GetLocalizationReferenceApi): GetLocalizationReferenceRepository {
+        return GetLocalizationReferenceRepositoryImpl(getLocalizationReferenceApi)
     }
 }
