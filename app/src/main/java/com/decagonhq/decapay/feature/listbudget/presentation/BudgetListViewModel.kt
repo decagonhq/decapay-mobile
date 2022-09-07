@@ -74,20 +74,8 @@ class BudgetListViewModel @Inject constructor(
                             page++
                             it.datas?.data?.content?.let { dataList ->
 
-                                /** Set up a new empty list to be emitted by combining the old list  **/
-                                val newList = mutableListOf<Content>()
+                                updateAndEmitNewList(dataList)
 
-                                /** Add the  current list into the  new empty list**/
-                                newList.addAll(list)
-
-                                /** Add the  nex pages list into the new list**/
-                                newList.addAll(dataList)
-
-                                /** Set the current list to be the new combined list **/
-                                list = newList
-
-                                /**  Set the new combined list as the flow's value **/
-                                _budgetListResponse.value = Resource.Success(newList)
                             }
                         }
                         is Resource.Error -> {
@@ -102,5 +90,20 @@ class BudgetListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    /** Create a new list by combining previous pages with current page **/
+    private fun updateAndEmitNewList(newPage: List<Content>) {
+        val newList = mutableListOf<Content>()
+
+        newList.addAll(list)
+
+
+        newList.addAll(newPage)
+
+        list = newList
+
+
+        _budgetListResponse.value = Resource.Success(newList)
     }
 }
