@@ -55,6 +55,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
     }
 
@@ -134,7 +135,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                                 "${it.data.message}",
                                 Toast.LENGTH_LONG
                             ).show()
-                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.NEW_LINE_ITEM, true)
+                            findNavController().previousBackStackEntry?.savedStateHandle?.set(DataConstant.UPDATE_UI, true)
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {

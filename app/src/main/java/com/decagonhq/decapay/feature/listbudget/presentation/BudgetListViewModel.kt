@@ -32,8 +32,11 @@ class BudgetListViewModel @Inject constructor(
         this.state = state
         page = 1
         viewModelScope.launch {
+
+
             budgetListUseCase.invoke(page, state).collect {
                 when (it) {
+
                     is Resource.Success -> {
                         isLastPage = it.data.data.last
                         page++
@@ -58,7 +61,6 @@ class BudgetListViewModel @Inject constructor(
             isFetching = true
             viewModelScope.launch {
                 budgetListUseCase.getNextPage(page, state).collect {
-
                     when (it) {
 
                         is Resource.Success -> {
@@ -66,11 +68,9 @@ class BudgetListViewModel @Inject constructor(
                             isLastPage = it.data.data.last
                             page++
                             it.datas?.data?.content?.let { dataList ->
-                                val newList = mutableListOf<Content>()
-                                newList.addAll(list)
-                                newList.addAll(dataList)
-                                list = newList
-                                _budgetListResponse.value = Resource.Success(newList)
+
+                                updateAndEmitNewList(dataList)
+
                             }
                         }
                         is Resource.Error -> {
@@ -84,5 +84,19 @@ class BudgetListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    /** Create a new list by combining previous pages with current page **/
+    private fun updateAndEmitNewList(newPage: List<Content>) {
+        val newList = mutableListOf<Content>()
+
+        newList.addAll(list)
+
+
+        newList.addAll(newPage)
+
+        list = newList
+
+        _budgetListResponse.value = Resource.Success(newList)
     }
 }
