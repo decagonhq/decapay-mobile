@@ -22,7 +22,6 @@ import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.cr
 import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.adapter.CategoryItemSpinnerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -80,11 +79,11 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             if (receivedAmount.toString().isEmpty() || (budgetCategoryId == null)) {
-               Toast.makeText(
-                   requireContext(),
-                   "Fields cannot be empty",
-                   Toast.LENGTH_LONG
-               ).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Fields cannot be empty",
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
 
                 if (budgetId != null) {

@@ -86,10 +86,10 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             // validate the amount field
             if (actualProjectedAmount.toString().isEmpty()) {
-                Snackbar.make(
-                    binding.root,
-                    "Amount field cannot be empty",
-                    Snackbar.LENGTH_LONG
+                Toast.makeText(
+                    requireContext(),
+                    "Projected Amount cannot be empty",
+                    Toast.LENGTH_LONG
                 ).show()
             } else {
                 // make a network call
