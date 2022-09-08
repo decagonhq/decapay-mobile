@@ -72,14 +72,26 @@ class UserSettingsFragment : Fragment() {
 
         // on click submit button, complete registration
         binding.userSettingsFragmentSubmitButtonBtn.setOnClickListener {
-            pleaseWaitDialog?.let { it.show() }
-            // on click submit button, make a call
-            registerViewModel.registerUser(
-                RegisterRequestBody(
-                    countryCode, currencyCode, signUpAccountDetailsData.email, signUpAccountDetailsData.firstName, languageCode,
-                    signUpAccountDetailsData.lastName, signUpAccountDetailsData.password, signUpAccountDetailsData.phoneNumber
+            // do a validation
+            if (countryCode.isNullOrEmpty() || currencyCode.isNullOrEmpty() || languageCode.isNullOrEmpty() || signUpAccountDetailsData.email.isNullOrEmpty()
+                || signUpAccountDetailsData.firstName.isNullOrEmpty() || signUpAccountDetailsData.lastName.isNullOrEmpty() || signUpAccountDetailsData.password.isNullOrEmpty() || signUpAccountDetailsData.phoneNumber.isNullOrEmpty()) {
+                Snackbar.make(
+                    binding.root,
+                    "Please select the required fields",
+                    Snackbar.LENGTH_LONG
+                ).show()
+
+            } else {
+                pleaseWaitDialog?.let { it.show() }
+                // on click submit button, make a call
+                registerViewModel.registerUser(
+                    RegisterRequestBody(
+                        countryCode, currencyCode, signUpAccountDetailsData.email, signUpAccountDetailsData.firstName, languageCode,
+                        signUpAccountDetailsData.lastName, signUpAccountDetailsData.password, signUpAccountDetailsData.phoneNumber
+                    )
                 )
-            )
+            }
+
         }
 
         initObserver()
@@ -188,9 +200,11 @@ class UserSettingsFragment : Fragment() {
                                 ) {
                                     val currencyItemSelected = parent?.selectedItem as Currency
                                     if (currencyItemSelected.id == 0) {
+                                        //
+                                    } else {
+                                        currencyCode = currencyItemSelected.code
+                                        Log.d(TAG, "content is :$currencyCode")
                                     }
-                                    currencyCode = currencyItemSelected.code
-                                    Log.d(TAG, "content is :$currencyCode")
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {

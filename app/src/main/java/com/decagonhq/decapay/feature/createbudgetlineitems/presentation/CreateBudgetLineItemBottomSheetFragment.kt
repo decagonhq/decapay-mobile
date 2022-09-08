@@ -79,12 +79,12 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
-            if (receivedAmount.toString().isEmpty()) {
-                Snackbar.make(
-                    binding.root,
-                    "Amount field cannot be empty",
-                    Snackbar.LENGTH_LONG
-                ).show()
+            if (receivedAmount.toString().isEmpty() || (budgetCategoryId == null)) {
+               Toast.makeText(
+                   requireContext(),
+                   "Fields cannot be empty",
+                   Toast.LENGTH_LONG
+               ).show()
             } else {
 
                 if (budgetId != null) {
@@ -156,7 +156,11 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             id: Long
                                         ) {
                                             val categoryItemSelected = parent?.selectedItem as CategoryItem
-                                            budgetCategoryId = categoryItemSelected.id
+                                            if (categoryItemSelected.id == 0) {
+                                                //
+                                            } else {
+                                                budgetCategoryId = categoryItemSelected.id
+                                            }
                                         }
 
                                         override fun onNothingSelected(p0: AdapterView<*>?) {
