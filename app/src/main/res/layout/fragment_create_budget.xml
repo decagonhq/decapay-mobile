@@ -97,10 +97,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        app:currencySymbol="₦"
         app:maxNumberOfDecimalDigits="2"
         android:paddingStart="8dp"
-        app:useCurrencySymbolAsHint="true"
         android:background="@drawable/budget_period_bg"
         />
 

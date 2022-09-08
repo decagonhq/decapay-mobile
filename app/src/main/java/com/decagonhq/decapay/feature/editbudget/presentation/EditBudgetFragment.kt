@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.BudgetPeriodConstant
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
+import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
@@ -73,6 +74,10 @@ class EditBudgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideDrawer()
+        // get currency symbol
+        val countryCode = "NG"
+        val language = "en"
+        binding.editBudgetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
         _binding = FragmentEditBudgetBinding.bind(view)
         // intialize views and variables

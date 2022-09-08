@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.common.constants.DataConstant
+import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditBudgetLineItemBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
@@ -57,6 +58,10 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // get currency symbol
+        val countryCode = "NG"
+        val language = "en"
+        binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
         // set the category value to textview
         binding.editBudgetLineItemCategoryTv.text = selectedCategory
 

@@ -75,6 +75,10 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // get currency symbol
+        val countryCode = "NG"
+        val language = "en"
+        binding.editLogExpenseBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
         // initialize view
         selectedEditExpenseDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv
         val viewId = R.id.editLogExpensee_bottom_sheet_fragment_transaction_date_tv

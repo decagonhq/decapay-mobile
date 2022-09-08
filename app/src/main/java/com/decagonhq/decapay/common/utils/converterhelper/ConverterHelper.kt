@@ -36,3 +36,9 @@ fun buildDateRangeConstraint(startDate: Long, endDate: Long): CalendarConstraint
     constraintsBuilderRange.setValidator(validators)
     return constraintsBuilderRange.build()
 }
+
+fun Fragment.getCurrencySymbol(language: String, countryCode: String) : String {
+    val locale = Locale(language, countryCode)
+    val currencySymbol = Currency.getInstance(locale).symbol
+    return currencySymbol
+}
