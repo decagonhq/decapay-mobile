@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
@@ -24,6 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
@@ -41,6 +43,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
     private var budgetCategoryId: Int? = null
     private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
+    @Inject
+    lateinit var createBudgetLineItemPreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +67,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // get currency symbol
-        val countryCode = "NG"
-        val language = "en"
+        val countryCode = createBudgetLineItemPreference.getCountry()
+        val language = createBudgetLineItemPreference.getLanguage()
         binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
         getBudgetCategoryListViewModel.getBudgetCategoryList()

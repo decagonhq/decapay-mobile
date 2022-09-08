@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GetLocalizationReferenceViewModel @Inject constructor(
     private val getLocalizationReferenceUsecase: GetLocalizationReferenceUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel(){
 
     private val _getLocalizationReferenceResponse = MutableSharedFlow<Resource<GetLocalizationReferenceResponse>>()

@@ -54,7 +54,7 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
             percentage.text = currentLineItem.displayPercentageSpentSoFar
 
-            if (currentLineItem.percentageSpentSoFar > DataConstant.MAX_PERCENT) {
+            if (currentLineItem.percentageSpentSoFar!! > DataConstant.MAX_PERCENT) {
                 amountSoFar.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
                 percentage.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
             } else {

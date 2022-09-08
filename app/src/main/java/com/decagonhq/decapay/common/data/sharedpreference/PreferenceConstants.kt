@@ -10,4 +10,7 @@ object PreferenceConstants {
     const val CALENDAR_SELECTED_DATE = "calendarSelectedDate"
     const val EXPENSE_CATEGORY_TITLE = "expense_category_title"
     const val USER_NAME = "userName"
+    const val COUNTRY_CODE = "country_code"
+    const val CURRENCY_CODE = "currency_code"
+    const val LANGUAGE_CODE = "language_code"
 }

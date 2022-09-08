@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.login.data.network.model
+package com.decagonhq.decapay.feature.login.data.network.model.localization
 
 data class Data(
     val country: String?,

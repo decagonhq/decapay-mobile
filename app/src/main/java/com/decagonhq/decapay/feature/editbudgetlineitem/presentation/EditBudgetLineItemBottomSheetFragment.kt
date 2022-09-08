@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.common.constants.DataConstant
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentEditBudgetLineItemBinding
@@ -20,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -30,19 +32,29 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private val TAG = "EDITBUDGETLINEITEM"
     private var _binding: FragmentEditBudgetLineItemBinding? = null
     val binding: FragmentEditBudgetLineItemBinding get() = _binding!!
-    private lateinit var selectedCategory: String
-    private var projectedAnount by Delegates.notNull<Double>()
+    private var selectedCategory: String? = null
+    private var projectedAnount: Double? = null
     private var selectedCategoryId by Delegates.notNull<Int>()
     private var selectedBudgetId by Delegates.notNull<Int>()
     private val editBudgetLineItemViewModel: EditBudgetLineItemViewModel by viewModels()
+    @Inject
+    lateinit var editBudgetLineItemPreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val selectedBudgetLineItem = arguments?.getSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM) as LineItem
-        selectedCategory = selectedBudgetLineItem.category
-        projectedAnount = selectedBudgetLineItem.projectedAmount.toDouble()
-        selectedCategoryId = selectedBudgetLineItem.categoryId
-        selectedBudgetId = selectedBudgetLineItem.budgetId
+        val selectedBudgetLineItem = arguments?.getSerializable(DataConstant.SELECTED_BUDGET_LINE_ITEM) as? LineItem
+        if (selectedBudgetLineItem != null) {
+            selectedCategory = selectedBudgetLineItem.category.toString()
+        }
+        if (selectedBudgetLineItem != null) {
+            projectedAnount = selectedBudgetLineItem.projectedAmount?.toDouble()
+        }
+        if (selectedBudgetLineItem != null) {
+            selectedCategoryId = selectedBudgetLineItem.categoryId!!
+        }
+        if (selectedBudgetLineItem != null) {
+            selectedBudgetId = selectedBudgetLineItem.budgetId!!
+        }
     }
 
     override fun onCreateView(
@@ -59,8 +71,8 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // get currency symbol
-        val countryCode = "NG"
-        val language = "en"
+        val countryCode = editBudgetLineItemPreference.getCountry()
+        val language = editBudgetLineItemPreference.getLanguage()
         binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
         // set the category value to textview
         binding.editBudgetLineItemCategoryTv.text = selectedCategory

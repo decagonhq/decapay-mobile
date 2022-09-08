@@ -5,21 +5,21 @@ import java.io.Serializable
 
 data class LineItem(
     @SerializedName("budgetId")
-    val budgetId: Int,
+    val budgetId: Int?,
     @SerializedName("category")
-    val category: String,
+    val category: String?,
     @SerializedName("categoryId")
-    val categoryId: Int,
+    val categoryId: Int?,
     @SerializedName("displayPercentageSpentSoFar")
-    val displayPercentageSpentSoFar: String,
+    val displayPercentageSpentSoFar: String?,
     @SerializedName("displayProjectedAmount")
-    val displayProjectedAmount: String,
+    val displayProjectedAmount: String?,
     @SerializedName("displayTotalAmountSpentSoFar")
-    val displayTotalAmountSpentSoFar: String,
+    val displayTotalAmountSpentSoFar: String?,
     @SerializedName("percentageSpentSoFar")
-    val percentageSpentSoFar: Int,
+    val percentageSpentSoFar: Int?,
     @SerializedName("projectedAmount")
-    val projectedAmount: Int,
+    val projectedAmount: Int?,
     @SerializedName("totalAmountSpentSoFar")
-    val totalAmountSpentSoFar: Int
+    val totalAmountSpentSoFar: Int?
 ) : Serializable

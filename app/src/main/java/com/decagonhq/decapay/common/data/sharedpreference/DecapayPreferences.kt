@@ -78,4 +78,28 @@ class DecapayPreferences @Inject constructor(context: Context) : Preferences {
     override fun getExpenseCategoryTitle(): String {
         return preferences.getString(PreferenceConstants.EXPENSE_CATEGORY_TITLE, "").orEmpty()
     }
+
+    override fun putCountry(country: String) {
+        preferences.edit().putString(PreferenceConstants.COUNTRY_CODE, country).apply()
+    }
+
+    override fun getCountry(): String {
+        return preferences.getString(PreferenceConstants.COUNTRY_CODE, "").orEmpty()
+    }
+
+    override fun putCurrency(currency: String) {
+        preferences.edit().putString(PreferenceConstants.CURRENCY_CODE, currency).apply()
+    }
+
+    override fun getCurrency(): String {
+        return preferences.getString(PreferenceConstants.CURRENCY_CODE, "").orEmpty()
+    }
+
+    override fun putLanguage(language: String) {
+        preferences.edit().putString(PreferenceConstants.LANGUAGE_CODE, language).apply()
+    }
+
+    override fun getLanguage(): String {
+        return preferences.getString(PreferenceConstants.LANGUAGE_CODE, "").orEmpty()
+    }
 }

@@ -172,7 +172,19 @@ class LoginFragment : Fragment() {
                             Log.d(TAG, "here is the logged login response: ${it}")
                             // capture the token here
                             val token = it.data.data?.token
+                            val country = it.data.data?.country
+                            val currency = it.data.data?.currency
+                            val language = it.data.data?.language
                             preference.putToken(token!!)
+                            if (country != null) {
+                                preference.putCountry(country)
+                            }
+                            if (currency != null) {
+                                preference.putCurrency(currency)
+                            }
+                            if (language != null) {
+                                preference.putLanguage(language)
+                            }
                             // preference.putUserName(it.data.data.)
                             (activity as MainActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)

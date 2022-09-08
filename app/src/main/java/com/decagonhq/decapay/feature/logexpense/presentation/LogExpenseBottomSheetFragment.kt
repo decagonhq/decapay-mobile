@@ -57,7 +57,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
+        logExpenseData = (arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData)
     }
 
     override fun onCreateView(
@@ -74,8 +74,8 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // get currency symbol
-        val countryCode = "NG"
-        val language = "en"
+        val countryCode = logExpensePreference.getCountry()
+        val language = logExpensePreference.getLanguage()
         binding.logExpenseBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
         // initialize view
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv

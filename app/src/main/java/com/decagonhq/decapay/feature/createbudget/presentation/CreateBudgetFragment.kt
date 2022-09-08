@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.BudgetPeriodConstant
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -55,6 +57,8 @@ class CreateBudgetFragment : Fragment() {
     lateinit var customBudgetEndDate: String
     lateinit var budgetDescription: String
     private var pleaseWaitDialog: AlertDialog? = null
+    @Inject
+    lateinit var createBudgetPreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +79,8 @@ class CreateBudgetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideDrawer()
         // get currency symbol
-        val countryCode = "NG"
-        val language = "en"
+        val countryCode = createBudgetPreference.getCountry()
+        val language = createBudgetPreference.getLanguage()
 
         binding.createBudgetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
