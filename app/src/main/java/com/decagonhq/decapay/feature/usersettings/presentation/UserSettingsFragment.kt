@@ -95,6 +95,8 @@ class UserSettingsFragment : Fragment() {
                             pleaseWaitDialog?.let { it.dismiss() }
                             // on receive of response, populate the spinners
                             val location = ArrayList<Country>()
+                            // add this first item
+                            location.add(Country("START", 0, "Please select a country"))
                             val countries = it.data.data?.countries
                             if (countries != null) {
                                 for (item in countries) {
@@ -115,8 +117,12 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val countryItemSelected = parent?.selectedItem as Country
-                                    countryCode = countryItemSelected.code
-                                    Log.d(TAG, "content is :$countryCode")
+                                    if (countryItemSelected.id == 0) {
+                                        //
+                                    } else {
+                                        countryCode = countryItemSelected.code
+                                        Log.d(TAG, "content is :$countryCode")
+                                    }
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -125,6 +131,7 @@ class UserSettingsFragment : Fragment() {
                             }
                             // preferred language
                             val spokenLanguage = ArrayList<Language>()
+                            spokenLanguage.add(Language("START", 0, "Please select a language"))
                             val language = it.data.data?.languages
                             if (language != null) {
                                 for (elem in language) {
@@ -145,8 +152,12 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val languageItemSelected = parent?.selectedItem as Language
-                                    languageCode = languageItemSelected.code
-                                    Log.d(TAG, "content is :$languageCode")
+                                    if (languageItemSelected.id == 0) {
+                                        //
+                                    } else {
+                                        languageCode = languageItemSelected.code
+                                        Log.d(TAG, "content is :$languageCode")
+                                    }
                                 }
 
                                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -155,6 +166,7 @@ class UserSettingsFragment : Fragment() {
                             }
                             // preferred currency
                             val allCurrency = ArrayList<Currency>()
+                            allCurrency.add(Currency("START", 0, "Please select a currency"))
                             val currency = it.data.data?.currencies
                             if (currency != null) {
                                 for (element in currency) {
@@ -175,6 +187,8 @@ class UserSettingsFragment : Fragment() {
                                     id: Long
                                 ) {
                                     val currencyItemSelected = parent?.selectedItem as Currency
+                                    if (currencyItemSelected.id == 0) {
+                                    }
                                     currencyCode = currencyItemSelected.code
                                     Log.d(TAG, "content is :$currencyCode")
                                 }
