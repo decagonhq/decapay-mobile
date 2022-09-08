@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -168,6 +169,7 @@ class LoginFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            Log.d(TAG, "here is the logged login response: ${it}")
                             // capture the token here
                             val token = it.data.data?.token
                             preference.putToken(token!!)
