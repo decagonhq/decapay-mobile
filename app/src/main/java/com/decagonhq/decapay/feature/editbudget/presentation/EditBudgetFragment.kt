@@ -16,7 +16,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.BudgetPeriodConstant
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
+import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
@@ -29,6 +31,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditBudgetFragment : Fragment() {
@@ -54,6 +57,8 @@ class EditBudgetFragment : Fragment() {
     private val binding: FragmentEditBudgetBinding get() = _binding!!
     private val fetchUserBudgetToEditViewModel: FetchUserBudgetToEditViewModel by viewModels()
     private val updateEditBudgetViewModel: UpdateEditBudgetViewModel by viewModels()
+    @Inject
+    lateinit var editBudgetPreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +78,10 @@ class EditBudgetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideDrawer()
+        // get currency symbol
+        val countryCode = editBudgetPreference.getCountry()
+        val language = editBudgetPreference.getLanguage()
+        binding.editBudgetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
         _binding = FragmentEditBudgetBinding.bind(view)
         // intialize views and variables

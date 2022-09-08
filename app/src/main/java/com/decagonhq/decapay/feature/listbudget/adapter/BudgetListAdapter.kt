@@ -59,8 +59,10 @@ class BudgetListAdapter(var list: MutableList<Content>, var clicker: BudgetClick
             if (currentBudgetItem.totalAmountSpentSoFar > currentBudgetItem.projectedAmount.toDouble()) {
                 percentageTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
                 spentTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
+            } else {
+                percentageTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.decapay_green))
+                spentTextView.setTextColor(AppCompatResources.getColorStateList(context, R.color.decapay_green))
             }
-
             itemView.setOnClickListener {
                 clicker.onClickItem(currentBudgetItem, adapterPosition)
             }

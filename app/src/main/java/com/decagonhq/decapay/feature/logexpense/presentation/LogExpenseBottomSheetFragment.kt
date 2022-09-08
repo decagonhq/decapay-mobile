@@ -18,6 +18,7 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.buildDatePickerWithConstraint
 import com.decagonhq.decapay.common.utils.converterhelper.buildDateRangeConstraint
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
+import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
@@ -56,7 +57,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logExpenseData = arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData
+        logExpenseData = (arguments?.getSerializable(DataConstant.LOG_EXPENSE_DATA) as LogExpenseData)
     }
 
     override fun onCreateView(
@@ -72,6 +73,10 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // get currency symbol
+        val countryCode = logExpensePreference.getCountry()
+        val language = logExpensePreference.getLanguage()
+        binding.logExpenseBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
         // initialize view
         selectedDateLogExpenseDate = binding.logExpenseBottomSheetFragmentTransactionDateTv
         val viewId = R.id.logExpense_bottom_sheet_fragment_transaction_date_tv

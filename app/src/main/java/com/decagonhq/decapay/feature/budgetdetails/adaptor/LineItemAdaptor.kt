@@ -13,11 +13,11 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 
-class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker,val context: Context) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
+class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClicker, val context: Context) : RecyclerView.Adapter<LineItemAdaptor.LineItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.budget_line_item, parent, false)
-        return LineItemViewHolder(view,context)
+        return LineItemViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: LineItemViewHolder, position: Int) {
@@ -39,7 +39,7 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
         notifyItemRangeChanged(index, list.size)
     }
 
-    class LineItemViewHolder(itemView: View,val context: Context) : RecyclerView.ViewHolder(itemView) {
+    class LineItemViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         private var ellipsisButton: ImageButton = itemView.findViewById<ImageButton>(R.id.budget_line_item_elipsis_ib)
         private var logButton: Button = itemView.findViewById<Button>(R.id.budget_line_item_log_btn)
         private var title: TextView = itemView.findViewById<TextView>(R.id.budget_line_item_title_tv)
@@ -54,9 +54,12 @@ class LineItemAdaptor(var list: MutableList<LineItem>, var clicker: LineItemClic
             amountSoFar.text = currentLineItem.displayTotalAmountSpentSoFar
             percentage.text = currentLineItem.displayPercentageSpentSoFar
 
-            if (currentLineItem.percentageSpentSoFar> DataConstant.MAX_PERCENT){
-                amountSoFar.setTextColor( AppCompatResources.getColorStateList(context, R.color.red))
+            if (currentLineItem.percentageSpentSoFar!! > DataConstant.MAX_PERCENT) {
+                amountSoFar.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
                 percentage.setTextColor(AppCompatResources.getColorStateList(context, R.color.red))
+            } else {
+                amountSoFar.setTextColor(AppCompatResources.getColorStateList(context, R.color.decapay_green))
+                percentage.setTextColor(AppCompatResources.getColorStateList(context, R.color.decapay_green))
             }
 
             ellipsisButton.setOnClickListener {

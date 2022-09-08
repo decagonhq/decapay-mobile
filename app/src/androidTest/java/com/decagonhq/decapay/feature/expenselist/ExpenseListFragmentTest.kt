@@ -18,7 +18,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ExpenseListFragmentTest {
 
-
     @get: Rule
     val hiltRule = HiltAndroidRule(this)
 
@@ -27,12 +26,9 @@ class ExpenseListFragmentTest {
         hiltRule.inject()
     }
 
-
-
-
     @Test
     fun screen_renders() {
-        val fragmentArgs = bundleOf(DataConstant.BUDGET_ID to 1,DataConstant.CATEGORY_ID to 1, DataConstant.CATEGORY to "Transportation")
+        val fragmentArgs = bundleOf(DataConstant.BUDGET_ID to 1, DataConstant.CATEGORY_ID to 1, DataConstant.CATEGORY to "Transportation")
         val scenario = launchFragmentInHiltContainer<ExpensesListFragment>(fragmentArgs)
     }
 }

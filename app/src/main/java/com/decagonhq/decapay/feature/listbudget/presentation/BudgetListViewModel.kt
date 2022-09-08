@@ -1,11 +1,9 @@
 package com.decagonhq.decapay.feature.listbudget.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.utils.resource.Resource
-import com.decagonhq.decapay.feature.listbudget.data.network.model.BudgetListResponse
 import com.decagonhq.decapay.feature.listbudget.domain.usecase.BudgetListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,9 +44,6 @@ class BudgetListViewModel @Inject constructor(
                             list.addAll(it1)
                             _budgetListResponse.value = Resource.Success(list)
                         }
-
-//
-
                     }
                     is Resource.Error -> {
                         _budgetListResponse.value = Resource.Error(it.message)
@@ -86,7 +81,6 @@ class BudgetListViewModel @Inject constructor(
                             _budgetListResponse.value = Resource.Loading()
                         }
                     }
-
                 }
             }
         }

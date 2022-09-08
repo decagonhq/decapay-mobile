@@ -8,13 +8,11 @@ interface Preferences {
 
     fun putUserEmail(email: String)
 
-
-
     fun getUserEmail(): String
 
     fun putUserName(name: String)
 
-    fun getUserName():String
+    fun getUserName(): String
 
     fun putUserPassword(password: String)
 
@@ -37,4 +35,16 @@ interface Preferences {
     fun putExpenseCategoryTitle(categoryTitle: String)
 
     fun getExpenseCategoryTitle(): String
+
+    fun putCountry(country: String)
+
+    fun getCountry(): String
+
+    fun putCurrency(currency: String)
+
+    fun getCurrency(): String
+
+    fun putLanguage(language: String)
+
+    fun getLanguage(): String
 }

@@ -10,7 +10,7 @@ import com.decagonhq.decapay.fragmenttestutils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.*
+import org.junit.Assert.* // ktlint-disable no-wildcard-imports
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,8 +34,6 @@ class EditBudgetLineItemBottomSheetFragmentTest {
         launchFragmentInHiltContainer<EditBudgetLineItemBottomSheetFragment>()
         onView(withId(R.id.edit_budget_line_item_bottom_sheet_fragment_category_title_tv))
             .check(matches(isDisplayed()))
-//        onView(withId(R.id.edit_budget_line_item_bottom_sheet_fragment_label_category_tv))
-//            .check(matches(isDisplayed()))
         onView(withId(R.id.edit_budget_line_item_bottom_sheet_fragment_label_projected_amount_tv))
             .check(matches(isDisplayed()))
         onView(withId(R.id.edit_budget_line_item_bottom_sheet_fragment_amount_tiedt))

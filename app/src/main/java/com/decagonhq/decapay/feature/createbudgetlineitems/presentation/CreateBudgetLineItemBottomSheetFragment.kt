@@ -13,6 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
+import com.decagonhq.decapay.common.data.sharedpreference.Preferences
+import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
@@ -20,9 +22,9 @@ import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.cr
 import com.decagonhq.decapay.feature.createbudgetlineitems.presentation.adapter.CategoryItemSpinnerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
@@ -40,6 +42,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
     private var budgetCategoryId: Int? = null
     private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
+    @Inject
+    lateinit var createBudgetLineItemPreference: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +65,10 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // get currency symbol
+        val countryCode = createBudgetLineItemPreference.getCountry()
+        val language = createBudgetLineItemPreference.getLanguage()
+        binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
@@ -70,11 +78,11 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
-            if (receivedAmount.toString().isEmpty()) {
-                Snackbar.make(
-                    binding.root,
-                    "Amount field cannot be empty",
-                    Snackbar.LENGTH_LONG
+            if (receivedAmount.toString().isEmpty() || (budgetCategoryId == null)) {
+                Toast.makeText(
+                    requireContext(),
+                    "Fields cannot be empty",
+                    Toast.LENGTH_LONG
                 ).show()
             } else {
 
@@ -132,7 +140,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                             // for a first time user, showCreateBudgetCategoryAlertDialog
                             if (categories != null) {
-                                if (categories.size <= 1) {
+                                if (categories.size == 0) {
                                     // display the create category dialog
                                     val destinationId = R.id.budgetCategoryList
                                     showCreateCategoryAlertDialog(destinationId)
@@ -147,7 +155,11 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                                             id: Long
                                         ) {
                                             val categoryItemSelected = parent?.selectedItem as CategoryItem
-                                            budgetCategoryId = categoryItemSelected.id
+                                            if (categoryItemSelected.id == 0) {
+                                                //
+                                            } else {
+                                                budgetCategoryId = categoryItemSelected.id
+                                            }
                                         }
 
                                         override fun onNothingSelected(p0: AdapterView<*>?) {

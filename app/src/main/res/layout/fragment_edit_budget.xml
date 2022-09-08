@@ -89,26 +89,17 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/create_budget_fragment_label_amount"
                 />
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_budget_fragment_amount_til"
+            <com.cottacush.android.currencyedittext.CurrencyEditText
+                android:id="@+id/edit_budget_fragment_amount_tiedt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                app:errorEnabled="true"
-                app:hintEnabled="false"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_budget_fragment_amount_tiedt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/create_budget_fragment_hint_amount"
-                    android:inputType="numberDecimal"
-                    android:lines="1"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:maxNumberOfDecimalDigits="2"
+                android:paddingStart="8dp"
+                android:background="@drawable/budget_period_bg"
+                />
             <TextView
                 android:id="@+id/edit_budget_fragment_title_budget_period_tv"
                 android:layout_width="wrap_content"
