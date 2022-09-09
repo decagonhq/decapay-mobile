@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:clickable="true"
@@ -238,6 +239,7 @@
                 android:background="@drawable/login_button_bg"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/create_budget_fragment_done_button"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
             <View

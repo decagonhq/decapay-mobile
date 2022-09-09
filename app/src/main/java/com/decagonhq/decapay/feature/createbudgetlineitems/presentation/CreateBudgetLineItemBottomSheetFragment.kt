@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.createbudgetlineitems.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +79,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
-            if (receivedAmount.toString().isEmpty() || (budgetCategoryId != null)) {
+            if ((receivedAmount == 0.0) || (budgetCategoryId == null)) {
                 Toast.makeText(
                     requireContext(),
                     "Fields cannot be empty",

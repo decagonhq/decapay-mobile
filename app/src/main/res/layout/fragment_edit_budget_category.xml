@@ -22,7 +22,9 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_arrow_back"
                 android:focusable="true" />
 
@@ -90,6 +92,7 @@
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/edit_budget_category_fragment_name_category_save"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

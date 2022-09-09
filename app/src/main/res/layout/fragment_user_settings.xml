@@ -85,6 +85,7 @@
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/userSettings_fragment_submit_button"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

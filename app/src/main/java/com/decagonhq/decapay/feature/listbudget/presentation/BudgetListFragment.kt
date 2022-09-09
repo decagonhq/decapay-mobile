@@ -53,9 +53,6 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         return binding.root
     }
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).revealDrawer()
@@ -75,12 +72,11 @@ class BudgetListFragment : Fragment(), BudgetClicker {
         setUpSpinner()
     }
 
-
     private fun setUpSpinner() {
         val states = resources.getStringArray(R.array.States)
         val spinnerAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, states)
         binding.budgetListFragmentFilterSpinner.adapter = spinnerAdapter
-        binding.budgetListFragmentFilterSpinner.setSelection(2);
+        binding.budgetListFragmentFilterSpinner.setSelection(2)
         binding.budgetListFragmentFilterSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -92,7 +88,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                     if (budgetListViewModel.budgetTypePosition != position) {
                         Log.d(
                             "spinner",
-                            "call-me, budgetTypePosition: ${budgetListViewModel.budgetTypePosition}, position: ${position}"
+                            "call-me, budgetTypePosition: ${budgetListViewModel.budgetTypePosition}, position: $position"
                         )
                         budgetListViewModel.budgetTypePosition = position
                         budgetListViewModel.isLastPage = true
@@ -105,12 +101,9 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                             3 -> budgetListViewModel.getBudgetList("upcoming")
                         }
                     }
-
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-
                 }
             }
     }
@@ -175,22 +168,21 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     private fun setUpScrollListener() {
         binding.budgetListFragmentBudgetListRv.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
-                if (dy > 0) {
-                    val visibleItemCount = recyclerView.layoutManager!!.childCount
-                    val totalItemCount = recyclerView.layoutManager!!.itemCount
-                    val pastVisibleItems =
-                        (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if (dy > 0) {
+                        val visibleItemCount = recyclerView.layoutManager!!.childCount
+                        val totalItemCount = recyclerView.layoutManager!!.itemCount
+                        val pastVisibleItems =
+                            (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
-                        budgetListViewModel.getNextPage()
-
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount - 2) {
+                            budgetListViewModel.getNextPage()
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 
     private fun setIsLoadingScreen() {
@@ -217,7 +209,5 @@ class BudgetListFragment : Fragment(), BudgetClicker {
             binding.budgetListFragmentEmptyLl.visibility = View.GONE
             binding.budgetListFragmentPageLoadingPb.visibility = View.GONE
         }
-
-
     }
 }

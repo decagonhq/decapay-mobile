@@ -63,20 +63,6 @@ class SignUpFragment : Fragment() {
 
             val formValidated = validateAndSendRequest()
             if (formValidated) {
-                // on click of submit button, pass the account details to userSettings
-                /*
-                signUpViewModel.signUp(
-                    SignUpRequestBody(
-                        firstName = binding.signUpFragmentFirstNameEt.text.toString().trim(),
-                        lastName = binding.signUpFragmentLastNameEt.text.toString().trim(),
-                        email = binding.signUpFragmentEmailEt.text.toString().trim(),
-                        password = binding.signUpFragmentPasswordEt.text.toString().trim(),
-                        phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString().trim(),
-                    )
-
-                )
-
-                 */
                 val firstName = binding.signUpFragmentFirstNameEt.text.toString().trim()
                 val lastName = binding.signUpFragmentLastNameEt.text.toString().trim()
                 val email = binding.signUpFragmentEmailEt.text.toString().trim()
@@ -91,10 +77,6 @@ class SignUpFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putSerializable(DataConstant.SIGNUP_DETAILS, signUpAccountDetailsData)
                 findNavController().navigate(R.id.userSettingsFragment, bundle)
-
-//                pleaseWaitDialog?.show()
-                // when user account is successfully created, navigate to the login
-//                findNavController().navigate(R.id.loginFragment)
             } else {
                 hideKeyboard()
                 Snackbar.make(

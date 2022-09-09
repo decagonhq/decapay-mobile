@@ -73,14 +73,14 @@ class UserSettingsFragment : Fragment() {
         // on click submit button, complete registration
         binding.userSettingsFragmentSubmitButtonBtn.setOnClickListener {
             // do a validation
-            if (countryCode.isNullOrEmpty() || currencyCode.isNullOrEmpty() || languageCode.isNullOrEmpty() || signUpAccountDetailsData.email.isNullOrEmpty()
-                || signUpAccountDetailsData.firstName.isNullOrEmpty() || signUpAccountDetailsData.lastName.isNullOrEmpty() || signUpAccountDetailsData.password.isNullOrEmpty() || signUpAccountDetailsData.phoneNumber.isNullOrEmpty()) {
+            if (countryCode.isNullOrEmpty() || currencyCode.isNullOrEmpty() || languageCode.isNullOrEmpty() || signUpAccountDetailsData.email.isNullOrEmpty() ||
+                signUpAccountDetailsData.firstName.isNullOrEmpty() || signUpAccountDetailsData.lastName.isNullOrEmpty() || signUpAccountDetailsData.password.isNullOrEmpty() || signUpAccountDetailsData.phoneNumber.isNullOrEmpty()
+            ) {
                 Snackbar.make(
                     binding.root,
                     "Please select the required fields",
                     Snackbar.LENGTH_LONG
                 ).show()
-
             } else {
                 pleaseWaitDialog?.let { it.show() }
                 // on click submit button, make a call
@@ -91,7 +91,6 @@ class UserSettingsFragment : Fragment() {
                     )
                 )
             }
-
         }
 
         initObserver()

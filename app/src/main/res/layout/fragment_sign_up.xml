@@ -240,6 +240,7 @@
             android:background="@color/decapay_green"
             app:backgroundTint="@color/decapay_green"
             android:layout_marginBottom="30dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             app:layout_constraintHorizontal_bias="0.6"

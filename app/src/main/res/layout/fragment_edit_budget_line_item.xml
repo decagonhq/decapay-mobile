@@ -78,6 +78,7 @@
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/edit_budget_line_item_bottom_sheet_fragment_create_button"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:textAllCaps="false"
         android:textColor="@color/white" />
     <TextView

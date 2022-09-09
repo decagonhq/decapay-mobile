@@ -104,7 +104,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             val receivedDescription = binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.text.toString()
             val receivedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
             // validate input field
-            if (receivedAmount.toString().isEmpty() || receivedDescription.isEmpty() || receivedTransactionDate.isEmpty()) {
+            if ((receivedAmount == 0.0) || receivedDescription.isEmpty() || receivedTransactionDate.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Input fields cannot be empty",
