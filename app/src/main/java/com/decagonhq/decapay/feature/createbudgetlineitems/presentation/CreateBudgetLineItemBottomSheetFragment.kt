@@ -78,7 +78,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
-            if (receivedAmount.toString().isEmpty() || (budgetCategoryId == null)) {
+            if (receivedAmount.toString().isEmpty() || (budgetCategoryId != null)) {
                 Toast.makeText(
                     requireContext(),
                     "Fields cannot be empty",
