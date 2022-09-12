@@ -49,7 +49,6 @@ class EditBudgetFragment : Fragment() {
     lateinit var editCustomeBudgetStartDate: String
     lateinit var editCustomBudgetEndDate: String
     lateinit var editBudgetTitle: String
-    lateinit var editBudgetAmount: String
     lateinit var editBudgetDescription: String
     lateinit var editWeeklyDuration: String
     private var pleaseWaitDialog: AlertDialog? = null
@@ -57,6 +56,7 @@ class EditBudgetFragment : Fragment() {
     private val binding: FragmentEditBudgetBinding get() = _binding!!
     private val fetchUserBudgetToEditViewModel: FetchUserBudgetToEditViewModel by viewModels()
     private val updateEditBudgetViewModel: UpdateEditBudgetViewModel by viewModels()
+    var editBudgetAmount: Double? = null
     @Inject
     lateinit var editBudgetPreference: Preferences
 
@@ -178,12 +178,12 @@ class EditBudgetFragment : Fragment() {
         binding.editBudgetFragmentDoneButtonBtn.setOnClickListener {
             // capture the input
             editBudgetTitle = binding.editBudgetFragmentTitleTiedt.text?.trim().toString()
-            editBudgetAmount = binding.editBudgetFragmentAmountTiedt.text?.trim().toString()
+            editBudgetAmount = binding.editBudgetFragmentAmountTiedt.getNumericValue()
             editBudgetDescription = binding.editBudgetFragmentDescriptionTiedt.text?.trim().toString()
             editWeeklyDuration = binding.editBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
-            if (editBudgetTitle.isEmpty() || editBudgetAmount.isEmpty() || editBudgetPeriodType.isEmpty() || editBudgetDescription.isEmpty()) {
+            if (editBudgetTitle.isEmpty() || (editBudgetAmount == 0.0) || editBudgetPeriodType.isEmpty() || editBudgetDescription.isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Please enter appropriate details to edit your budget",
@@ -196,7 +196,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetAmount, null, null,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.ANNUAL,
                                 editBudgetTitle, editAnnualPeriodYear.toInt()
                             ),
@@ -209,7 +209,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetAmount, null, null,
                                 editBudgetDescription, null, CalendarMonth.convertMonthStringValueToInt(editMonthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
                                 editBudgetTitle, editMonthlyPeriodYear.toInt()
                             ),
@@ -222,7 +222,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, editWeeklyStartDate,
+                                editBudgetAmount, null, editWeeklyStartDate,
                                 editBudgetDescription, editWeeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
                                 editBudgetTitle, null
                             ),
@@ -236,7 +236,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), editDailyStartDateSelected, editDailyStartDateSelected,
+                                editBudgetAmount, editDailyStartDateSelected, editDailyStartDateSelected,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.DAILY,
                                 editBudgetTitle, null
                             ),
@@ -249,7 +249,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), editCustomBudgetEndDate, editCustomeBudgetStartDate,
+                                editBudgetAmount, editCustomBudgetEndDate, editCustomeBudgetStartDate,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.CUSTOM,
                                 editBudgetTitle, null
                             ),
