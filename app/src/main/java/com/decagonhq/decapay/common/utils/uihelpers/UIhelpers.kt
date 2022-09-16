@@ -62,5 +62,5 @@ fun Activity.showInfoMsgTokenExpired() {
         .setMessage(getString(R.string.unauthorized_title_info_message))
         .setPositiveButton(getString(R.string.unauthorized_title_info_ok)) { dialog, which ->
             dialog.cancel()
-        }
+        }.show()
 }
