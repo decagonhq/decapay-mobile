@@ -23,6 +23,7 @@ class ExceptionHandler @Inject constructor(context: Context) {
                     )
 
                     errorMessage += if (obj.message != null) "${obj.message}\n" else ""
+                    errorMessage += if (obj.status != null) "${obj.status}\n" else ""
                     if (obj.subErrors != null) {
                         for (value in obj.subErrors) {
                             errorMessage += "${value?.message}"

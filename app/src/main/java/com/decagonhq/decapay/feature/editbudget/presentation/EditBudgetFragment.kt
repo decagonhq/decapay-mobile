@@ -20,6 +20,7 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
@@ -440,11 +441,22 @@ class EditBudgetFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

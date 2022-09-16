@@ -12,9 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgTokenExpired
 import com.decagonhq.decapay.databinding.ActivityMainBinding
 import com.decagonhq.decapay.feature.signout.data.network.model.SignOutRequestBody
 import com.decagonhq.decapay.feature.signout.presentation.MainActivityViewModel
@@ -41,15 +44,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setUpViewModelListener()
-       val email = preference.getUserEmail()
+        val email = preference.getUserEmail()
         val name = preference.getUserName()
-
 
         if (preference.getToken().isEmpty()) {
             binding.mainActivityHamburgerIb.visibility = View.GONE
             binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-
-
         } else {
         }
 
@@ -86,12 +86,18 @@ class MainActivity : AppCompatActivity() {
                             preference.deleteToken()
                         }
                         is Resource.Error -> {
-//                            pleaseWaitDialog?.dismiss()
-//                            Snackbar.make(
-//                                binding.root,
-//                                "${it.message}",
-//                                Snackbar.LENGTH_LONG
-//                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    navController.navigate(R.id.loginFragment)
+                                    showInfoMsgTokenExpired()
+                                }
+                                else -> {
+                                    // nothing
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }
@@ -129,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-     fun hideDrawer() {
+    fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
@@ -139,8 +145,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-    fun navigateToLogIn(){
+    fun navigateToLogIn() {
         navController.navigate(R.id.loginFragment)
-
     }
 }

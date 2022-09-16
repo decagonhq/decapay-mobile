@@ -21,6 +21,7 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.model.Content
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentBudgetListBinding
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
@@ -121,7 +122,20 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                         is Resource.Success -> {
                             setDataLoaded(it.data as MutableList<Content>)
                         }
-                        else -> {}
+                        is Resource.Error -> {
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    // nothing
+                                }
+                            }
+                        }
                     }
                 }
             }

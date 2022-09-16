@@ -22,6 +22,7 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
@@ -196,7 +197,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val addedOneDayToEndDateFromRemoteDate = addOneDayToEndDateFromRemote.replace('-', '.')
                             val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDate = extractedMonthFromCurrentDateToSetStartDateForFutureBudget.replace('-', '.')
 
-
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
                             val addedOneDayTodaysDateTime = "$addedOneDayTodaysDate, 00:00"
@@ -225,11 +225,22 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             setDataLoaded(it.data.data.lineItems.toMutableList())
                         }
                         is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
-                                it.message,
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when(it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

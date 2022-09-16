@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentForgotPasswordBinding
@@ -117,11 +118,22 @@ class ForgotPasswordFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

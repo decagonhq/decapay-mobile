@@ -17,6 +17,7 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.*
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentEditLogExpenseBottomSheetBinding
 import com.decagonhq.decapay.feature.editlogexpense.data.network.model.EditLogExpenseRequestBody
 import com.decagonhq.decapay.feature.expenseslist.data.network.model.ExpenseContent
@@ -143,8 +144,20 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            binding.editLogExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
-                            binding.editLogExpenseBottomSheetFragmentErrorMessageTv.text = it.message
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    binding.editLogExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
+                                    binding.editLogExpenseBottomSheetFragmentErrorMessageTv.text = it.message
+                                }
+                            }
+
                         }
                         is Resource.Loading -> {
                         }
