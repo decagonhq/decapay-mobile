@@ -71,6 +71,39 @@
         android:paddingStart="8dp"
         android:background="@drawable/budget_period_bg"
         />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <CheckBox
+            android:id="@+id/create_budget_line_item_bottom_sheet_fragment_template_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="10dp"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="@string/create_budget_line_item_bottom_sheet_fragment_template_msg"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/create_budget_line_item_bottom_sheet_fragment_template_period_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_budget_line_item_bottom_sheet_fragment_template_period"
+            android:layout_marginTop="4dp"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="6dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            />
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <Button
         android:id="@+id/create_budget_line_item_bottom_sheet_fragment_create_button_btn"
         android:layout_width="match_parent"
