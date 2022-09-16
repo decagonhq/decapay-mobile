@@ -128,6 +128,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
                                 "UNAUTHORIZED" -> {
                                     // navigate to login
                                     // show a dialog
+
                                     findNavController().navigate(R.id.loginFragment)
                                     showInfoMsgSessionExpired()
                                 }

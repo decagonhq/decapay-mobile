@@ -183,7 +183,7 @@
     <string name="userSettings_language_custom_spinner">Language</string>
     <string name="userSettings_currency_custom_spinner">Currency</string>
     <string name="unauthorized_title_info">Info</string>
-    <string name="unauthorized_title_info_message">Your session has timed out, please login\nagain.</string>
-    <string name="unauthorized_title_info_ok">Info</string>
+    <string name="unauthorized_title_info_message">Your session has timed out, please login again.</string>
+    <string name="unauthorized_title_info_ok">Dismiss</string>
 
 </resources>

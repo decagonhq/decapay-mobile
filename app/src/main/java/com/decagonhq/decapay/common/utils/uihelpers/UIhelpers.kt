@@ -53,7 +53,7 @@ fun Fragment.showInfoMsgSessionExpired() {
         .setMessage(getString(R.string.unauthorized_title_info_message))
         .setPositiveButton(getString(R.string.unauthorized_title_info_ok)) { dialog, which ->
             dialog.cancel()
-        }
+        }.show()
 }
 
 fun Activity.showInfoMsgTokenExpired() {
