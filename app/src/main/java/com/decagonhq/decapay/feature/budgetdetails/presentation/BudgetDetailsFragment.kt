@@ -44,13 +44,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
     private var budgetId: Int? = null
-    private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
     private var calendarSelectedDate: String? = null
-    private var startDateCaptured by Delegates.notNull<Long>()
-    private var endDateCaptured by Delegates.notNull<Long>()
     private lateinit var logExpenseData: LogExpenseData
+    private var budgetPeriod: String? = null
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences
@@ -106,6 +104,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             val bundle = Bundle()
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
+                bundle.putString(DataConstant.BUDGET_PERIOD, budgetPeriod)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
         }
@@ -114,7 +113,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             val selectedDayOfMonth = if ("$dayOfMonth".length == 1) "0$dayOfMonth" else "$dayOfMonth"
             val selectedMonth = if ("${month + 1}".length == 1) "0${month + 1}" else "${month + 1}"
             calendarSelectedDate = "$selectedDayOfMonth/$selectedMonth/$year"
-            Log.d("calendar", "here it is $calendarSelectedDate")
         }
 
         initObserver()
@@ -158,6 +156,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                         is Resource.Success -> {
 
                             val budgetDetails = it.data.data
+                            // capture budget period to save to bundle
+                            budgetPeriod = budgetDetails.budgetPeriod
 
                             binding.budgetDetailsHeaderPeriodTv.text = budgetDetails.budgetPeriod
                             binding.budgetDetailsHeaderDateTv.text = " ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"

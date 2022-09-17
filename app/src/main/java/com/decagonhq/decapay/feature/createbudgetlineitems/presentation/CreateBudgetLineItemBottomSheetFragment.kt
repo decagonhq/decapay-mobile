@@ -35,14 +35,13 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private val TAG = "CREATELINEITEM"
     private var _binding: FragmentCreateBudgetLineItemBottomSheetBinding? = null
     private val binding: FragmentCreateBudgetLineItemBottomSheetBinding get() = _binding!!
-    lateinit var selectedCategory: String
     private val getBudgetCategoryListViewModel: GetBudgetCategoryListViewModel by viewModels()
     private val createBudgetLineItemViewModel: CreateBudgetLineItemViewModel by viewModels()
     private var budgetId: Int? = null
-    private var receivedDetailBudgetId: Int? = null
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
     private var budgetCategoryId: Int? = null
-    private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
+    private var budgetPeriod: String? = null
+
     @Inject
     lateinit var createBudgetLineItemPreference: Preferences
 
@@ -50,6 +49,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
         // get the budgetId from bundle
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
+        budgetPeriod = arguments?.getString(DataConstant.BUDGET_PERIOD)
     }
 
     override fun onCreateView(
@@ -70,6 +70,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         val countryCode = createBudgetLineItemPreference.getCountry()
         val language = createBudgetLineItemPreference.getLanguage()
         binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
+        // set the budget period to the createBudgetLineItem template option
+        binding.createBudgetLineItemBottomSheetFragmentTemplatePeriodTv.text = budgetPeriod
 
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
@@ -88,9 +90,15 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             } else {
 
                 if (budgetId != null) {
-                    createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, null)
-                    )
+                    if (binding.createBudgetLineItemBottomSheetFragmentTemplateChk.isChecked) {
+                        createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                            budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, true)
+                        )
+                    } else {
+                        createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                            budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, false)
+                        )
+                    }
                 }
             }
         }
