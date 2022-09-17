@@ -2,5 +2,6 @@ package com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.c
 
 data class CreateBudgetLineItemRequestBody(
     val amount: Double?,
-    val budgetCategoryId: Int?
+    val budgetCategoryId: Int?,
+    val setLineItemAsTemplate: Boolean?
 )

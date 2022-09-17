@@ -89,7 +89,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
                 if (budgetId != null) {
                     createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId)
+                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, null)
                     )
                 }
             }
