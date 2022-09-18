@@ -100,8 +100,8 @@ class CreateNewPasswordFragment : Fragment() {
 
         initObserver()
         // navigate
-        binding.createNewPasswordFragmentLoginTv.setOnClickListener {
-            findNavController().navigate(R.id.loginFragment)
+        binding.changeNewPasswordFragmentCreateAccountTv.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
         }
     }
 
