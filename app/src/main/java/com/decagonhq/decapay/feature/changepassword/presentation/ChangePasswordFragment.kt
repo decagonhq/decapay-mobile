@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentChangePasswordBinding
+import com.decagonhq.decapay.feature.changepassword.data.network.model.ChangePasswordRequestBody
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
     /**
      * decalre variables and views
@@ -22,6 +26,7 @@ class ChangePasswordFragment : Fragment() {
     private var _binding: FragmentChangePasswordBinding? = null
     val binding: FragmentChangePasswordBinding get() = _binding!!
     private var pleaseWaitDialog: AlertDialog? = null
+    private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +61,9 @@ class ChangePasswordFragment : Fragment() {
                 ).show()
             } else {
                 // make a network call
-
+                changePasswordViewModel.userChangePassword(
+                    ChangePasswordRequestBody(receivedConfirmPassword, receivedNewPassword, receivedPassword)
+                )
                 // show dialog
                 pleaseWaitDialog?.let { it.show() }
                 // hide the keyboard
