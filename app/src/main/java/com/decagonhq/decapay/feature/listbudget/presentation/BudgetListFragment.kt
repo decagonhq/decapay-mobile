@@ -25,6 +25,7 @@ import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentBudgetListBinding
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetClicker
 import com.decagonhq.decapay.feature.listbudget.adapter.BudgetListAdapter
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class BudgetListFragment : Fragment(), BudgetClicker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).revealDrawer()
+        (activity as BaseActivity).revealDrawer()
 
         adapter = BudgetListAdapter(list, this, requireContext())
         binding.budgetListFragmentBudgetListRv.adapter = adapter
