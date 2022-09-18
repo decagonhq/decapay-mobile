@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
     private val changePasswordUsecase: ChangePasswordUsecase,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle?
 ) : ViewModel() {
 
     private val _changePasswordResponse = MutableSharedFlow<Resource<ChangePasswordResponse>>()

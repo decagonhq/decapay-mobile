@@ -22,7 +22,7 @@ import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class CreateBudgetLineItemViewModelTest {
+class dCreateBudgetLineItemViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     lateinit var mockCreateBudgetLineItemResponse: CreateBudgetLineItemResponse
