@@ -12,10 +12,13 @@ Decapay is a digital product that allows users to track and manage their finance
 
 ## Tools
 * Kotlin.
-* Retrofit.
-* Dagger Hilt.
-* JUnit.
-* Flow.
-* Coroutine.
+* Retrofit( API Integration).
+* Dagger Hilt(Dependency Injection).
+* JUnit(Unit Testing).
+* Flow(Reactive Programming).
+* Coroutine(Asyn operations).
 * Android Jetpack Architectural Components.
 * View Binding.
+
+## Installation
+Search decapay on google play store, download then install to device.
