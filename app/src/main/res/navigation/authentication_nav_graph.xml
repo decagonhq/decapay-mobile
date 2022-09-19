@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/userProfileFragment">
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.decagonhq.decapay.feature.signup.presentation.SignUpFragment"
@@ -120,6 +120,11 @@
         android:id="@+id/userSettingsFragment"
         android:name="com.decagonhq.decapay.feature.usersettings.presentation.UserSettingsFragment"
         android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.decagonhq.decapay.feature.userprofile.presentation.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
 
 
 </navigation>
