@@ -33,7 +33,6 @@ class BudgetListViewModel @Inject constructor(
         page = 1
         viewModelScope.launch {
 
-
             budgetListUseCase.invoke(page, state).collect {
                 when (it) {
 
@@ -70,7 +69,6 @@ class BudgetListViewModel @Inject constructor(
                             it.datas?.data?.content?.let { dataList ->
 
                                 updateAndEmitNewList(dataList)
-
                             }
                         }
                         is Resource.Error -> {
@@ -91,7 +89,6 @@ class BudgetListViewModel @Inject constructor(
         val newList = mutableListOf<Content>()
 
         newList.addAll(list)
-
 
         newList.addAll(newPage)
 
