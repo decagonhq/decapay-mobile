@@ -48,6 +48,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentSignUpBinding.bind(view)
+
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         binding.signUpFragmentLogInTv.setOnClickListener {

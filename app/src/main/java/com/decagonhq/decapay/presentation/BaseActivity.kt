@@ -11,4 +11,8 @@ open class BaseActivity : AppCompatActivity() {
    open fun revealDrawer() {
 
     }
+
+    open fun updateName( name :String,email:String) {
+
+    }
 }

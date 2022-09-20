@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             >
             <ImageView
-                android:id="@+id/expense_list_fragment_toolbar_iv"
+                android:id="@+id/user_profile_fragment_toolbar_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -30,10 +30,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_arrow_back"
+                android:visibility="invisible"
                 />
 
             <TextView
-                android:id="@+id/expense_list_fragment_toolbar_title"
+                android:id="@+id/user_profile_fragment_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
@@ -42,11 +43,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.391"
-                app:layout_constraintStart_toEndOf="@+id/expense_list_fragment_toolbar_iv"
+                app:layout_constraintStart_toEndOf="@+id/user_profile_fragment_toolbar_iv"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/expense_list_fragment_toolbar_ellipsis"
+                android:id="@+id/user_profile_fragment_toolbar_ellipsis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
@@ -56,7 +57,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/expense_list_fragment_toolbar_title"
+                app:layout_constraintStart_toEndOf="@+id/user_profile_fragment_toolbar_title"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
