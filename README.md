@@ -21,4 +21,9 @@ Decapay is a digital product that allows users to track and manage their finance
 * View Binding.
 
 ## Installation
-Search decapay on google play store, download then install to device.
+* Clone the repo.
+* Navigate to the root folder.
+* On your terminal, run the command below. 
+```
+./gradlew installDebug
+```
