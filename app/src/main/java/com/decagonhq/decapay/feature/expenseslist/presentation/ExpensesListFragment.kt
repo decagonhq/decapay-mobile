@@ -21,6 +21,7 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentExpensesListBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.feature.expenseslist.adapter.ExpenseClicker
@@ -155,7 +156,20 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
                         is Resource.Success -> {
                             setDataLoaded(it.data as MutableList<ExpenseContent>)
                         }
-                        else -> {}
+                        is Resource.Error -> {
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    //
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -243,7 +257,7 @@ class ExpensesListFragment : Fragment(), ExpenseClicker {
             DataConstant.UPDATE_UI
         )?.observe(viewLifecycleOwner) {
             it?.let {
-                budgetId?.let { it1 -> expenseListViewModel.getExpensesList(budgetId!!,categoryId!!); }
+                budgetId?.let { it1 -> expenseListViewModel.getExpensesList(budgetId!!, categoryId!!); }
             }
         }
     }

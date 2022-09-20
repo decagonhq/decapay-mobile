@@ -17,6 +17,7 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateNewPasswordBinding
@@ -99,8 +100,8 @@ class CreateNewPasswordFragment : Fragment() {
 
         initObserver()
         // navigate
-        binding.createNewPasswordFragmentLoginTv.setOnClickListener {
-            findNavController().navigate(R.id.loginFragment)
+        binding.changeNewPasswordFragmentCreateAccountTv.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
         }
     }
 
@@ -109,7 +110,7 @@ class CreateNewPasswordFragment : Fragment() {
             binding.createNewPasswordFragmentNewPasswordTil.error = "Password cannot be empty"
         } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
             binding.createNewPasswordFragmentNewPasswordTil.error = "Password must have a minimum of 8 characters."
-        }  else {
+        } else {
             binding.createNewPasswordFragmentNewPasswordTil.error = ""
         }
     }
@@ -139,11 +140,22 @@ class CreateNewPasswordFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

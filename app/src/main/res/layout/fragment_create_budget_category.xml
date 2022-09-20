@@ -23,6 +23,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_arrow_back"
                 android:focusable="true" />
 
@@ -90,6 +91,7 @@
         android:background="@drawable/login_button_bg"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/create_budget_category_fragment_name_category_add"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

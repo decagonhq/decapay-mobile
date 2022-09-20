@@ -14,10 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.CreateBudgetCategoryInputValidation
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetCategoryBinding
 import com.decagonhq.decapay.feature.createbudgetcategory.data.network.model.CreateBudgetCategoryRequestBody
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +53,7 @@ class CreateBudgetCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
 
         _binding = FragmentCreateBudgetCategoryBinding.bind(view)
         pleaseWaitDialog = showPleaseWaitAlertDialog()
@@ -98,11 +100,23 @@ class CreateBudgetCategoryFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+
                         }
                         is Resource.Loading -> {
                         }

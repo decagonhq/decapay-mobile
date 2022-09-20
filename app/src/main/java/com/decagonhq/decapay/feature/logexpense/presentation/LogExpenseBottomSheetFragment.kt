@@ -20,6 +20,7 @@ import com.decagonhq.decapay.common.utils.converterhelper.buildDateRangeConstrai
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentLogExpenseBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
 import com.decagonhq.decapay.feature.logexpense.data.network.model.LogExpenseRequestBody
@@ -144,8 +145,19 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
-                            binding.logExpenseBottomSheetFragmentErrorMessageTv.text = it.message
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    binding.logExpenseBottomSheetFragmentErrorMessageTv.visibility = View.VISIBLE
+                                    binding.logExpenseBottomSheetFragmentErrorMessageTv.text = it.message
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

@@ -20,12 +20,14 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentEditBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
 import com.decagonhq.decapay.feature.editbudget.data.network.model.editbudgetmodel.UpdateBudgetRequestBody
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -49,7 +51,6 @@ class EditBudgetFragment : Fragment() {
     lateinit var editCustomeBudgetStartDate: String
     lateinit var editCustomBudgetEndDate: String
     lateinit var editBudgetTitle: String
-    lateinit var editBudgetAmount: String
     lateinit var editBudgetDescription: String
     lateinit var editWeeklyDuration: String
     private var pleaseWaitDialog: AlertDialog? = null
@@ -57,6 +58,7 @@ class EditBudgetFragment : Fragment() {
     private val binding: FragmentEditBudgetBinding get() = _binding!!
     private val fetchUserBudgetToEditViewModel: FetchUserBudgetToEditViewModel by viewModels()
     private val updateEditBudgetViewModel: UpdateEditBudgetViewModel by viewModels()
+    var editBudgetAmount: Double? = null
     @Inject
     lateinit var editBudgetPreference: Preferences
 
@@ -77,7 +79,7 @@ class EditBudgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
         // get currency symbol
         val countryCode = editBudgetPreference.getCountry()
         val language = editBudgetPreference.getLanguage()
@@ -178,12 +180,12 @@ class EditBudgetFragment : Fragment() {
         binding.editBudgetFragmentDoneButtonBtn.setOnClickListener {
             // capture the input
             editBudgetTitle = binding.editBudgetFragmentTitleTiedt.text?.trim().toString()
-            editBudgetAmount = binding.editBudgetFragmentAmountTiedt.text?.trim().toString()
+            editBudgetAmount = binding.editBudgetFragmentAmountTiedt.getNumericValue()
             editBudgetDescription = binding.editBudgetFragmentDescriptionTiedt.text?.trim().toString()
             editWeeklyDuration = binding.editBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
-            if (editBudgetTitle.isEmpty() || editBudgetAmount.isEmpty() || editBudgetPeriodType.isEmpty() || editBudgetDescription.isEmpty()) {
+            if (editBudgetTitle.isEmpty() || (editBudgetAmount == 0.0) || editBudgetPeriodType.isEmpty() || editBudgetDescription.isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Please enter appropriate details to edit your budget",
@@ -196,7 +198,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetAmount, null, null,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.ANNUAL,
                                 editBudgetTitle, editAnnualPeriodYear.toInt()
                             ),
@@ -209,7 +211,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, null,
+                                editBudgetAmount, null, null,
                                 editBudgetDescription, null, CalendarMonth.convertMonthStringValueToInt(editMonthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
                                 editBudgetTitle, editMonthlyPeriodYear.toInt()
                             ),
@@ -222,7 +224,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), null, editWeeklyStartDate,
+                                editBudgetAmount, null, editWeeklyStartDate,
                                 editBudgetDescription, editWeeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
                                 editBudgetTitle, null
                             ),
@@ -236,7 +238,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), editDailyStartDateSelected, editDailyStartDateSelected,
+                                editBudgetAmount, editDailyStartDateSelected, editDailyStartDateSelected,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.DAILY,
                                 editBudgetTitle, null
                             ),
@@ -249,7 +251,7 @@ class EditBudgetFragment : Fragment() {
                         // make this network call
                         updateEditBudgetViewModel.userUpdateBudget(
                             UpdateBudgetRequestBody(
-                                editBudgetAmount.toDouble(), editCustomBudgetEndDate, editCustomeBudgetStartDate,
+                                editBudgetAmount, editCustomBudgetEndDate, editCustomeBudgetStartDate,
                                 editBudgetDescription, null, null, BudgetPeriodConstant.CUSTOM,
                                 editBudgetTitle, null
                             ),
@@ -440,11 +442,22 @@ class EditBudgetFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

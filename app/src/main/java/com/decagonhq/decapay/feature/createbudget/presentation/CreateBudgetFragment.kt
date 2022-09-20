@@ -19,12 +19,14 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.convertLongToTime
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetBinding
 import com.decagonhq.decapay.feature.createbudget.data.network.model.CreateBudgetRequestBody
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.BudgetPeriods
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.CalendarMonth
 import com.decagonhq.decapay.feature.createbudget.data.staticdata.YearList
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -77,7 +79,7 @@ class CreateBudgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
         // get currency symbol
         val countryCode = createBudgetPreference.getCountry()
         val language = createBudgetPreference.getLanguage()
@@ -381,11 +383,22 @@ class CreateBudgetFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                             pleaseWaitDialog?.let { it.dismiss() }

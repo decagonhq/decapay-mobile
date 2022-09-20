@@ -120,6 +120,16 @@
         android:id="@+id/userSettingsFragment"
         android:name="com.decagonhq.decapay.feature.usersettings.presentation.UserSettingsFragment"
         android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.decagonhq.decapay.feature.userprofile.presentation.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.decagonhq.decapay.feature.edit_profile.presentation.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
 
 </navigation>

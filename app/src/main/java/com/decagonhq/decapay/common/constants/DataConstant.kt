@@ -17,4 +17,12 @@ object DataConstant {
     const val START_DATE = "start_date"
     const val END_DATE = "end_date"
     const val SIGNUP_DETAILS = "signup_details"
+    const val BUDGET_PERIOD = "budget_period"
+    const val FIRST_NAME = "first_name"
+    const val LAST_NAME = "last_name"
+    const val EMAIL = "email"
+    const val PHONENUMBER = "phone_number"
+
+
+
 }

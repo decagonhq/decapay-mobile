@@ -18,7 +18,7 @@ import javax.inject.Inject
 class VerifyPasswordResetCodeViewModel @Inject constructor(
     private val verifyPasswordResetCodeUsecase: VerifyPasswordResetCodeUsecase,
     private val savedStateHandle: SavedStateHandle?
-) : ViewModel(){
+) : ViewModel() {
 
     private val _verifyPasswordResetCode = MutableSharedFlow<Resource<VerifyPasswordResetCodeResponse>>()
     val verifyPasswordResetCode: SharedFlow<Resource<VerifyPasswordResetCodeResponse>> get() = _verifyPasswordResetCode.asSharedFlow()
@@ -30,5 +30,4 @@ class VerifyPasswordResetCodeViewModel @Inject constructor(
             }
         }
     }
-
 }

@@ -1,7 +1,6 @@
 package com.decagonhq.decapay.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,12 @@ import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentLoginBinding
 import com.decagonhq.decapay.feature.login.data.network.model.LoginRequestBody
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +72,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
         _binding = FragmentLoginBinding.bind(view)
         // when the view is visible
         pleaseWaitDialog = showPleaseWaitAlertDialog()
@@ -169,7 +170,6 @@ class LoginFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            Log.d(TAG, "here is the logged login response: ${it}")
                             // capture the token here
                             val token = it.data.data?.token
                             val country = it.data.data?.country
@@ -186,16 +186,27 @@ class LoginFragment : Fragment() {
                                 preference.putLanguage(language)
                             }
                             // preference.putUserName(it.data.data.)
-                            (activity as MainActivity).revealDrawer()
+                            (activity as BaseActivity).revealDrawer()
                             findNavController().navigate(R.id.action_loginFragment_to_budgetListFragment)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog!!.dismiss()
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

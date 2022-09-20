@@ -8,13 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
-import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.resource.Validator
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
@@ -22,7 +18,6 @@ import com.decagonhq.decapay.databinding.FragmentSignUpBinding
 import com.decagonhq.decapay.feature.signup.data.network.model.signupaccountdetails.SignUpAccountDetailsData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
@@ -53,6 +48,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentSignUpBinding.bind(view)
+
         pleaseWaitDialog = showPleaseWaitAlertDialog()
 
         binding.signUpFragmentLogInTv.setOnClickListener {
@@ -63,20 +59,6 @@ class SignUpFragment : Fragment() {
 
             val formValidated = validateAndSendRequest()
             if (formValidated) {
-                // on click of submit button, pass the account details to userSettings
-                /*
-                signUpViewModel.signUp(
-                    SignUpRequestBody(
-                        firstName = binding.signUpFragmentFirstNameEt.text.toString().trim(),
-                        lastName = binding.signUpFragmentLastNameEt.text.toString().trim(),
-                        email = binding.signUpFragmentEmailEt.text.toString().trim(),
-                        password = binding.signUpFragmentPasswordEt.text.toString().trim(),
-                        phoneNumber = binding.signUpFragmentPhoneNumberEt.text.toString().trim(),
-                    )
-
-                )
-
-                 */
                 val firstName = binding.signUpFragmentFirstNameEt.text.toString().trim()
                 val lastName = binding.signUpFragmentLastNameEt.text.toString().trim()
                 val email = binding.signUpFragmentEmailEt.text.toString().trim()
@@ -91,10 +73,6 @@ class SignUpFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putSerializable(DataConstant.SIGNUP_DETAILS, signUpAccountDetailsData)
                 findNavController().navigate(R.id.userSettingsFragment, bundle)
-
-//                pleaseWaitDialog?.show()
-                // when user account is successfully created, navigate to the login
-//                findNavController().navigate(R.id.loginFragment)
             } else {
                 hideKeyboard()
                 Snackbar.make(
@@ -136,33 +114,6 @@ class SignUpFragment : Fragment() {
             onConfirmPasswordChanged(receivedConfirmPassword)
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                signUpViewModel.registerResponse.collect {
-                    when (it) {
-                        is Resource.Success -> {
-                            pleaseWaitDialog?.dismiss()
-                            findNavController().navigate(R.id.loginFragment)
-                            Snackbar.make(
-                                binding.root,
-                                "${it.data.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                        is Resource.Error -> {
-                            pleaseWaitDialog?.dismiss()
-                            Snackbar.make(
-                                binding.root,
-                                "${it.message}",
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                        }
-                        is Resource.Loading -> {
-                        }
-                    }
-                }
-            }
-        }
         // navigation
         binding.signUpFragmentLogInTv.setOnClickListener {
             findNavController().navigate(R.id.loginFragment)

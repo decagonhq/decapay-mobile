@@ -22,11 +22,13 @@ import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.UtilsConverter
 import com.decagonhq.decapay.common.utils.converterhelper.getTodaysDate
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentBudgetDetailsBinding
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,13 +45,11 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     private var _binding: FragmentBudgetDetailsBinding? = null
     val binding get() = _binding!!
     private var budgetId: Int? = null
-    private var detailsBudgetId: Content? = null
     private var list = mutableListOf<LineItem>()
     private lateinit var adapter: LineItemAdaptor
     private var calendarSelectedDate: String? = null
-    private var startDateCaptured by Delegates.notNull<Long>()
-    private var endDateCaptured by Delegates.notNull<Long>()
     private lateinit var logExpenseData: LogExpenseData
+    private var budgetPeriod: String? = null
 
     @Inject
     lateinit var budgetDetailsPreference: Preferences
@@ -90,7 +90,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
         if (budgetId != null) {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
@@ -105,6 +105,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             val bundle = Bundle()
             if (budgetId != null) {
                 bundle.putInt(DataConstant.BUDGET_ID, budgetId!!)
+                bundle.putString(DataConstant.BUDGET_PERIOD, budgetPeriod)
                 findNavController().navigate(R.id.createBudgetLineItemBottomSheetFragment, bundle)
             }
         }
@@ -113,7 +114,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
             val selectedDayOfMonth = if ("$dayOfMonth".length == 1) "0$dayOfMonth" else "$dayOfMonth"
             val selectedMonth = if ("${month + 1}".length == 1) "0${month + 1}" else "${month + 1}"
             calendarSelectedDate = "$selectedDayOfMonth/$selectedMonth/$year"
-            Log.d("calendar", "here it is $calendarSelectedDate")
         }
 
         initObserver()
@@ -157,6 +157,8 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                         is Resource.Success -> {
 
                             val budgetDetails = it.data.data
+                            // capture budget period to save to bundle
+                            budgetPeriod = budgetDetails.budgetPeriod
 
                             binding.budgetDetailsHeaderPeriodTv.text = budgetDetails.budgetPeriod
                             binding.budgetDetailsHeaderDateTv.text = " ${budgetDetails.displayStartDate} - ${budgetDetails.displayEndDate}"
@@ -196,7 +198,6 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             val addedOneDayToEndDateFromRemoteDate = addOneDayToEndDateFromRemote.replace('-', '.')
                             val extractedMonthFromCurrentDateToSetStartDateForFutureBudgetDate = extractedMonthFromCurrentDateToSetStartDateForFutureBudget.replace('-', '.')
 
-
                             val startTime = "$startDate, 00:00"
                             val endTime = "$endDate, 00:00"
                             val addedOneDayTodaysDateTime = "$addedOneDayTodaysDate, 00:00"
@@ -225,11 +226,22 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
                             setDataLoaded(it.data.data.lineItems.toMutableList())
                         }
                         is Resource.Error -> {
-                            Snackbar.make(
-                                binding.root,
-                                it.message,
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when(it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

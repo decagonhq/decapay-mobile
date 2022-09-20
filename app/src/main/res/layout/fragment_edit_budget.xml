@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:clickable="true"
@@ -136,7 +137,7 @@
                     />
                 <Spinner
                     android:id="@+id/edit_budget_fragment_budget_period_monthly_year_spinner"
-                    android:layout_width="180dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:entries="@array/choose_year"
@@ -145,7 +146,7 @@
                     />
                 <Spinner
                     android:id="@+id/edit_budget_fragment_budget_period_monthly_month_spinner"
-                    android:layout_width="180dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:entries="@array/budget_period_month"
@@ -238,6 +239,7 @@
                 android:background="@drawable/login_button_bg"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/create_budget_fragment_done_button"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
             <View

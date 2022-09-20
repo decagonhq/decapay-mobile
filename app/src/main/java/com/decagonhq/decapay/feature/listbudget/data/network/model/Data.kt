@@ -1,6 +1,5 @@
 package com.decagonhq.decapay.feature.listbudget.data.network.model
 
-
 import com.decagonhq.decapay.common.data.model.Content
 import com.google.gson.annotations.SerializedName
 

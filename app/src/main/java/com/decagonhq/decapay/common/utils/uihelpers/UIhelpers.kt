@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.decagonhq.decapay.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Fragment.showPleaseWaitAlertDialog(): AlertDialog {
     return showCustomDialog(
@@ -44,4 +45,22 @@ fun Fragment.hideKeyboard() {
         currentFocus = View(requireActivity())
     }
     hideKeyboard.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+}
+
+fun Fragment.showInfoMsgSessionExpired() {
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle(getString(R.string.unauthorized_title_info))
+        .setMessage(getString(R.string.unauthorized_title_info_message))
+        .setPositiveButton(getString(R.string.unauthorized_title_info_ok)) { dialog, which ->
+            dialog.cancel()
+        }.show()
+}
+
+fun Activity.showInfoMsgTokenExpired() {
+    MaterialAlertDialogBuilder(this)
+        .setTitle(getString(R.string.unauthorized_title_info))
+        .setMessage(getString(R.string.unauthorized_title_info_message))
+        .setPositiveButton(getString(R.string.unauthorized_title_info_ok)) { dialog, which ->
+            dialog.cancel()
+        }.show()
 }

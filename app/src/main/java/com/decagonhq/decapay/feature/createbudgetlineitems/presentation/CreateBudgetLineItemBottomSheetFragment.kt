@@ -16,6 +16,7 @@ import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetLineItemBottomSheetBinding
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.CategoryItem
 import com.decagonhq.decapay.feature.createbudgetlineitems.data.network.model.createbudgetlineitemmodel.CreateBudgetLineItemRequestBody
@@ -34,14 +35,13 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
     private val TAG = "CREATELINEITEM"
     private var _binding: FragmentCreateBudgetLineItemBottomSheetBinding? = null
     private val binding: FragmentCreateBudgetLineItemBottomSheetBinding get() = _binding!!
-    lateinit var selectedCategory: String
     private val getBudgetCategoryListViewModel: GetBudgetCategoryListViewModel by viewModels()
     private val createBudgetLineItemViewModel: CreateBudgetLineItemViewModel by viewModels()
     private var budgetId: Int? = null
-    private var receivedDetailBudgetId: Int? = null
     private lateinit var budgetCategoryListObject: ArrayList<CategoryItem>
     private var budgetCategoryId: Int? = null
-    private lateinit var customSpinnerAdapter: CategoryItemSpinnerAdapter
+    private var budgetPeriod: String? = null
+
     @Inject
     lateinit var createBudgetLineItemPreference: Preferences
 
@@ -49,6 +49,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
         // get the budgetId from bundle
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
+        budgetPeriod = arguments?.getString(DataConstant.BUDGET_PERIOD)
     }
 
     override fun onCreateView(
@@ -69,6 +70,8 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         val countryCode = createBudgetLineItemPreference.getCountry()
         val language = createBudgetLineItemPreference.getLanguage()
         binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
+        // set the budget period to the createBudgetLineItem template option
+        binding.createBudgetLineItemBottomSheetFragmentTemplatePeriodTv.text = budgetPeriod
 
         getBudgetCategoryListViewModel.getBudgetCategoryList()
         // observers
@@ -78,7 +81,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
-            if (receivedAmount.toString().isEmpty() || (budgetCategoryId == null)) {
+            if ((receivedAmount == 0.0) || (budgetCategoryId == null)) {
                 Toast.makeText(
                     requireContext(),
                     "Fields cannot be empty",
@@ -87,9 +90,15 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             } else {
 
                 if (budgetId != null) {
-                    createBudgetLineItemViewModel.userCreateBudgetLineItem(
-                        budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId)
-                    )
+                    if (binding.createBudgetLineItemBottomSheetFragmentTemplateChk.isChecked) {
+                        createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                            budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, true)
+                        )
+                    } else {
+                        createBudgetLineItemViewModel.userCreateBudgetLineItem(
+                            budgetId!!, CreateBudgetLineItemRequestBody(receivedAmount, budgetCategoryId, false)
+                        )
+                    }
                 }
             }
         }
@@ -170,11 +179,22 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             }
                         }
                         is Resource.Error -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "${it.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "${it.message}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }

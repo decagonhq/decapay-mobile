@@ -10,15 +10,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.decagonhq.decapay.R
 import com.decagonhq.decapay.common.constants.DataConstant
 import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.converterhelper.getCurrencySymbol
 import com.decagonhq.decapay.common.utils.resource.Resource
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.databinding.FragmentEditBudgetLineItemBinding
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.editbudgetlineitem.data.network.model.EditBudgetLineItemRequestBody
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -85,7 +86,7 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
             // get all the inputs
             val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             // validate the amount field
-            if (actualProjectedAmount.toString().isEmpty()) {
+            if (actualProjectedAmount == 0.0) {
                 Toast.makeText(
                     requireContext(),
                     "Projected Amount cannot be empty",
@@ -122,8 +123,19 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
                             findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            binding.editBudgetLineItemFragmentErrorMessageTv.visibility = View.VISIBLE
-                            binding.editBudgetLineItemFragmentErrorMessageTv.text = it.message
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    binding.editBudgetLineItemFragmentErrorMessageTv.visibility = View.VISIBLE
+                                    binding.editBudgetLineItemFragmentErrorMessageTv.text = it.message
+                                }
+                            }
                         }
                         is Resource.Loading -> {
                         }
