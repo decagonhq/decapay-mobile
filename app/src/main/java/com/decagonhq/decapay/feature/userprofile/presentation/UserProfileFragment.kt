@@ -26,10 +26,10 @@ class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
     val binding: FragmentUserProfileBinding get() = _binding!!
 
-    lateinit var firstName :String
-    lateinit var lastName :String
-    lateinit var email :String
-    lateinit var phoneNumber :String
+    lateinit var firstName: String
+    lateinit var lastName: String
+    lateinit var email: String
+    lateinit var phoneNumber: String
 
     private val userProfileViewModel: UserProfileViewModel by viewModels()
 
@@ -54,9 +54,6 @@ class UserProfileFragment : Fragment() {
         setUpFlowListener()
 
 
-
-
-
     }
 
     private fun showPopupMenu(view: View) =
@@ -66,10 +63,10 @@ class UserProfileFragment : Fragment() {
                 when (item.title) {
                     "Edit" -> {
                         val bundle = Bundle()
-                        bundle.putString(DataConstant.FIRST_NAME,firstName)
-                        bundle.putString(DataConstant.LAST_NAME,lastName)
-                        bundle.putString(DataConstant.EMAIL,email)
-                        bundle.putString(DataConstant.PHONENUMBER,phoneNumber)
+                        bundle.putString(DataConstant.FIRST_NAME, firstName)
+                        bundle.putString(DataConstant.LAST_NAME, lastName)
+                        bundle.putString(DataConstant.EMAIL, email)
+                        bundle.putString(DataConstant.PHONENUMBER, phoneNumber)
 
                         findNavController().navigate(R.id.editProfileFragment, bundle)
 
@@ -90,14 +87,9 @@ class UserProfileFragment : Fragment() {
                         is Resource.Loading -> {
 
                         }
-
                         is Resource.Success -> {
-
-
-
-
                             binding.userProfileFragmentFirstNameTv.text = it.data.data.firstName
-                            firstName= it.data.data.firstName
+                            firstName = it.data.data.firstName
                             binding.userProfileFragmentLastNameTv.text = it.data.data.lastName
                             lastName = it.data.data.lastName
                             binding.userProfileFragmentEmailTv.text = it.data.data.email
@@ -109,7 +101,7 @@ class UserProfileFragment : Fragment() {
                                 showPopupMenu(it)
                             }
                             val name = "$firstName $lastName"
-                            (activity as BaseActivity).updateName(name,email)
+                            (activity as BaseActivity).updateName(name, email)
                         }
                         is Resource.Error -> {
                             Snackbar.make(
