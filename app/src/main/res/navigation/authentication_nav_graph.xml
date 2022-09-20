@@ -120,6 +120,10 @@
         android:id="@+id/userSettingsFragment"
         android:name="com.decagonhq.decapay.feature.usersettings.presentation.UserSettingsFragment"
         android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.decagonhq.decapay.feature.changepassword.presentation.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
 
 
 </navigation>
