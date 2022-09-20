@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var preference: Preferences
@@ -135,12 +135,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun hideDrawer() {
+    override fun hideDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.GONE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    fun revealDrawer() {
+    override fun revealDrawer() {
         binding.mainActivityHamburgerIb.visibility = View.VISIBLE
         binding.mainActivityDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }

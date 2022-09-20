@@ -20,6 +20,7 @@ import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.Create
 import com.decagonhq.decapay.databinding.FragmentEditBudgetCategoryBinding
 import com.decagonhq.decapay.feature.editbudgetcategory.data.network.model.EditBudgetCategoryRequestBody
 import com.decagonhq.decapay.feature.listbudgetcategories.data.network.model.Data
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,7 @@ class EditBudgetCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
 
         _binding = FragmentEditBudgetCategoryBinding.bind(view)
         pleaseWaitDialog = showPleaseWaitAlertDialog()

@@ -28,6 +28,7 @@ import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemAdaptor
 import com.decagonhq.decapay.feature.budgetdetails.adaptor.LineItemClicker
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.LineItem
 import com.decagonhq.decapay.feature.budgetdetails.data.network.model.bundle.LogExpenseData
+import com.decagonhq.decapay.presentation.BaseActivity
 import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +90,7 @@ class BudgetDetailsFragment : Fragment(), LineItemClicker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideDrawer()
+        (activity as BaseActivity).hideDrawer()
         budgetId = arguments?.getInt(DataConstant.BUDGET_ID)
         if (budgetId != null) {
             budgetDetailsViewModel.getBudgetDetails(budgetId!!)
