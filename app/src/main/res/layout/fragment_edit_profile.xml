@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".feature.edit_profile.presentation.EditProfileFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_profile_fragment_appbar_ab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_bg"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/edit_profile_fragment_toolbar_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_arrow_back"
+                />
+
+            <TextView
+                android:id="@+id/edit_profile_fragment_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/edit_profile"
+                android:textSize="@dimen/create_budget_fragment_toolbar_title_txsiz"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.391"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_fragment_toolbar_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/edit_profile_first_name_tv"
+        android:layout_width="wrap_content"
+        android:paddingTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_profile_first_name_tl"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_profile_first_name_etv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_your_first_name"
+            android:textColorHint="@color/label_color"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+android:id="@+id/edit_profile_last_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_profile_last_name_tl"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_profile_last_name_etv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_your_last_name"
+            android:textColorHint="@color/label_color"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/edit_profile_email_tv"
+
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:text="@string/email" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_profile_email_tl"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_profile_email_etv"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:textColorHint="@color/label_color"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/edit_profile_phone_number_tv"
+
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_number" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_profile_phone_number_tl"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_profile_phone_number_etv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/label_color"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_profile_fragment_edit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/decapay_green"
+        app:backgroundTint="@color/decapay_green"
+        android:layout_marginBottom="30dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        app:layout_constraintHorizontal_bias="0.6"
+        />
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

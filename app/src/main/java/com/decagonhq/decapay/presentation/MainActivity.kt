@@ -2,6 +2,7 @@ package com.decagonhq.decapay.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class MainActivity : BaseActivity() {
     lateinit var preference: Preferences
     private val activityViewModel: MainActivityViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var header:View
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
 
@@ -62,12 +64,21 @@ class MainActivity : BaseActivity() {
         binding.mainActivityHamburgerIb.setOnClickListener {
             drawerLayout.openDrawer(binding.mainActivityNavViewNv)
         }
-        val header: View = navigationView.getHeaderView(0)
+         header = navigationView.getHeaderView(0)
         val emailView = header.findViewById<TextView>(R.id.menu_header_email_tv)
         val nameView = header.findViewById<TextView>(R.id.menu_header_name_tv)
 
         emailView.text = ""
         nameView.text = ""
+       // val logo = header.findViewById<ImageView>(R.id.menu_header_profile_picture_iv)
+
+        header.setOnClickListener{
+
+            navController =
+                Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
+            navController.navigate(R.id.userProfileFragment)
+            binding.mainActivityDrawerLayout.closeDrawer(GravityCompat.START)
+        }
 
         selectNavigationItem(navigationView)
     }
@@ -147,5 +158,13 @@ class MainActivity : BaseActivity() {
 
     fun navigateToLogIn() {
         navController.navigate(R.id.loginFragment)
+    }
+
+    override fun updateName(name: String, email: String) {
+        val emailView = header.findViewById<TextView>(R.id.menu_header_email_tv)
+        val nameView = header.findViewById<TextView>(R.id.menu_header_name_tv)
+
+        emailView.text = email
+        nameView.text = name
     }
 }
