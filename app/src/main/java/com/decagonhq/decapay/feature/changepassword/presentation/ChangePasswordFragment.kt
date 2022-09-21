@@ -8,14 +8,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
+import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
+import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentChangePasswordBinding
 import com.decagonhq.decapay.feature.changepassword.data.network.model.ChangePasswordRequestBody
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
@@ -51,8 +58,8 @@ class ChangePasswordFragment : Fragment() {
             /** collect values from the input fields */
             val receivedPassword = binding.changePasswordFragmentPasswordTiedt.text?.trim().toString()
             val receivedNewPassword = binding.changePasswordFragmentNewPasswordTiedt.text?.trim().toString()
-            val receivedConfirmPassword = binding.changePasswordFragmentConfirmPasswordTiedt.text?.trim().toString()
-            if (!LoginInputValidation.validateUserPassword(receivedPassword) || !LoginInputValidation.validateUserPassword(receivedNewPassword) || LoginInputValidation.validateConfirmPassword(receivedNewPassword, receivedConfirmPassword)) {
+            val receivedNewConfirmPassword = binding.changePasswordFragmentConfirmPasswordTiedt.text?.trim().toString()
+            if (!LoginInputValidation.validateUserPassword(receivedPassword) || !LoginInputValidation.validateUserPassword(receivedNewPassword) || !LoginInputValidation.validateConfirmPassword(receivedNewPassword, receivedNewConfirmPassword)) {
                 hideKeyboard()
                 Snackbar.make(
                     binding.root,
@@ -62,7 +69,7 @@ class ChangePasswordFragment : Fragment() {
             } else {
                 // make a network call
                 changePasswordViewModel.userChangePassword(
-                    ChangePasswordRequestBody(receivedConfirmPassword, receivedNewPassword, receivedPassword)
+                    ChangePasswordRequestBody(receivedNewConfirmPassword, receivedNewPassword, receivedPassword)
                 )
                 // show dialog
                 pleaseWaitDialog?.let { it.show() }
@@ -70,6 +77,8 @@ class ChangePasswordFragment : Fragment() {
                 hideKeyboard()
             }
         }
+        // observer
+        initObserver()
         // capture the password
         binding.changePasswordFragmentPasswordTiedt.addTextChangedListener {
             val enteredPassword = binding.changePasswordFragmentPasswordTiedt.text.toString()
@@ -85,6 +94,48 @@ class ChangePasswordFragment : Fragment() {
             val enteredConfirmPassword = binding.changePasswordFragmentConfirmPasswordTiedt.text.toString()
             val enteredNewPassword = binding.changePasswordFragmentNewPasswordTiedt.text.toString()
             onConfirmPasswordTextChange(enteredNewPassword, enteredConfirmPassword)
+        }
+    }
+
+    private fun initObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                changePasswordViewModel.changePasswordResponse.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                "${it.data.message}",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            // navigate user to login
+                            findNavController().navigate(R.id.loginFragment)
+                        }
+                        is Resource.Error -> {
+                            pleaseWaitDialog?.let { it.dismiss() }
+                            // check when it is UNAUTHORIZED
+                            when (it.message) {
+                                "UNAUTHORIZED" -> {
+                                    // navigate to login
+                                    // show a dialog
+                                    findNavController().navigate(R.id.loginFragment)
+                                    showInfoMsgSessionExpired()
+                                }
+                                else -> {
+                                    Snackbar.make(
+                                        binding.root,
+                                        "${it.message}",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        }
+                        is Resource.Loading -> {
+                        }
+                    }
+                }
+            }
         }
     }
 

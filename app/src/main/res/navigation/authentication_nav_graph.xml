@@ -130,6 +130,10 @@
         android:name="com.decagonhq.decapay.feature.edit_profile.presentation.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.decagonhq.decapay.feature.changepassword.presentation.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
 
 
 </navigation>
