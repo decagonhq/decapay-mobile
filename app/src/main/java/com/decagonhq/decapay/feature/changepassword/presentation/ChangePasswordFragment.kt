@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.decagonhq.decapay.R
-import com.decagonhq.decapay.common.data.sharedpreference.Preferences
 import com.decagonhq.decapay.common.utils.resource.Resource
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showInfoMsgSessionExpired
@@ -21,12 +20,9 @@ import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.LoginInputValidation
 import com.decagonhq.decapay.databinding.FragmentChangePasswordBinding
 import com.decagonhq.decapay.feature.changepassword.data.network.model.ChangePasswordRequestBody
-import com.decagonhq.decapay.feature.signout.data.network.model.SignOutRequestBody
-import com.decagonhq.decapay.feature.signout.presentation.MainActivityViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
@@ -38,10 +34,6 @@ class ChangePasswordFragment : Fragment() {
     val binding: FragmentChangePasswordBinding get() = _binding!!
     private var pleaseWaitDialog: AlertDialog? = null
     private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
-    private val signOutViewModel: MainActivityViewModel by viewModels()
-
-    @Inject
-    lateinit var changePasswordPrefereces: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,8 +79,6 @@ class ChangePasswordFragment : Fragment() {
         }
         // observer
         initObserver()
-        // ObserveSignOut
-        initObserveSignOut()
         // capture the password
         binding.changePasswordFragmentPasswordTiedt.addTextChangedListener {
             val enteredPassword = binding.changePasswordFragmentPasswordTiedt.text.toString()
@@ -119,8 +109,8 @@ class ChangePasswordFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            // signOut the use
-                            signOutViewModel.signOutUser(SignOutRequestBody(changePasswordPrefereces.getToken()))
+                            // navigate user to login
+                            findNavController().navigate(R.id.loginFragment)
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
@@ -138,42 +128,6 @@ class ChangePasswordFragment : Fragment() {
                                         "${it.message}",
                                         Snackbar.LENGTH_LONG
                                     ).show()
-                                }
-                            }
-                        }
-                        is Resource.Loading -> {
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun initObserveSignOut() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                signOutViewModel.signOutResponse.collect {
-                    when (it) {
-                        is Resource.Success -> {
-                            Snackbar.make(
-                                binding.root,
-                                it.data.message,
-                                Snackbar.LENGTH_LONG
-                            ).show()
-                            changePasswordPrefereces.deleteToken()
-                            findNavController().navigate(R.id.loginFragment)
-                        }
-                        is Resource.Error -> {
-                            // check when it is UNAUTHORIZED
-                            when (it.message) {
-                                "UNAUTHORIZED" -> {
-                                    // navigate to login
-                                    // show a dialog
-                                    findNavController().navigate(R.id.loginFragment)
-                                    showInfoMsgSessionExpired()
-                                }
-                                else -> {
-                                    // nothing
                                 }
                             }
                         }
