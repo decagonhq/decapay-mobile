@@ -6,12 +6,10 @@ import com.decagonhq.decapay.feature.listbudget.domain.repository.BudgetListRepo
 import javax.inject.Inject
 
 class BudgetListRepositoryImpl @Inject constructor(
-  private  val budgetListApi: BudgetListApi
+    private val budgetListApi: BudgetListApi
 ) : BudgetListRepository {
 
-
-
-    override suspend fun getBudgetList(page:Int,state: String): BudgetListResponse {
-        return  budgetListApi.getBudgetList(page,20,state)
+    override suspend fun getBudgetList(page: Int, state: String): BudgetListResponse {
+        return budgetListApi.getBudgetList(page, 20, state)
     }
 }

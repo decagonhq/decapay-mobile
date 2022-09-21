@@ -186,14 +186,14 @@
     <string name="unauthorized_title_info_message">Your session has timed out, please login again.</string>
     <string name="unauthorized_title_info_ok">Dismiss</string>
     <string name="create_budget_line_item_bottom_sheet_fragment_template_period">Period</string>
-    <string name="create_budget_line_item_bottom_sheet_fragment_template_msg">Do you want to remember this line item for budget of this type:</string>
+    <string name="create_budget_line_item_bottom_sheet_fragment_template_msg">Remember this line item for budget of this type:</string>
     <string name="change_password_fragment_title">Change Password</string>
     <string name="change_password_fragment_password_label">Password</string>
     <string name="change_password_fragment_password_hint">Password</string>
     <string name="change_password_fragment_new_password_label">New Password</string>
     <string name="change_password_fragment_new_password_hint">New Password</string>
-    <string name="change_password_fragment_confirm_password_label">Confirm Password</string>
-    <string name="change_password_fragment_confirm_password_hint">Confirm Password</string>
+    <string name="change_password_fragment_confirm_password_label">Confirm New Password</string>
+    <string name="change_password_fragment_confirm_password_hint">Confirm New Password</string>
     <string name="change_password_fragment_change_password_button">Change Password</string>
     <string name="change_password_validation">Invalid password</string>
     <string name="edit_profile">Edit Profile</string>

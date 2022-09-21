@@ -55,8 +55,7 @@ class BudgetListViewModelTest {
         Mockito.`when`(mockResponse.data.content).thenReturn(mutableListOf<Content>())
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
 
-        Mockito.`when`(mockUseCase.invoke(1,"")).thenReturn(flow)
-
+        Mockito.`when`(mockUseCase.invoke(1, "")).thenReturn(flow)
 
         val viewModel = BudgetListViewModel(mockUseCase)
 
@@ -75,8 +74,8 @@ class BudgetListViewModelTest {
         Mockito.`when`(mockResponse.data).thenReturn(mockData)
         val flow = ResponseFakeFlow(Resource.Success(mockResponse))
         val flow2 = ResponseFakeFlow(Resource.Success(mockResponse))
-        Mockito.`when`(mockUseCase.invoke(1,"")).thenReturn(flow)
-        Mockito.`when`(mockUseCase.getNextPage(2,"")).thenReturn(flow2)
+        Mockito.`when`(mockUseCase.invoke(1, "")).thenReturn(flow)
+        Mockito.`when`(mockUseCase.getNextPage(2, "")).thenReturn(flow2)
         val viewModel = BudgetListViewModel(mockUseCase)
 
         viewModel.getBudgetList("")
