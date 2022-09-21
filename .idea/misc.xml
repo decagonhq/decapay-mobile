@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/edit_field_bg.xml" value="0.126" />
         <entry key="app/src/main/res/drawable/editbudgetlineitem_text_bg.xml" value="0.1725" />
         <entry key="app/src/main/res/drawable/ic_budget.xml" value="0.1625" />
+        <entry key="app/src/main/res/drawable/ic_change_password.xml" value="0.1625" />
         <entry key="app/src/main/res/drawable/logexpense_button_bg.xml" value="0.248" />
         <entry key="app/src/main/res/drawable/login_button_bg.xml" value="0.24" />
         <entry key="app/src/main/res/drawable/op_bottomsheet_layout_bg.xml" value="0.1" />

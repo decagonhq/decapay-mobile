@@ -123,10 +123,14 @@ class MainActivity : BaseActivity() {
             navController =
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
             when (it.itemId) {
-//                R.id.menu_dashboard -> {
-//
-//                    navController.navigate(R.id.budgetListFragment)
-//                }
+                R.id.menu_profile -> {
+
+                    navController.navigate(R.id.userProfileFragment)
+                }
+                R.id.menu_change_password -> {
+
+                    navController.navigate(R.id.userProfileFragment)
+                }
                 R.id.menu_budget -> {
                     navController.navigate(R.id.budgetListFragment)
                 }

@@ -10,6 +10,12 @@
     <item android:id="@+id/menu_budget_category"
         android:icon="@drawable/ic_check_box"
         android:title="@string/budget_category"/>
+    <item android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile"/>
+    <item android:id="@+id/menu_change_password"
+        android:icon="@drawable/ic_change_password"
+        android:title="@string/change_password"/>
     <item android:id="@+id/menu_logout"
         android:icon="@drawable/ic_log_out"
         android:title="@string/log_out"/>
