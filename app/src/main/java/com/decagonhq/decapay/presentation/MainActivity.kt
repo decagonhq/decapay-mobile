@@ -129,7 +129,7 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.menu_change_password -> {
 
-                    navController.navigate(R.id.userProfileFragment)
+                    navController.navigate(R.id.changePasswordFragment)
                 }
                 R.id.menu_budget -> {
                     navController.navigate(R.id.budgetListFragment)
