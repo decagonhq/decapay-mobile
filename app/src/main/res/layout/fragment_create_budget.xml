@@ -131,7 +131,7 @@
         >
         <Spinner
             android:id="@+id/create_budget_fragment_budget_period_annual_year_spinner"
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:entries="@array/choose_year"
