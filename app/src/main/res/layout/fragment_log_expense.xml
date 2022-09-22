@@ -44,6 +44,16 @@
         android:text="@string/logExpense_bottom_sheet_title"
         android:textSize="@dimen/logExpense_bottom_sheet_fragment_category_title_txsize" />
     <TextView
+        android:id="@+id/create_budget_fragment_required_field_msg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_budget_fragment_required_field_msg"
+        android:fontFamily="@font/roboto_medium"
+        />
+    <TextView
         android:id="@+id/logExpense_bottom_sheet_fragment_label_amount_spent_tv"
         android:layout_width="wrap_content"
         android:layout_marginTop="24dp"
@@ -143,7 +153,7 @@
         android:text="@string/createBudgetLineItem_fragment_error_message"
         android:textColor="@color/white"
         android:fontFamily="@font/roboto_medium"
-        android:lines="2"
+        android:lines="3"
         android:padding="8dp"
         android:visibility="invisible"
         />

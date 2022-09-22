@@ -33,13 +33,13 @@
         <entry key="app/src/main/res/layout/fragment_budget_category_list.xml" value="0.37617135207496655" />
         <entry key="app/src/main/res/layout/fragment_budget_details.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_budget_list.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_create_budget.xml" value="0.23660714285714285" />
         <entry key="app/src/main/res/layout/fragment_create_budget_category.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_budget_line_item_bottom_sheet.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.39443155452436196" />
-        <entry key="app/src/main/res/layout/fragment_edit_budget.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_edit_budget.xml" value="0.28418230563002683" />
         <entry key="app/src/main/res/layout/fragment_edit_budget_category.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_edit_budget_line_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_edit_budget_line_item.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_edit_log_expense_bottom_sheet.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.24010416666666667" />
         <entry key="app/src/main/res/layout/fragment_expenses_list.xml" value="0.13916591115140525" />
@@ -65,7 +65,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

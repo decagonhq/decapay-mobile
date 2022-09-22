@@ -48,6 +48,16 @@
         android:textSize="@dimen/editBudgetLineItem_selected_category__txsiz"
         android:textStyle="bold" />
     <TextView
+        android:id="@+id/create_budget_fragment_required_field_msg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_budget_fragment_required_field_msg"
+        android:fontFamily="@font/roboto_medium"
+        />
+    <TextView
         android:id="@+id/edit_budget_line_item_bottom_sheet_fragment_label_projected_amount_tv"
         android:layout_width="wrap_content"
         android:layout_marginTop="22dp"
@@ -93,7 +103,7 @@
         android:text="@string/createBudgetLineItem_fragment_error_message"
         android:textColor="@color/white"
         android:fontFamily="@font/roboto_medium"
-        android:lines="2"
+        android:lines="3"
         android:padding="8dp"
         android:visibility="invisible"
         />

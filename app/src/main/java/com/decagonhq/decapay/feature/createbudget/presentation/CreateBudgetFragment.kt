@@ -182,7 +182,7 @@ class CreateBudgetFragment : Fragment() {
             weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
-            if (budgetTitle.isEmpty() || budgetAmount.toString().isEmpty() || budgetPeriodType.isEmpty() || budgetDescription.isEmpty()) {
+            if (budgetTitle.isEmpty() || budgetAmount.toString().isEmpty() || budgetPeriodType.isEmpty()) {
                 Snackbar.make(
                     binding.root,
                     "Please enter appropriate details to create a budget",
