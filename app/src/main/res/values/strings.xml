@@ -65,11 +65,13 @@
     <string name="percentage">Percentage</string>
     <string name="total_amount_spent">Total Amount spent</string>
     <string name="create_budget_fragment_title_tv">Create Budget</string>
-    <string name="create_budget_fragment_label_title">Title</string>
+    <string name="create_budget_fragment_label_title">Title <font color='#FF0000'>*</font></string>
     <string name="create_budget_fragment_hint_title">Enter title</string>
-    <string name="create_budget_fragment_label_amount">Projected Amount</string>
+    <string name="create_budget_fragment_label_amount">Projected Amount <font color='#FF0000'>*</font></string>
     <string name="create_budget_fragment_hint_amount">Enter amount</string>
-    <string name="create_budget_fragment_label_buget_period">Budget period</string>
+    <string name="create_budget_fragment_label_buget_period">Budget period <font color='#FF0000'>*</font></string>
+    <string name="create_budget_fragment_required_field_msg"> <font color='#FF0000'>*</font> all fields asterisked are required</string>
+    <string name="edit_budget_line_item_bottom_sheet_fragment_required_field"> <font color='#FF0000'>*</font> field asterisked is required</string>
     <string name="create_budget_fragment_hint_select">Select</string>
     <string name="create_budget_fragment_label_description">Description</string>
     <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
@@ -130,8 +132,8 @@
     <string name="edit_budget_category_fragment_title">Edit Category</string>
     <string name="edit_budget_category_fragment_name_category_save">Save</string>
     <string name="create_budget_line_item_bottom_sheet_title">Create Budget Line Item</string>
-    <string name="create_budget_line_item_bottom_sheet_label_category">Category</string>
-    <string name="create_budget_line_item_bottom_sheet_label_projected_amount">Projected Amount</string>
+    <string name="create_budget_line_item_bottom_sheet_label_category">Category <font color='#FF0000'>*</font></string>
+    <string name="create_budget_line_item_bottom_sheet_label_projected_amount">Projected Amount <font color='#FF0000'>*</font></string>
     <string name="create_budget_line_item_bottom_sheet_label_projected_amount_hint">N0.00</string>
     <string name="create_budget_line_item_bottom_sheet_fragment_create_button">Create</string>
     <string name="yes">Yes</string>
@@ -147,10 +149,10 @@
     <string name="time_logged">Time Logged</string>
     <string name="no_expenses_yet">No Expenses Yet</string>
     <string name="logExpense_bottom_sheet_title">Transportation</string>
-    <string name="logExpense_bottom_sheet_fragment_transaction_date">Transaction Date</string>
+    <string name="logExpense_bottom_sheet_fragment_transaction_date">Transaction Date <font color='#FF0000'>*</font></string>
     <string name="logExpense_bottom_sheet_fragment_transaction_date_hint">Current Date</string>
-    <string name="logExpense_bottom_sheet_fragment_label_amount_spent">Amount Spent</string>
-    <string name="logExpense_bottom_sheet_fragment_description">Description</string>
+    <string name="logExpense_bottom_sheet_fragment_label_amount_spent">Amount Spent <font color='#FF0000'>*</font></string>
+    <string name="logExpense_bottom_sheet_fragment_description">Description <font color='#FF0000'>*</font></string>
     <string name="logExpense_bottom_sheet_fragment_description_hint">Type description here..</string>
     <string name="logExpense_bottom_sheet_fragment_save_button">Save</string>
     <string name="logExpense_bottom_sheet_fragment_cancel_button">Cancel</string>

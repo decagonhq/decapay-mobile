@@ -52,6 +52,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
+    <TextView
+        android:id="@+id/create_budget_fragment_required_field_msg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_budget_fragment_required_field_msg"
+        android:fontFamily="@font/roboto_medium"
+        />
 
     <TextView
         android:id="@+id/create_budget_fragment_label_title_tv"
@@ -230,8 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/create_budget_fragment_hint_add_description_here"
-            android:inputType="text"
-            android:lines="1"
+            android:inputType="textMultiLine"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <Button
