@@ -196,10 +196,11 @@
     <string name="change_password_fragment_confirm_password_hint">Confirm New Password</string>
     <string name="change_password_fragment_change_password_button">Change Password</string>
     <string name="change_password_validation">Invalid password</string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="my_profile">My Profile</string>
     <string name="submit">Submit</string>
     <string name="profile">Profile</string>
     <string name="change_password">Change Password</string>
+    <string name="edit_profile">Edit Profile</string>
 
 
 </resources>

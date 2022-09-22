@@ -76,7 +76,7 @@ class MainActivity : BaseActivity() {
 
             navController =
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
-            navController.navigate(R.id.userProfileFragment)
+            navController.navigate(R.id.editProfileFragment)
             binding.mainActivityDrawerLayout.closeDrawer(GravityCompat.START)
         }
 
@@ -124,11 +124,9 @@ class MainActivity : BaseActivity() {
                 Navigation.findNavController(this, R.id.main_activity_fragment_container_fcv)
             when (it.itemId) {
                 R.id.menu_profile -> {
-
-                    navController.navigate(R.id.userProfileFragment)
+                    navController.navigate(R.id.editProfileFragment)
                 }
                 R.id.menu_change_password -> {
-
                     navController.navigate(R.id.changePasswordFragment)
                 }
                 R.id.menu_budget -> {

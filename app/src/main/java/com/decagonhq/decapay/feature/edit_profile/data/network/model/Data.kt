@@ -1,4 +1,4 @@
-package com.decagonhq.decapay.feature.userprofile.data.network.model
+package com.decagonhq.decapay.feature.edit_profile.data.network.model
 
 
 import com.google.gson.annotations.SerializedName
