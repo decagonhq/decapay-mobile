@@ -20,8 +20,6 @@ import com.decagonhq.decapay.common.utils.resource.Validator
 import com.decagonhq.decapay.common.utils.uihelpers.hideKeyboard
 import com.decagonhq.decapay.common.utils.uihelpers.showPleaseWaitAlertDialog
 import com.decagonhq.decapay.databinding.FragmentEditProfileBinding
-import com.decagonhq.decapay.databinding.FragmentLoginBinding
-import com.decagonhq.decapay.databinding.FragmentUserProfileBinding
 import com.decagonhq.decapay.feature.edit_profile.data.network.model.EditProfileRequestBody
 import com.decagonhq.decapay.presentation.BaseActivity
 import com.google.android.material.snackbar.Snackbar
@@ -98,7 +96,9 @@ class EditProfileFragment : Fragment() {
             submit()
         }
 
-        setUpFlowListener()
+        setUpEditFlowListener()
+        setUpProfileFlowListener()
+        editProfileViewModel.getUserProfile()
 
     }
 
@@ -126,7 +126,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun setUpFlowListener() {
+    private fun setUpEditFlowListener() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 editProfileViewModel.editProfileResponse.collect {
@@ -143,10 +143,38 @@ class EditProfileFragment : Fragment() {
                                 Snackbar.LENGTH_LONG
                             ).show()
 
-                            findNavController().popBackStack()
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }
+                            Snackbar.make(
+                                binding.root,
+                                it.message,
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUpProfileFlowListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                editProfileViewModel.userProfileResponse.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+                            binding.editProfileFirstNameEtv.setText(it.data.data.firstName, TextView.BufferType.EDITABLE)
+                            binding.editProfileLastNameEtv.setText(it.data.data.lastName, TextView.BufferType.EDITABLE)
+                            binding.editProfileEmailEtv.setText(it.data.data.email, TextView.BufferType.EDITABLE)
+                            binding.editProfilePhoneNumberEtv.setText(it.data.data.phoneNumber, TextView.BufferType.EDITABLE)
+                            val name = "${it.data.data.firstName} ${it.data.data.lastName}"
+                            (activity as BaseActivity).updateName(name, it.data.data.email)
+                        }
+                        is Resource.Error -> {
                             Snackbar.make(
                                 binding.root,
                                 it.message,
