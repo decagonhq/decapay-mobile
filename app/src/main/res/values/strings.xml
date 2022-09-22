@@ -70,8 +70,8 @@
     <string name="create_budget_fragment_label_amount">Projected Amount <font color='#FF0000'>*</font></string>
     <string name="create_budget_fragment_hint_amount">Enter amount</string>
     <string name="create_budget_fragment_label_buget_period">Budget period <font color='#FF0000'>*</font></string>
-    <string name="create_budget_fragment_required_field_msg"> <font color='#FF0000'>*</font> all fields asterisked are required</string>
-    <string name="edit_budget_line_item_bottom_sheet_fragment_required_field"> <font color='#FF0000'>*</font> field asterisked is required</string>
+    <string name="create_budget_fragment_required_field_msg"> <font color='#FF0000'>*</font> All fields asterisked are required</string>
+    <string name="edit_budget_line_item_bottom_sheet_fragment_required_field"> <font color='#FF0000'>*</font> Field asterisked is required</string>
     <string name="create_budget_fragment_hint_select">Select</string>
     <string name="create_budget_fragment_label_description">Description</string>
     <string name="create_budget_fragment_hint_add_description_here">Add description here</string>
