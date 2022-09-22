@@ -54,7 +54,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/edit_budget_line_item_bottom_sheet_fragment_required_field"
+        android:text="@string/create_budget_fragment_required_field_msg"
         android:fontFamily="@font/roboto_medium"
         />
     <TextView

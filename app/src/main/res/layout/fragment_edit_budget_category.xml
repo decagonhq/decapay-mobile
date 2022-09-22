@@ -54,13 +54,23 @@
         android:text="@string/create_budget_category_fragment_callout"
         android:textSize="@dimen/create_budget_category_callout" />
     <TextView
+        android:id="@+id/create_budget_fragment_required_field_msg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_budget_fragment_required_field_msg"
+        android:fontFamily="@font/roboto_medium"
+        />
+    <TextView
         android:id="@+id/edit_budget_category_fragment_name_category_tv"
         android:layout_width="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginStart="16dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
-        android:text="@string/create_budget_category_fragment_name_category"
+        android:text="@string/edit_budget_category_fragment_name_category"
         />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_budget_category_fragment_name_category_til"
