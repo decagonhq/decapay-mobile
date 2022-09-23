@@ -20,7 +20,6 @@ import com.decagonhq.decapay.common.utils.validation.inputfieldvalidation.Create
 import com.decagonhq.decapay.databinding.FragmentCreateBudgetCategoryBinding
 import com.decagonhq.decapay.feature.createbudgetcategory.data.network.model.CreateBudgetCategoryRequestBody
 import com.decagonhq.decapay.presentation.BaseActivity
-import com.decagonhq.decapay.presentation.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -126,7 +125,6 @@ class CreateBudgetCategoryFragment : Fragment() {
                                     ).show()
                                 }
                             }
-
                         }
                         is Resource.Loading -> {
                         }

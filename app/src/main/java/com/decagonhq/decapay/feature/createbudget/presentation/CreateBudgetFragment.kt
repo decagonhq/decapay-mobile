@@ -86,12 +86,7 @@ class CreateBudgetFragment : Fragment() {
         val countryCode = createBudgetPreference.getCountry()
         val language = createBudgetPreference.getLanguage()
 
-        binding.createBudgetFragmentAmountTiedt.setCurrencySymbol(
-            getCurrencySymbol(
-                language,
-                countryCode
-            ), true
-        )
+        binding.createBudgetFragmentAmountTiedt.setCurrencySymbol(getCurrencySymbol(language, countryCode), true)
 
         _binding = FragmentCreateBudgetBinding.bind(view)
         // initialize view
@@ -99,129 +94,86 @@ class CreateBudgetFragment : Fragment() {
 //        budgetPeriod = binding.createBudgetFragmentBudgetPeriodTv
 
         // list of items
-        val budgetPeriodAdapter =
-            ArrayAdapter<String>(requireContext(), R.layout.list_item, BudgetPeriods.budgetPeriod)
+        val budgetPeriodAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, BudgetPeriods.budgetPeriod)
         budgetPeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.createBudgetFragmentBugetPeriodSpinner.adapter = budgetPeriodAdapter
-        binding.createBudgetFragmentBugetPeriodSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (parent?.getItemAtPosition(position) == "Please select a period") {
-                        //
-                    } else {
-                        binding.createBudgetFragmentPeriodTil.error = ""
-                        // on click of an item,
-                        budgetPeriodType = parent?.getItemAtPosition(position).toString()
-                        when (budgetPeriodType) {
-                            "Annual" -> {
-                                // make annual view visible
-                                binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.visibility =
-                                    View.GONE
-                                annualSpinnerAdapterInit()
+        binding.createBudgetFragmentBugetPeriodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (parent?.getItemAtPosition(position) == "Please select a period") {
+                    //
+                } else {
+                    // on click of an item,
+                    budgetPeriodType = parent?.getItemAtPosition(position).toString()
+                    when (budgetPeriodType) {
+                        "Annual" -> {
+                            // make annual view visible
+                            binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            annualSpinnerAdapterInit()
+                        }
+                        "Monthly" -> {
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            monthlyYearSpinner()
+                            monthlyMonthSpinner()
+                        }
+                        "Weekly" -> {
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            // on click on the start date
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.setOnClickListener {
+                                weeklyStartDate()
                             }
-                            "Monthly" -> {
-                                binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.visibility =
-                                    View.GONE
-                                monthlyYearSpinner()
-                                monthlyMonthSpinner()
+                        }
+                        "Daily" -> {
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.GONE
+                            // on click on the daily view
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.setOnClickListener {
+                                dailyDate()
                             }
-                            "Weekly" -> {
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.visibility =
-                                    View.GONE
-                                // on click on the start date
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.setOnClickListener {
-                                    weeklyStartDate()
-                                }
-                            }
-                            "Daily" -> {
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.visibility =
-                                    View.GONE
-                                // on click on the daily view
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.setOnClickListener {
-                                    dailyDate()
-                                }
-                            }
-                            "Custom" -> {
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.visibility =
-                                    View.VISIBLE
-                                binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility =
-                                    View.GONE
-                                binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility =
-                                    View.GONE
-                                // on click on the custom view
-                                binding.createBudgetFragmentBudgetPeriodCustomTv.setOnClickListener {
-                                    showDateRange()
-                                }
+                        }
+                        "Custom" -> {
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.visibility = View.VISIBLE
+                            binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyStartDateTv.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.visibility = View.GONE
+                            binding.createBudgetFragmentBudgetPeriodDailyStartDateTv.visibility = View.GONE
+                            // on click on the custom view
+                            binding.createBudgetFragmentBudgetPeriodCustomTv.setOnClickListener {
+                                showDateRange()
                             }
                         }
                     }
                 }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //
-                }
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
         // on click, createBudgetDoneButton
         binding.createBudgetFragmentDoneButtonBtn.setOnClickListener {
             // capture the input
@@ -229,9 +181,7 @@ class CreateBudgetFragment : Fragment() {
             budgetAmount = binding.createBudgetFragmentAmountTiedt.getNumericValue()
             // budgetPeriodType
             budgetDescription = binding.createBudgetFragmentDescriptionTiedt.text?.trim().toString()
-            weeklyDuration =
-                binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim()
-                    .toString()
+            weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
             validate()
@@ -263,15 +213,9 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount,
-                                null,
-                                null,
-                                budgetDescription,
-                                null,
-                                CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth),
-                                BudgetPeriodConstant.MONTHLY,
-                                budgetTitle,
-                                monthlyPeriodYear.toInt()
+                                budgetAmount, null, null,
+                                budgetDescription, null, CalendarMonth.convertMonthStringValueToInt(monthlyPeriodMonth), BudgetPeriodConstant.MONTHLY,
+                                budgetTitle, monthlyPeriodYear.toInt()
                             )
                         )
                         // show dialog
@@ -281,15 +225,9 @@ class CreateBudgetFragment : Fragment() {
                         // make this network call
                         createBudgetViewModel.userCreateBudget(
                             CreateBudgetRequestBody(
-                                budgetAmount,
-                                null,
-                                weeklyStartDate,
-                                budgetDescription,
-                                weeklyDuration.toInt(),
-                                null,
-                                BudgetPeriodConstant.WEEKLY,
-                                budgetTitle,
-                                null
+                                budgetAmount, null, weeklyStartDate,
+                                budgetDescription, weeklyDuration.toInt(), null, BudgetPeriodConstant.WEEKLY,
+                                budgetTitle, null
                             )
                         )
 
@@ -362,70 +300,48 @@ class CreateBudgetFragment : Fragment() {
     }
 
     private fun annualSpinnerAdapterInit() {
-        val annualPeriodAdapter =
-            ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
+        val annualPeriodAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
         annualPeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.adapter = annualPeriodAdapter
-        binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    annualPeriodYear = parent?.getItemAtPosition(position).toString()
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //
-                }
+        binding.createBudgetFragmentBudgetPeriodAnnualYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                annualPeriodYear = parent?.getItemAtPosition(position).toString()
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
     }
 
     private fun monthlyYearSpinner() {
-        val monthPeriodYearAdapter =
-            ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
+        val monthPeriodYearAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, YearList.yearList)
         monthPeriodYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.adapter = monthPeriodYearAdapter
-        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    monthlyPeriodYear = parent?.getItemAtPosition(position).toString()
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //
-                }
+        binding.createBudgetFragmentBudgetPeriodMonthlyYearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                monthlyPeriodYear = parent?.getItemAtPosition(position).toString()
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
     }
 
     private fun monthlyMonthSpinner() {
-        val monthPeriodMonthAdapter =
-            ArrayAdapter<String>(requireContext(), R.layout.list_item, CalendarMonth.calendarMonth)
+        val monthPeriodMonthAdapter = ArrayAdapter<String>(requireContext(), R.layout.list_item, CalendarMonth.calendarMonth)
         monthPeriodMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.adapter =
-            monthPeriodMonthAdapter
-        binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    monthlyPeriodMonth = parent?.getItemAtPosition(position).toString()
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    //
-                }
+        binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.adapter = monthPeriodMonthAdapter
+        binding.createBudgetFragmentBudgetPeriodMonthlyMonthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                monthlyPeriodMonth = parent?.getItemAtPosition(position).toString()
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
     }
 
     private fun weeklyStartDate() {
@@ -474,8 +390,7 @@ class CreateBudgetFragment : Fragment() {
             val endDate = dateSelected.second
 
             if (startDate != null && endDate != null) {
-                customSelectedDate =
-                    "${convertLongToTime(startDate)}, ${convertLongToTime(endDate)}"
+                customSelectedDate = "${convertLongToTime(startDate)}, ${convertLongToTime(endDate)}"
                 customeBudgetStartDate = convertLongToTime(startDate)
                 customBudgetEndDate = convertLongToTime(endDate)
                 binding.createBudgetFragmentBudgetPeriodCustomTv.text = customSelectedDate
