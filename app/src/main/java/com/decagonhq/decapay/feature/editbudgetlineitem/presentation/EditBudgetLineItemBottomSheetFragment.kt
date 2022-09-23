@@ -84,6 +84,7 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         // on click on update button
         binding.editBudgetLineItemBottomSheetFragmentUpdateButtonBtn.setOnClickListener {
             // get all the inputs
+            validate()
             val actualProjectedAmount = binding.editBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             // validate the amount field
             if (actualProjectedAmount == 0.0) {
@@ -104,6 +105,15 @@ class EditBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         // close the bottomsheet
         binding.editBudgetLineItemBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun validate(){
+        if (binding.editBudgetLineItemBottomSheetFragmentAmountTiedt .getNumericValue()<=0.0) {
+            binding.editBudgetLineItemBottomSheetFragmentAmountTil.error = "Amount is required"
+        }else{
+
+            binding.editBudgetLineItemBottomSheetFragmentAmountTil.error = ""
         }
     }
 

@@ -91,17 +91,36 @@
         android:fontFamily="@font/roboto_medium"
         android:text="@string/create_budget_fragment_label_amount"
         />
-    <com.cottacush.android.currencyedittext.CurrencyEditText
-        android:id="@+id/create_budget_fragment_amount_tiedt"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_budget_fragment_amount_til"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        app:maxNumberOfDecimalDigits="2"
-        android:paddingStart="8dp"
-        android:background="@drawable/budget_period_bg"
-        />
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.cottacush.android.currencyedittext.CurrencyEditText
+            android:id="@+id/create_budget_fragment_amount_tiedt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:maxNumberOfDecimalDigits="2"
+            android:paddingStart="8dp"
+            android:background="@drawable/budget_period_bg"
+            />
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/create_budget_fragment_title_tiedt"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/create_budget_fragment_hint_title"-->
+<!--            android:inputType="text"-->
+<!--            android:lines="1"-->
+<!--            />-->
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/create_budget_fragment_title_budget_period_tv"
@@ -122,6 +141,23 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/spinner_bg"
         />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_budget_fragment_period_til"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -59,11 +59,13 @@ class CreateBudgetCategoryFragment : Fragment() {
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         // on click on the add button
         binding.createBudgetCategoryFragmentNameCategoryAddButtonBtn.setOnClickListener {
+            validate()
             hideKeyboard()
             // receive the value from the input field
             val categoryName = binding.createBudgetCategoryFragmentNameCategoryTiedt.text?.trim().toString()
             // validate input
             if (!CreateBudgetCategoryInputValidation.validateNameOfCategoryItem(categoryName)) {
+
                 Snackbar.make(
                     binding.root,
                     "Item entered must have 3 characters",
@@ -80,7 +82,15 @@ class CreateBudgetCategoryFragment : Fragment() {
         initObserver()
 
         binding.createBudgetCategoryFragmentBackNavigationIv.setOnClickListener {
-            findNavController().navigate(R.id.budgetCategoryList)
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun validate(){
+        if (binding.createBudgetCategoryFragmentNameCategoryTiedt.text?.trim().toString().isEmpty()) {
+            binding.createBudgetCategoryFragmentNameCategoryTil.error = "Item entered must have 3 characters"
+        }else{
+            binding.createBudgetCategoryFragmentNameCategoryTil.error = ""
         }
     }
 
@@ -96,7 +106,7 @@ class CreateBudgetCategoryFragment : Fragment() {
                                 "${it.data.message}",
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            findNavController().navigate(R.id.budgetCategoryList)
+                            findNavController().popBackStack()
                         }
                         is Resource.Error -> {
                             pleaseWaitDialog?.let { it.dismiss() }

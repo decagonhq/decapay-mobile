@@ -101,6 +101,7 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // on click update button
         binding.editLogExpenseeBottomSheetFragmentUpdateButtonBtn.setOnClickListener {
             // capture all the input fields
+            validate()
             val receivedAmount = binding.editLogExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val receivedDescription = binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.text.toString()
             val receivedTransactionDate = binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString()
@@ -125,6 +126,29 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // close the bottomSheet
         binding.editLogExpenseBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun validate(){
+        if (binding.editLogExpenseBottomSheetFragmentAmountTiedt.getNumericValue()<=0.0) {
+            binding.editLogExpenseBottomSheetFragmentAmountTil.error = "Amount is required"
+        }else{
+
+            binding.editLogExpenseBottomSheetFragmentAmountTil.error = ""
+        }
+
+        if(binding.editLogExpenseBottomSheetFragmentDescriptionTiedt.text.toString().isEmpty()){
+            binding.editLogExpenseBottomSheetFragmentDescriptionTil.error = "Description is required"
+        }else{
+
+            binding.editLogExpenseBottomSheetFragmentDescriptionTil.error = ""
+        }
+
+        if(binding.editLogExpenseeBottomSheetFragmentTransactionDateTv.text.trim().toString().isEmpty()){
+            binding.editLogExpenseeBottomSheetFragmentDateTil.error = "Transaction date is required"
+        }else{
+
+            binding.editLogExpenseeBottomSheetFragmentDateTil.error = ""
         }
     }
 
