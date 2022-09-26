@@ -288,14 +288,6 @@ class CreateBudgetFragment : Fragment() {
         }else{
            binding.createBudgetFragmentPeriodTil.error = ""
         }
-        if (binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
-                .isEmpty()
-        ) {
-
-            binding.createBudgetFragmentDescriptionTil.error = "Budget description is required"
-        }else{
-            binding.createBudgetFragmentDescriptionTil.error = ""
-        }
 
     }
 
