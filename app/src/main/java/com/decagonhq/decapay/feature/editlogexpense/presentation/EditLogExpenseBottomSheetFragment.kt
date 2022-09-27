@@ -128,8 +128,8 @@ class EditLogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
             findNavController().popBackStack()
         }
     }
-
-    private fun validate(){
+    // TODO To use a single layout for editLogExpenseBottomSheetFragment and LogExpenseBottomSheetFragment
+    private fun validate() {
         if (binding.editLogExpenseBottomSheetFragmentAmountTiedt.getNumericValue()<=0.0) {
             binding.editLogExpenseBottomSheetFragmentAmountTil.error = "Amount is required"
         }else{
