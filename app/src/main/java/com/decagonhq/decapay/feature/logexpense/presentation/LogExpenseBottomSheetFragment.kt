@@ -100,7 +100,7 @@ class LogExpenseBottomSheetFragment : BottomSheetDialogFragment() {
         // on click on save button
         binding.logExpenseBottomSheetFragmentSaveButtonBtn.setOnClickListener {
             // capture all the inputs from the input fields
-            validate()
+            validate();
             val amountSpent = binding.logExpenseBottomSheetFragmentAmountTiedt.getNumericValue()
             val description = binding.logExpenseBottomSheetFragmentDescriptionTiedt.text?.trim().toString()
             enteredTransactionDate = binding.logExpenseBottomSheetFragmentTransactionDateTv.text.trim().toString()
