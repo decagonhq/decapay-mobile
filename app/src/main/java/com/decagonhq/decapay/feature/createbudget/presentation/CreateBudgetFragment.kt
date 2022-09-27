@@ -1,6 +1,7 @@
 package com.decagonhq.decapay.feature.createbudget.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,7 @@ class CreateBudgetFragment : Fragment() {
     lateinit var customBudgetEndDate: String
     lateinit var budgetDescription: String
     private var pleaseWaitDialog: AlertDialog? = null
+
     @Inject
     lateinit var createBudgetPreference: Preferences
 
@@ -182,7 +184,10 @@ class CreateBudgetFragment : Fragment() {
             weeklyDuration = binding.createBudgetFragmentBudgetPeriodWeeklyDurationEdittext.text.trim().toString()
 
             // check validation
-            if (budgetTitle.isEmpty() || budgetAmount.toString().isEmpty() || budgetPeriodType.isEmpty()) {
+            validate()
+            if (budgetTitle.isEmpty() || budgetAmount.toString()
+                    .isEmpty() || budgetPeriodType.isEmpty() || budgetDescription.isEmpty()
+            ) {
                 Snackbar.make(
                     binding.root,
                     "Please enter appropriate details to create a budget",
@@ -263,6 +268,27 @@ class CreateBudgetFragment : Fragment() {
         binding.createBudgetFragmentBackNavigationIv.setOnClickListener {
             findNavController().navigate(R.id.budgetListFragment)
         }
+    }
+
+    private fun validate() {
+        if (binding.createBudgetFragmentTitleTiedt.text?.trim().toString().isEmpty()) {
+            binding.createBudgetFragmentTitleTil.error = "Budget title is required"
+        }else{
+            binding.createBudgetFragmentTitleTil.error = ""
+        }
+        if (binding.createBudgetFragmentAmountTiedt.getNumericValue()<=0.0) {
+            binding.createBudgetFragmentAmountTil.error = "Budget amount is required"
+        }else{
+
+            binding.createBudgetFragmentAmountTil.error = ""
+        }
+
+        if (binding.createBudgetFragmentDescriptionTiedt.text?.trim().toString().isEmpty()) {
+            binding.createBudgetFragmentPeriodTil.error = "Budget period is required"
+        }else{
+           binding.createBudgetFragmentPeriodTil.error = ""
+        }
+
     }
 
     private fun annualSpinnerAdapterInit() {

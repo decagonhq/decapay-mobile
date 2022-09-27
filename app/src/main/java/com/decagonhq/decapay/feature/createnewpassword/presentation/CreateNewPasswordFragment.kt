@@ -65,6 +65,7 @@ class CreateNewPasswordFragment : Fragment() {
         pleaseWaitDialog = showPleaseWaitAlertDialog()
         /** on click of the createNewPassword button */
         binding.createNewPasswordFragmentCreateNewPasswordButtonBtn.setOnClickListener {
+            validate()
             /** collect values from the input fields */
             receivedNewPassword = binding.createNewPasswordFragmentNewPasswordTiedt.text.toString()
             receivedConfirmPassword = binding.createNewPasswordFragmentConfirmPasswordTiedt.text.toString()
@@ -120,6 +121,24 @@ class CreateNewPasswordFragment : Fragment() {
             binding.createNewPasswordFragmentConfirmPasswordTil.error = "Invalid Password Entered"
         } else {
             binding.createNewPasswordFragmentConfirmPasswordTil.error = ""
+        }
+    }
+
+    private fun validate(){
+        val newPassword = binding.createNewPasswordFragmentConfirmPasswordTiedt.text.toString()
+        val confirmPassword = binding.createNewPasswordFragmentNewPasswordTiedt.text.toString()
+       val receivedPassword = binding.createNewPasswordFragmentNewPasswordTiedt.text.toString()
+        if (!LoginInputValidation.validateConfirmPassword(newPassword, confirmPassword)) {
+            binding.createNewPasswordFragmentConfirmPasswordTil.error = "Invalid Password Entered"
+        } else {
+            binding.createNewPasswordFragmentConfirmPasswordTil.error = ""
+        }
+        if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password cannot be empty") {
+            binding.createNewPasswordFragmentNewPasswordTil.error = "Password cannot be empty"
+        } else if (LoginInputValidation.validatePasswordForTextwatcher(receivedPassword) == "Password must have a minimum of 8 characters.") {
+            binding.createNewPasswordFragmentNewPasswordTil.error = "Password must have a minimum of 8 characters."
+        } else {
+            binding.createNewPasswordFragmentNewPasswordTil.error = ""
         }
     }
 

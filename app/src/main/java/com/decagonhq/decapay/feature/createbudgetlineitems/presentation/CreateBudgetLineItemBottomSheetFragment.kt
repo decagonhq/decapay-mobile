@@ -80,6 +80,7 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.createBudgetLineItemBottomSheetFragmentCreateButtonBtn.setOnClickListener {
             // receive all the inputs
+            validate()
             val receivedAmount = binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()
             if ((receivedAmount == 0.0) || (budgetCategoryId == null)) {
                 Toast.makeText(
@@ -109,6 +110,20 @@ class CreateBudgetLineItemBottomSheetFragment : BottomSheetDialogFragment() {
         // close the bottomsheet
         binding.createBudgetLineItemBottomSheetFragmentCloseIconIv.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun validate(){
+        if (budgetCategoryId == null) {
+            binding.createBudgetLineItemBottomSheetFragmentCategoryTil.error = "Category is required"
+        }else{
+            binding.createBudgetLineItemBottomSheetFragmentCategoryTil.error = ""
+        }
+        if (binding.createBudgetLineItemBottomSheetFragmentAmountTiedt.getNumericValue()<=0.0) {
+            binding.createBudgetLineItemBottomSheetFragmentAmountTil.error = "Amount is required"
+        }else{
+
+            binding.createBudgetLineItemBottomSheetFragmentAmountTil.error = ""
         }
     }
 
