@@ -24,16 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <ImageView
-                android:id="@+id/edit_profile_fragment_toolbar_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_arrow_back"
-                />
+<!--            <ImageView-->
+<!--                android:id="@+id/edit_profile_fragment_toolbar_iv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:src="@drawable/ic_arrow_back"-->
+<!--                />-->
 
             <TextView
                 android:id="@+id/edit_profile_fragment_toolbar_title"
@@ -44,8 +44,7 @@
                 android:textSize="@dimen/create_budget_fragment_toolbar_title_txsiz"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.391"
-                app:layout_constraintStart_toEndOf="@+id/edit_profile_fragment_toolbar_iv"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

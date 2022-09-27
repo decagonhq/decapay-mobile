@@ -51,7 +51,7 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as BaseActivity).hideDrawer()
+        (activity as BaseActivity).revealDrawer()
         _binding = FragmentEditProfileBinding.bind(view)
 
         val firstName = arguments?.getString(DataConstant.FIRST_NAME)
@@ -65,10 +65,6 @@ class EditProfileFragment : Fragment() {
         binding.editProfilePhoneNumberEtv.setText(phoneNumber, TextView.BufferType.EDITABLE)
 
 
-
-        binding.editProfileFragmentToolbarIv.setOnClickListener{
-            findNavController().popBackStack()
-        }
 
 
         pleaseWaitDialog = showPleaseWaitAlertDialog()
